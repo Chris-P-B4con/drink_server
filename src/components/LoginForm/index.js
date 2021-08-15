@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useSpring, animated } from "react-spring";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 import './LoginFormStyle.css';
 
 function LoginForm({ Login, Register, error }) {
-    const [login, setLogin] = useState({email:"",username:"", password:"" })
+    const [login, setLogin] = useState({email:"", username:"", password:"", remember:true })
     const [register, setRegister] = useState({email:"", username:"", password:"", confirm_password:""})
     const [RevealPwd, setRevealPwd] = useState(false)
 
@@ -47,7 +46,7 @@ function LoginForm({ Login, Register, error }) {
                                     </div>
                                 </div>
                                 <div className="checkBox">
-                                    <input type="checkbox" id="remember" name="remember" value="remember"/> 
+                                    <input type="checkbox" id="remember" name="remember" checked={login.remember} onChange={e=> setLogin({...login, remember: !login.remember})} /> 
                                     <label htmlFor="remember">Remember me</label>
                                 </div>
                                 <input className="submit" type="submit" value="Submit"/>
