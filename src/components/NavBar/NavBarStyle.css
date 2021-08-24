@@ -1,0 +1,89 @@
+header {
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  /* box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.4); */
+  padding: 10px;
+  padding-top: 1rem;
+  height: 6rem;
+  margin-bottom: 3.5rem;
+}
+
+.header__img {
+  height: auto;
+  width: 33%;
+}
+
+.header__right {
+  width: 33%;
+  height: 4rem;
+  min-height: 30px;
+  display: flex;
+  justify-content: end;
+  padding-bottom: 5px;
+  font-size: 3rem;
+}
+
+.header__menu {
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg);
+  border-radius: 9999px;
+}
+
+.header__right .header__menu-logos {
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  height: 30px;
+  color: var(--accent);
+}
+
+.neon-button {
+  font-size: 2rem;
+  display: inline-block;
+  cursor: pointer;
+  background-color: var(--bg-2);
+  text-decoration: none;
+  color: var(--accent);
+  border: var(--accent) 0.125em solid;
+  padding: 0.25em 1em;
+  border-radius: 0.25em;
+  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
+  box-shadow: inset 0 0 0.5em 0 var(--accent), 0 0 0.5em 0 var(--accent);
+  position: relative;
+}
+
+.neon-button::before {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  background: var(--accent);
+  top: 120%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+  filter: blur(1em);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.neon-button:hover,
+.neon-button:focus {
+  color: var(--bg);
+  text-shadow: none;
+  background-color: var(--accent);
+  box-shadow: inset 0 0 1.5em 0 var(--accent), 0 0 1.5em 0 var(--accent);
+}
+
+.neon-button:hover::before,
+.neon-button:focus::before {
+  opacity: 1;
+}
+.neon-button:hover::after,
+.neon-button:focus::after {
+  opacity: 1;
+}
