@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import "./App.css";
 
-import DrinkCards from "./components/DrinkCards";
-import LoginForm from "./components/LoginForm";
-import NavBar from "./components/NavBar";
+import DrinkCards from "./components/DrinkCards/DrinkCards.jsx";
+import LoginForm from "./components/LoginForm/LoginForm.jsx";
+import NavBar from "./components/NavBar/NavBar.jsx";
 
 function App() {
   const [user, setUser] = useState({ username: "", email: "" });
