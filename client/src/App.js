@@ -8,35 +8,48 @@ import NavBar from "./components/NavBar/NavBar.jsx";
 
 function App() {
   const [user, setUser] = useState({ username: "", email: "" });
-  const [error, setError] = useState("");
+  const [status, setStatus] = useState({ error: "", success: "" });
   const [cookies, setCookie] = useCookies(["session"]);
 
-  const admin = {
-    email: "admin@admin.com",
-    username: "admin",
-    password: "root",
-  };
   const Login = (details) => {
-    console.log(details);
-    if (details.email === admin.email && details.password === admin.password) {
-      setUser({ username: "admin" });
-      setCookie("session", "admin", {
-        path: "/",
+    fetch("http://localhost:5000/api/users/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(details),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.length > 0
+          ? setUser({ username: data[0].username })
+          : setUser({ username: "" });
       });
-      //window.location.reload()
-    } else {
-      console.log("Something is wrong");
-    }
   };
 
   const Register = (details) => {
-    console.log(details);
+    fetch("http://localhost:5000/api/users/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(details),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        data.status === 403
+          ? setStatus({ error: data.error, success: data.success })
+          : setStatus({ success: data.success, error: data.error });
+      });
   };
 
   // HTML Portion
   return (
     <>
-      {cookies.session !== undefined ? (
+      {user.username !== "" ? (
         <div className="dark">
           <NavBar />
           <DrinkCards />
@@ -44,7 +57,7 @@ function App() {
       ) : (
         // THIS IS LOGIN/REGISTER PAGE
         <div className="wrapper_center dark">
-          <LoginForm Login={Login} Register={Register} error={error} />
+          <LoginForm Login={Login} Register={Register} status={status} />
         </div>
       )}
     </>

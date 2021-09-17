@@ -3,7 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import "./LoginFormStyle.css";
 
-function LoginForm({ Login, Register, error }) {
+function LoginForm({ Login, Register, status }) {
   const [login, setLogin] = useState({
     email: "",
     username: "",
@@ -25,12 +25,8 @@ function LoginForm({ Login, Register, error }) {
   // Send Login or Registration information back to App.js
   const submitHandler = (e) => {
     e.preventDefault();
-    if (
-      register.confirm_password === register.password &&
-      register.password !== ""
-    ) {
-      Register(register);
-    } else Login(login);
+    const card = document.querySelector(".card__inner");
+    card.classList.contains("is-flipped") ? Register(register) : Login(login);
   };
 
   // Switch between register and login form
@@ -112,6 +108,8 @@ function LoginForm({ Login, Register, error }) {
           <div className="card__content">
             <div className="card__header">
               <h2>Register</h2>
+              {status.error ? status.error : ""}
+              {status.success ? status.success : ""}
             </div>
             <div className="card__body">
               <form action="" id="registerform" onSubmit={submitHandler}>
