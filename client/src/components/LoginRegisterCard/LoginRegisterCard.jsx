@@ -9,18 +9,20 @@ function LoginRegisterCard({ setUser }) {
   // Switch between register and login form
   const [registerToggle, setRegisterToggle] = useState(false);
   const flip = () => {
-    const card = document.querySelector(".card__inner");
-    card.classList.toggle("is-flipped");
     setRegisterToggle(!registerToggle);
+    setStatus({ error: "", success: "" });
   };
 
   return (
     <div className="card">
-      <div className={status.error ? "error" : "success"}>
-        {status.error ? status.error : ""}
-        {status.success ? status.success : ""}
+      <div
+        className={` ${status.success ? "success" : ""} ${
+          status.error ? "error" : ""
+        } ${status.success || status.error ? "alert-shown" : "alert-hidden"}`}
+      >
+        {status.error ? status.error : status.success}
       </div>
-      <div className="card__inner">
+      <div className={` card__inner ${registerToggle ? "is-flipped" : ""}`}>
         <LoginForm setUser={setUser} flip={flip} />
         <RegisterForm setStatus={setStatus} flip={flip} />
       </div>
