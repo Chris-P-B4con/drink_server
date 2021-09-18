@@ -7,11 +7,14 @@
   "scripts": {
     "start": "nodemon index.js"
   },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^2.30.0",
+    "@prisma/client": "^2.30.3",
     "babel": "^6.23.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",

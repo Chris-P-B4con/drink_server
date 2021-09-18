@@ -20,4 +20,3 @@ model User {
 
   @@map(name: "user")
 }
-module.exports = 

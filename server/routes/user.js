@@ -20,7 +20,6 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  console.log(req.body);
   // Check if any field is empty
   if (
     req.body.username === "" ||

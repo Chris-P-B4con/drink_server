@@ -8,6 +8,8 @@
   --accent: #f4a261;
   --clr-neon: hsl(317 100% 54%);
   --clr-bg: hsl(323 21% 16%);
+  --error: var(--accent);
+  --success: green;
 }
 /* :root {
   --primary: #082032;
