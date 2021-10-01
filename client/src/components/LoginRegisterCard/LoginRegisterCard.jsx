@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import RegisterForm from "../Register/RegisterForm";
 import LoginForm from "../Login/LoginForm";
 import "./LoginRegisterCardStyle.css";
+import Status from "../Status/Status";
 
 function LoginRegisterCard({ setUser }) {
   const [status, setStatus] = useState({ error: "", success: "" });
@@ -15,13 +16,7 @@ function LoginRegisterCard({ setUser }) {
 
   return (
     <div className="card">
-      <div
-        className={` ${status.success ? "success" : ""} ${
-          status.error ? "error" : ""
-        } ${status.success || status.error ? "alert-shown" : "alert-hidden"}`}
-      >
-        {status.error ? status.error : status.success}
-      </div>
+      <Status status={status} />
       <div className={` card__inner ${registerToggle ? "is-flipped" : ""}`}>
         <LoginForm setUser={setUser} flip={flip} />
         <RegisterForm setStatus={setStatus} flip={flip} />

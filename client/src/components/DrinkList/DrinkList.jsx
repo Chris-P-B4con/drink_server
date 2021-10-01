@@ -1,7 +1,8 @@
-import { useState, React } from "react";
+import { useState, useEffect, React } from "react";
 import "./DrinkListStyle.css";
 import { AiOutlineReload } from "react-icons/ai";
 import Table from "../Table/Table";
+
 function DrinkList() {
   const [drinks, setDrinks] = useState([
     {
@@ -14,9 +15,14 @@ function DrinkList() {
   ]);
 
   const [spin, setSpin] = useState(false);
-
-  const get_drinks = async () => {
+  const reloadSpin = () => {
     setSpin(true);
+    get_drinks();
+    setTimeout(() => {
+      setSpin(false);
+    }, 1000);
+  };
+  const get_drinks = async () => {
     await fetch("http://localhost:5000/api/drinks/get", {
       method: "GET",
       headers: {
@@ -28,16 +34,21 @@ function DrinkList() {
       .then((data) => {
         setDrinks(JSON.parse(JSON.stringify(data)));
       });
+  };
+
+  useEffect(() => {
+    setSpin(true);
+    get_drinks();
     setTimeout(() => {
       setSpin(false);
     }, 1000);
-  };
+  }, []);
 
   return (
     <div className="drinks_table_wrapper">
       <div className="reload">
         <AiOutlineReload
-          onClick={get_drinks}
+          onClick={reloadSpin}
           spin={spin}
           className={spin ? "refresh-start" : ""}
         />
