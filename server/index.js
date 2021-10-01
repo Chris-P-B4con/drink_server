@@ -1,12 +1,12 @@
 const express = require("express");
 const session = require("express-session");
-const passport = require("passport");
-const crypto = require("crypto");
-const app = express();
 const redis = require("redis");
 const connectRedis = require("connect-redis");
-const RedisStore = connectRedis(session);
 const dotenv = require("dotenv");
+const cors = require("cors");
+
+const app = express();
+const RedisStore = connectRedis(session);
 dotenv.config();
 const redisClient = redis.createClient({
   host: "localhost",
@@ -19,6 +19,12 @@ redisClient.on("connect", function (err) {
   console.log("Connected to redis successfully");
 }); //Configure session middleware
 
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+  })
+);
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -40,21 +46,8 @@ app.use(
   })
 );
 
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
-
 app.use("/api/users", require("./routes/user"));
+app.use("/api/drinks", require("./routes/drinks"));
 const PORT = process.env.PORT || 5000;
 
 app.listen(5000, () => {

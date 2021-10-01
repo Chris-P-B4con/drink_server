@@ -29,7 +29,6 @@ function Home() {
       slidesToSlide: 2, // optional, default to 1.
     },
   };
-
   return (
     <div className="section dark">
       <Carousel

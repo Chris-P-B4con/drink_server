@@ -14,7 +14,6 @@ function RegisterForm({ setStatus, flip }) {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
         data.status === 403
           ? setStatus({ error: data.error, success: data.success })
           : setStatus({ success: data.success, error: data.error });
