@@ -1,6 +1,7 @@
 import React from "react";
 import { RiSendPlane2Fill } from "react-icons/ri";
-function InputTable({ data, newData, setNewData, inputMap }) {
+
+function TableInput({ data, newData, setNewData, inputMap }) {
   const keys = Object.keys(data[0]);
 
   return (
@@ -15,6 +16,7 @@ function InputTable({ data, newData, setNewData, inputMap }) {
               onChange={(e) =>
                 setNewData({ ...newData, [key]: e.target.value })
               }
+              value={newData[key]}
             />
           </th>
         );
@@ -28,4 +30,4 @@ function InputTable({ data, newData, setNewData, inputMap }) {
   );
 }
 
-export default InputTable;
+export default TableInput;
