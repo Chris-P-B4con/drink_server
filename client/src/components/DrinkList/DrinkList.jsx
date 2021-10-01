@@ -17,13 +17,13 @@ function DrinkList() {
   const [spin, setSpin] = useState(false);
   const reloadSpin = () => {
     setSpin(true);
-    get_drinks();
+    getDrinks();
     setTimeout(() => {
       setSpin(false);
     }, 1000);
   };
-  const get_drinks = async () => {
-    await fetch("http://localhost:5000/api/drinks/get", {
+  const getDrinks = () => {
+    fetch(`${process.env.REACT_APP_IP_BACKEND}:5000/api/drinks/get`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -38,7 +38,7 @@ function DrinkList() {
 
   useEffect(() => {
     setSpin(true);
-    get_drinks();
+    getDrinks();
     setTimeout(() => {
       setSpin(false);
     }, 1000);
@@ -53,7 +53,7 @@ function DrinkList() {
           className={spin ? "refresh-start" : ""}
         />
       </div>
-      <Table drinks={drinks} />
+      <Table drinks={drinks} getDrinks={getDrinks} />
     </div>
   );
 }

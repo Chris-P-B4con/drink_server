@@ -14,30 +14,26 @@ router.post("/add", async (req, res) => {
     available: Number(req.body.available),
     price: Number(req.body.price),
   };
-  const drinks = await prisma.drinks.findMany({
-    where: {
-      drink_name: drink.drink_name,
-      volume: drink.volume,
-    },
-    select: {
-      drink_name: true,
-    },
-  });
-  if (drinks != []) {
-    const created = prisma.drinks
-      .create({
-        data: drink,
-      })
-      .then((data) => {
-        res.status(200).json({
-          success: "Drink added to database.",
-          error: "",
+  for (key in drink) {
+    if (drink[key] === "" || Number.isNaN(drink[key]))
+      res.json({ succes: "", error: "Please fill out all fields." });
+  }
+  const created = prisma.drinks
+    .create({
+      data: drink,
+    })
+    .catch((err) => {
+      if (err.code === "P2002")
+        res.json({
+          success: "",
+          error: "Drink already exists in database.",
         });
+    })
+    .then((data) => {
+      res.status(200).json({
+        success: "Drink added to database.",
+        error: "",
       });
-  } else
-    res.status(400).json({
-      success: "",
-      error: "Drink already in database.",
     });
 });
 

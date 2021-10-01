@@ -3,7 +3,7 @@ import "./TableStyle.css";
 import Status from "../Status/Status";
 import InputTable from "../TableInput/TableInput";
 
-function Table({ drinks }) {
+function Table({ drinks, getDrinks }) {
   const [status, setStatus] = useState({ error: "", success: "" });
 
   const inputMap = {
@@ -27,7 +27,7 @@ function Table({ drinks }) {
 
     // Check that he fields contain the correct type of info
 
-    fetch("http://localhost:5000/api/drinks/add", {
+    fetch(`${process.env.REACT_APP_IP_BACKEND}:5000/api/drinks/add`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -39,6 +39,7 @@ function Table({ drinks }) {
       .then((data) => {
         setStatus({ error: data.error, success: data.success });
       });
+    getDrinks();
   };
   const keys = Object.keys(drinks[0]);
   return (

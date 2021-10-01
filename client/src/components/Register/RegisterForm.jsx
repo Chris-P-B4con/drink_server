@@ -4,7 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 function RegisterForm({ setStatus, flip }) {
   const Register = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/users/register", {
+    fetch("http://192.168.0.72:5000/api/users/register", {
       method: "POST",
       headers: {
         Accept: "application/json",

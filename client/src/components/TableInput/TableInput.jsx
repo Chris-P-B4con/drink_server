@@ -4,7 +4,7 @@ function InputTable({ data, newData, setNewData, inputMap }) {
   const keys = Object.keys(data[0]);
 
   return (
-    <tr>
+    <tr className="input">
       {keys.map((key, i) => {
         return (
           <th>
