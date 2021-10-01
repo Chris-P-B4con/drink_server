@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./TableStyle.css";
 import Status from "../Status/Status";
-import { RiSendPlane2Fill } from "react-icons/ri";
+import InputTable from "../TableInput/TableInput";
 
 function Table({ drinks }) {
   const [status, setStatus] = useState({ error: "", success: "" });
 
-  const input_map = {
+  const inputMap = {
     drink_name: "text",
     id: "number",
     available: "number",
@@ -69,31 +69,12 @@ function Table({ drinks }) {
               </tr>
             );
           })}
-          {drinks.map((drink, index) => {
-            return (
-              <tr>
-                {keys.map((key, i) => {
-                  return (
-                    <th>
-                      <input
-                        type={input_map[key]}
-                        id={key}
-                        step={key === "volume" || key === "price" ? "0.01" : ""}
-                        onChange={(e) =>
-                          setNewDrink({ ...newDrink, [key]: e.target.value })
-                        }
-                      />
-                    </th>
-                  );
-                })}
-                <th>
-                  <button type="submit">
-                    <RiSendPlane2Fill />
-                  </button>
-                </th>
-              </tr>
-            );
-          })}
+          <InputTable
+            data={drinks}
+            newData={newDrink}
+            setNewData={setNewDrink}
+            inputMap={inputMap}
+          />
         </tbody>
       </table>
     </form>
