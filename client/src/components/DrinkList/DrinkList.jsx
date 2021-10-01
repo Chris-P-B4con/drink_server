@@ -48,7 +48,8 @@ function DrinkList() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setDrinks(JSON.parse(JSON.stringify(data)));
+        if (JSON.parse(JSON.stringify(data)).length !== 0)
+          setDrinks(JSON.parse(JSON.stringify(data)));
       });
   };
   const updateDrinks = (e) => {
