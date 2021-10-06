@@ -22,7 +22,9 @@ function App() {
         // THIS IS LOGIN/REGISTER PAGE
         <div className="wrapper_center dark">
           {/* <LoginForm setUser={setUser} /> */}
-          <DrinkList />
+          <NavBar />
+          <DrinkCards />
+          {/* <DrinkList /> */}
         </div>
       )}
     </>

@@ -16,7 +16,7 @@ router.post("/add", async (req, res) => {
     available: parseInt(req.body.available, 10),
     price: Number(req.body.price),
   };
-
+  console.log(drink);
   const cur_num = await prisma.drinks.findMany({
     where: {
       drink_name: drink.drink_name,
@@ -25,26 +25,29 @@ router.post("/add", async (req, res) => {
       available: true,
     },
   });
-  let available = drink.available + cur_num[0].available;
-  if (cur_num.length > 0 && available > 0) {
-    try {
-      const update = await prisma.drinks.update({
-        where: {
-          drink_name: drink.drink_name,
-        },
-        data: {
-          available,
-        },
+
+  if (cur_num.length > 0) {
+    let available = drink.available + cur_num[0].available;
+    if (available > 0) {
+      try {
+        const update = await prisma.drinks.update({
+          where: {
+            drink_name: drink.drink_name,
+          },
+          data: {
+            available,
+          },
+        });
+        res.status(200).json({ success: "Updated database", error: "" });
+      } catch (e) {
+        res.json({ succes: "", error: e });
+      }
+    } else if (available < 0)
+      res.status(400).json({
+        succes: "",
+        error: "Cant update due to negative available number.",
       });
-      res.status(200).json({ success: "Updated database", error: "" });
-    } catch (e) {
-      res.json({ succes: "", error: e });
-    }
-  } else if (available < 0)
-    res.status(400).json({
-      succes: "",
-      error: "Cant update due to negative available number.",
-    });
+  }
 
   for (key in drink) {
     if (drink[key] === "" || Number.isNaN(drink[key]) || drink[key] === 0)
@@ -68,5 +71,10 @@ router.post("/add", async (req, res) => {
       });
     });
 });
+router.post("/book", async (req, res) => {
 
+  console.log(req.session)
+  console.log(req.header)
+  console.log(req.body)
+})
 module.exports = router;

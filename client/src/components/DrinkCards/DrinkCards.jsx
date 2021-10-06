@@ -8,58 +8,41 @@ import "./DrinkCardsStyle.css";
 
 function Home() {
   //Handle cookie sessions
-  const length = SliderData.length;
 
   const [current, setCurrent] = useState(0);
 
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 8,
-      slidesToSlide: 3, // optional, default to 1.
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 3,
-      slidesToSlide: 2, // optional, default to 1.
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 2,
-      slidesToSlide: 2, // optional, default to 1.
-    },
+  const bookDrink = (e) => {
+    console.log(e)
+    e.preventDefault();
+    fetch("http://192.168.0.195:5000/api/drinks/book", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(),
+    });
   };
   return (
-    <div className="section dark">
-      <Carousel
-        swipeable={true}
-        draggable={true}
-        showDots={true}
-        ssr={true}
-        responsive={responsive}
-        keyBoardControl={true}
-        transitionDuration={500}
-        centerMode={true}
-        containerClass="carousel-container"
-        removeArrowOnDeviceType={["tablet", "mobile"]}
-      >
-        {SliderData.map((slide, index) => {
-          return (
-            <div className="drink__card">
-              <div className="drink__card__header">
+    <>
+      {SliderData.map((slide, index) => {
+        return (
+          <div className="drink__card">
+            <div className="drink__card__header">
+              <button onClick={bookDrink} id={slide.name}>
                 <img
                   src={`${process.env.PUBLIC_URL}${slide.image}`}
                   alt={slide.name}
                 />
-              </div>
-              <div className="drink__card__body">
-                <h3>{slide.name}</h3>
-              </div>
+              </button>
             </div>
-          );
-        })}
-      </Carousel>
-    </div>
+            <div className="drink__card__body">
+              <h3>{slide.name}</h3>
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 }
 

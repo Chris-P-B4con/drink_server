@@ -3,7 +3,6 @@ import "./TableStyle.css";
 import TableInput from "../TableInput/TableInput";
 
 function Table(props) {
-  console.log(props.data);
   const keys = Object.keys(props.data[0]);
   return (
     <table className="drinks_table">

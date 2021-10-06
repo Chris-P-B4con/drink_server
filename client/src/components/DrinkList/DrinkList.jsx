@@ -69,10 +69,10 @@ function DrinkList() {
         setTimeout(() => setStatus({ error: "", succes: "" }), 5000);
       });
 
-    if (status.error !== "") {
+    if (status.error === "") {
       setNewDrink({ drink_name: "", available: "", volume: "", price: "" });
+      getDrinks();
     }
-    getDrinks();
   };
   useEffect(() => {
     setSpin(true);
