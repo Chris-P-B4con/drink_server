@@ -3,7 +3,6 @@ import { RiSendPlane2Fill } from "react-icons/ri";
 
 function TableInput({ data, newData, setNewData, inputMap }) {
   const keys = Object.keys(data[0]);
-
   return (
     <tr className="input">
       {keys.map((key, i) => {

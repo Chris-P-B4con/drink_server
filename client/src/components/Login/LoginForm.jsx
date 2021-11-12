@@ -1,23 +1,26 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
+import {  useCookies } from "react-cookie"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-function LoginForm({ setUser, flip }) {
+function LoginForm({ setUser, setStatus, flip }) {
+  const [cookies, setCookie, removeCookie] = useCookies(["Session"]);
   const Login = (e) => {
     e.preventDefault();
-    fetch("http://localhost:5000/api/users/login", {
+    fetch("users/login", {
       method: "POST",
+      credentials: "include",
       headers: {
-        Accept: "application/json",
+        accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(login),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.length > 0
-          ? setUser({ username: data[0].username })
-          : setUser({ username: "" });
-      });
+    }).then((response) => {
+      if (response.status === 422) {
+        response.json().then((data) => {setStatus({ error: data.error, success: data.success });})
+      } else {
+        response.json().then((data) => {setUser({userID: data})});
+      }
+    });
   };
   const [login, setLogin] = useState({
     email: "",

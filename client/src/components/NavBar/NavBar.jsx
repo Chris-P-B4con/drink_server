@@ -8,11 +8,17 @@ import { BiUser } from "react-icons/bi";
 function NavBar() {
   const [cookies, setCookie, removeCookie] = useCookies(["session"]);
   function Logout() {
-    removeCookie("session", {
+    removeCookie("Session", {
       path: "/",
     });
-    console.log("removed cookie");
-    window.location.reload();
+    fetch("/users/logout", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    });
+    window.location.reload(true)
   }
 
   return (

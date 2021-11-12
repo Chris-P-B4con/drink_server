@@ -3,16 +3,17 @@ import "./DrinkListStyle.css";
 import { AiOutlineReload } from "react-icons/ai";
 import Table from "../Table/Table";
 import Status from "../Status/Status";
-
+import axios from "axios";
 function DrinkList() {
+  const [resStatus, setResStatus] = useState("");
   const [status, setStatus] = useState({ error: "", success: "" });
   const [drinks, setDrinks] = useState([
     {
-      id: "",
       drink_name: "",
       available: "",
       volume: "",
       price: "",
+      image: null,
     },
   ]);
   const [newDrink, setNewDrink] = useState([
@@ -21,6 +22,7 @@ function DrinkList() {
       available: "",
       volume: "",
       price: "",
+      image: null,
     },
   ]);
   const inputMap = {
@@ -29,6 +31,7 @@ function DrinkList() {
     available: "number",
     volume: "number",
     price: "number",
+    image: "file",
   };
   const [spin, setSpin] = useState(false);
   const reloadSpin = () => {
@@ -39,40 +42,67 @@ function DrinkList() {
     }, 1000);
   };
   const getDrinks = () => {
-    fetch(`${process.env.REACT_APP_IP_BACKEND}:5000/api/drinks/get`, {
+    fetch(`/drinks/get`, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (JSON.parse(JSON.stringify(data)).length !== 0)
-          setDrinks(JSON.parse(JSON.stringify(data)));
-      });
+    }).then((response) => {
+      if (response.status === 401) {
+        response.json().then((status) => {
+          setStatus({ success: status.success, error: status.error });
+        });
+      } else {
+        response.json().then((data) => {
+          if (JSON.parse(JSON.stringify(data)).length !== 0) {
+            setDrinks(JSON.parse(JSON.stringify(data)));
+          }
+        });
+      }
+    });
   };
+
   const updateDrinks = (e) => {
     // Check that he fields contain the correct type of info
     e.preventDefault();
-    fetch(`${process.env.REACT_APP_IP_BACKEND}:5000/api/drinks/add`, {
+    const formData = new FormData();
+    formData.append("drink_name", newDrink.drink_name);
+    formData.append("available", newDrink.available);
+    formData.append("price", newDrink.price);
+    formData.append("volume", newDrink.volume);
+    formData.append(
+      "file",
+      document.querySelector('input[type="file"]').files[0]
+    );
+    fetch("/drinks/add", {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newDrink),
+      body: formData,
     })
-      .then((response) => response.json())
+      // axios.post("/drinks/add", formData, {headers: {'content-type':'multipart/form-data'}}).then((response) => {
+      //   console.log(response);
+      //   return response.json();
+      // })
+      .then((res) => {
+        setResStatus(res.status);
+        return res.json();
+      })
       .then((data) => {
         setStatus({ error: data.error, success: data.success });
-        setTimeout(() => setStatus({ error: "", succes: "" }), 5000);
+        console.log(resStatus)
+        
+        if (resStatus === 200) {
+          console.log("True")
+          setNewDrink({ drink_name: "", available: "", volume: "", price: "",image: null });
+          getDrinks();
+        }
+        setTimeout(() => {
+          setStatus({ error: "", success: "" });
+        }, 4000);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-
-    if (status.error === "") {
-      setNewDrink({ drink_name: "", available: "", volume: "", price: "" });
-      getDrinks();
-    }
   };
   useEffect(() => {
     setSpin(true);
@@ -91,7 +121,11 @@ function DrinkList() {
           className={spin ? "refresh-start" : ""}
         />
       </div>
-      <form id="drinkForm" onSubmit={updateDrinks}>
+      <form
+        id="drinkForm"
+        onSubmit={updateDrinks}
+        enctype="multipart/form-data"
+      >
         <Status status={status} />
         <Table
           data={drinks}

@@ -18,7 +18,7 @@ function LoginRegisterCard({ setUser }) {
     <div className="card">
       <Status status={status} />
       <div className={` card__inner ${registerToggle ? "is-flipped" : ""}`}>
-        <LoginForm setUser={setUser} flip={flip} />
+        <LoginForm setUser={setUser} setStatus={setStatus} flip={flip} />
         <RegisterForm setStatus={setStatus} flip={flip} />
       </div>
     </div>
