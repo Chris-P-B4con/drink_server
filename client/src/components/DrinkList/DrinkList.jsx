@@ -3,7 +3,6 @@ import "./DrinkListStyle.css";
 import { AiOutlineReload } from "react-icons/ai";
 import Table from "../Table/Table";
 import Status from "../Status/Status";
-import axios from "axios";
 function DrinkList() {
   const [resStatus, setResStatus] = useState("");
   const [status, setStatus] = useState({ error: "", success: "" });
@@ -79,20 +78,14 @@ function DrinkList() {
       method: "POST",
       body: formData,
     })
-      // axios.post("/drinks/add", formData, {headers: {'content-type':'multipart/form-data'}}).then((response) => {
-      //   console.log(response);
-      //   return response.json();
-      // })
       .then((res) => {
         setResStatus(res.status);
         return res.json();
       })
       .then((data) => {
         setStatus({ error: data.error, success: data.success });
-        console.log(resStatus)
         
         if (resStatus === 200) {
-          console.log("True")
           setNewDrink({ drink_name: "", available: "", volume: "", price: "",image: null });
           getDrinks();
         }
