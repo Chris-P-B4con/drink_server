@@ -1,72 +1,55 @@
-import { useState, useEffect, React } from "react";
-import "./DrinkListStyle.css";
+import { useState, useEffect, React, Fragment } from "react";
 import { AiOutlineReload } from "react-icons/ai";
-import Table from "../Table/Table";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import drinkFunctions from "../../lib/drinkFunctions";
+
+import UpdateDrink from "./UpdateDrink/UpdateDrink";
+import Drink from "./Drink/Drink";
 import Status from "../Status/Status";
+import Modal from "../Modal/Modal";
+import Backdrop from "../Backdrop/Backdrop";
+
+import "./DrinkListStyle.css";
 function DrinkList() {
-  const [resStatus, setResStatus] = useState("");
   const [status, setStatus] = useState({ error: "", success: "" });
+  const [modalStatus, setModalStatus] = useState(false);
+  const [spin, setSpin] = useState(true);
   const [drinks, setDrinks] = useState([
     {
-      drink_name: "",
+      drinkName: "",
       available: "",
       volume: "",
       price: "",
       image: null,
     },
   ]);
+
   const [newDrink, setNewDrink] = useState([
     {
-      drink_name: "",
+      drinkName: "",
       available: "",
       volume: "",
       price: "",
       image: null,
     },
   ]);
-  const inputMap = {
-    drink_name: "text",
-    id: "number",
-    available: "number",
-    volume: "number",
-    price: "number",
-    image: "file",
-  };
-  const [spin, setSpin] = useState(false);
-  const reloadSpin = () => {
+
+  const getDrinkHandler = (e) => {
     setSpin(true);
-    getDrinks();
+
+    drinkFunctions.getDrinks(catchError, setDrinks);
     setTimeout(() => {
       setSpin(false);
     }, 1000);
   };
-  const getDrinks = () => {
-    fetch(`/drinks/get`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }).then((response) => {
-      if (response.status === 401) {
-        response.json().then((status) => {
-          setStatus({ success: status.success, error: status.error });
-        });
-      } else {
-        response.json().then((data) => {
-          if (JSON.parse(JSON.stringify(data)).length !== 0) {
-            setDrinks(JSON.parse(JSON.stringify(data)));
-          }
-        });
-      }
-    });
+  const showModal = (e) => {
+    setModalStatus(!modalStatus);
   };
-
-  const updateDrinks = (e) => {
-    // Check that he fields contain the correct type of info
+  const addDrinkHandler = (e) => {
     e.preventDefault();
+    showModal()
     const formData = new FormData();
-    formData.append("drink_name", newDrink.drink_name);
+    formData.append("drinkName", newDrink.drinkName);
     formData.append("available", newDrink.available);
     formData.append("price", newDrink.price);
     formData.append("volume", newDrink.volume);
@@ -74,61 +57,63 @@ function DrinkList() {
       "file",
       document.querySelector('input[type="file"]').files[0]
     );
-    fetch("/drinks/add", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => {
-        setResStatus(res.status);
-        return res.json();
-      })
-      .then((data) => {
-        setStatus({ error: data.error, success: data.success });
-        
-        if (resStatus === 200) {
-          setNewDrink({ drink_name: "", available: "", volume: "", price: "",image: null });
-          getDrinks();
-        }
-        setTimeout(() => {
-          setStatus({ error: "", success: "" });
-        }, 4000);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    drinkFunctions.addDrink(catchError, formData);
+    drinkFunctions.getDrinks(catchError, setDrinks);
   };
+
+  const catchError = (err, succ) => {
+    if (succ) setStatus({ success: succ, error: "" });
+    else if (err) setStatus({ success: "", error: err });
+    setTimeout(() => {
+      setStatus({ error: "", success: "" });
+    }, 4000);
+  };
+
   useEffect(() => {
     setSpin(true);
-    getDrinks();
+    getDrinkHandler(null);
     setTimeout(() => {
       setSpin(false);
     }, 1000);
   }, []);
 
   return (
-    <div className="drinks_table_wrapper">
+    <div className="drinks__wrapper">
       <div className="reload">
         <AiOutlineReload
-          onClick={reloadSpin}
+          onClick={getDrinkHandler}
           spin={spin}
           className={spin ? "refresh-start" : ""}
         />
       </div>
-      <form
-        id="drinkForm"
-        onSubmit={updateDrinks}
-        enctype="multipart/form-data"
-      >
-        <Status status={status} />
-        <Table
-          data={drinks}
-          inputMap={inputMap}
-          newData={newDrink}
-          updateData={updateDrinks}
-          setNewData={setNewDrink}
-          inputs={true}
-        />
-      </form>
+      <Status status={status} />
+      {drinks.map((drink, index) => {
+        return <Drink drink={drink} />;
+      })}
+      <div className="drink__add">
+        <button onClick={showModal} id="addDrink">
+          <IoMdAddCircleOutline />
+        </button>
+      </div>
+
+      {modalStatus ? (
+        <Fragment>
+          <Backdrop onClick={showModal} />
+          <Modal
+            modalStatus={modalStatus}
+            title="Add Drink"
+            deleteButton={showModal}
+          >
+            <form onSubmit={addDrinkHandler}>
+              <UpdateDrink
+                newDrink={newDrink}
+                setNewDrink={setNewDrink}
+                deleteButton={showModal}
+              />
+            </form>
+          </Modal>
+        </Fragment>
+      ) : null}
     </div>
   );
 }

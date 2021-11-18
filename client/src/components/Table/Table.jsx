@@ -9,20 +9,31 @@ function Table(props) {
       <thead>
         <tr>
           {keys.map((key, i) => {
-            return (
-              <th>
-                {(key.charAt(0).toUpperCase() + key.slice(1)).replace("_", " ")}
-              </th>
-            );
+            if (key !== "image") {
+              return (
+                <th key={key}>
+                  {(key.charAt(0).toUpperCase() + key.slice(1)).replace(
+                    "_",
+                    " "
+                  )}
+                </th>
+              );
+            } else {
+              return "";
+            }
           })}
         </tr>
       </thead>
       <tbody>
         {props.data.map((sample, index) => {
           return (
-            <tr>
+            <tr key={index}>
               {keys.map((key, i) => {
-                return <th>{sample[key]}</th>;
+                if (key !== "image") {
+                  return <th key={key}>{sample[key]}</th>;
+                } else {
+                  return ""
+                }
               })}
             </tr>
           );

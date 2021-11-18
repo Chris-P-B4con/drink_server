@@ -1,49 +1,47 @@
-import React, { useState } from "react";
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+import React, { useState, useEffect } from "react";
 
-import { SliderData } from "./SliderData";
-import "./DrinkCardsStyle.css";
+import Status from "../Status/Status";
+import DrinkCard from "../DrinkCard/DrinkCard";
+import Card from "../Card/Card"
+import {getDrinks, bookDrink} from "../../lib/drinkFunctions"
+import './DrinkCardsStyles.css'
+function DrinkCards() {
+  const [status, setStatus] = useState({ success: "", error: "" });
+  const [drinks, setDrinks] = useState([
+    {
+      drinkName: "",
+      available: "",
+      volume: "",
+      price: "",
+      image: null,
+    },
+  ]);
 
-function Home() {
-  //Handle cookie sessions
+  useEffect(() => {
+    getDrinks(catchError, setDrinks);
+  }, []);
 
-  const [current, setCurrent] = useState(0);
-
-  const bookDrink = (e) => {
-    console.log(e)
+  const bookingHandler = (e) =>{
     e.preventDefault();
-    fetch("http://192.168.0.195:5000/api/drinks/book", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    });
+    const drink = e.currentTarget.id
+    bookDrink(catchError, drink)
+  }
+  
+  function catchError (err, succ){
+    if (succ) setStatus({ success: succ, error: "" });
+    else if (err) setStatus({ success: "", error: err });
+    setTimeout(() => {
+      setStatus({ error: "", success: "" });
+    }, 4000);
   };
   return (
-    <>
-      {SliderData.map((slide, index) => {
-        return (
-          <div className="drink__card">
-            <div className="drink__card__header">
-              <button onClick={bookDrink} id={slide.name}>
-                <img
-                  src={`${process.env.PUBLIC_URL}${slide.image}`}
-                  alt={slide.name}
-                />
-              </button>
-            </div>
-            <div className="drink__card__body">
-              <h3>{slide.name}</h3>
-            </div>
-          </div>
-        );
+    <div className="drink__cards">
+      <Status status={status} setStatus={setStatus}/>
+      {drinks.map((drink, index) => {
+        return <DrinkCard drink={drink} bookDrink={bookingHandler} />;
       })}
-    </>
+    </div>
   );
 }
 
-export default Home;
+export default DrinkCards;

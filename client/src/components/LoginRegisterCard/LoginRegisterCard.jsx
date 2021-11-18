@@ -3,6 +3,8 @@ import RegisterForm from "../Register/RegisterForm";
 import LoginForm from "../Login/LoginForm";
 import "./LoginRegisterCardStyle.css";
 import Status from "../Status/Status";
+import Card from "../Card/Card"
+
 
 function LoginRegisterCard({ setUser }) {
   const [status, setStatus] = useState({ error: "", success: "" });
@@ -15,13 +17,13 @@ function LoginRegisterCard({ setUser }) {
   };
 
   return (
-    <div className="card">
+    <Card className="card__small">
       <Status status={status} />
       <div className={` card__inner ${registerToggle ? "is-flipped" : ""}`}>
         <LoginForm setUser={setUser} setStatus={setStatus} flip={flip} />
         <RegisterForm setStatus={setStatus} flip={flip} />
       </div>
-    </div>
+    </Card>
   );
 }
 

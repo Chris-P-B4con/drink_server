@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 
 const express = require("express");
 const session = require("express-session");
@@ -6,15 +7,23 @@ const redis = require("redis");
 const connectRedis = require("connect-redis");
 const dotenv = require("dotenv");
 const cors = require("cors");
-
-const { fileStorage, fileFilter } = require("./lib/files");
-const { findOne } = require("./controller/user");
+const morgan = require("morgan");
+const compression = require("compression");
+const helmet = require("helmet");
 
 // Server Setup
+dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = express();
 const RedisStore = connectRedis(session);
-dotenv.config();
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 const redisClient = redis.createClient({
   host: "localhost",
   port: 6379,
@@ -27,12 +36,12 @@ redisClient.on("connect", function (err) {
 }); //Configure session middleware
 
 // MIDDLEWARE
-app.set("trust proxy", 1)
+app.set("trust proxy", 1);
 app.use(
   cors({
     origin: true,
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   })
 );
@@ -43,7 +52,7 @@ app.use(
   })
 );
 
-app.use(express.static('images'));
+app.use(express.static("images"));
 app.use(
   session({
     name: "Session",
@@ -66,7 +75,6 @@ app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   next();
 });
-
 
 // ROUTES
 app.use("/users", require("./routes/user"));

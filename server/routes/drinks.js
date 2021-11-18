@@ -8,9 +8,6 @@ router.get("/get", isAuth, drinks.getDrinks);
 
 router.post("/add", isAuth, files.upload.single("file"), drinks.addDrink);
 
-router.post("/book", isAuth, async (req, res) => {
-  console.log(req.session);
-  console.log(req.header);
-  console.log(req.body);
-});
+router.post("/book", isAuth, drinks.bookDrink)
+
 module.exports = router;

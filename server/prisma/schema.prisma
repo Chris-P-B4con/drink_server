@@ -21,22 +21,22 @@ model User {
 }
 
 model Drinks {
-  id         Int    @id @default(autoincrement())
-  drink_name String @unique
-  volume     Float
-  price      Float
-  available  Int
-  image      String
+  id        Int    @id @default(autoincrement())
+  drinkName String @unique
+  volume    Float
+  price     Float
+  available Int
+  image     String
 
-  user_drinks UserDrinks[]
+  userDrinks UserDrinks[]
   @@map(name: "drinks")
 }
 
 model UserDrinks {
-  id        Int      @id @default(autoincrement())
-  orderedAt DateTime @default(now())
-  paid      Boolean  @default(false)
-  paidAt    DateTime
+  id        Int       @id @default(autoincrement())
+  orderedAt DateTime  @default(now())
+  paid      Boolean   @default(false)
+  paidAt    DateTime?  @updatedAt
 
   drink   Drinks @relation(fields: [drinkId], references: [id])
   user    User   @relation(fields: [userId], references: [id])

@@ -14,12 +14,6 @@
   height: 100%;
 }
 
-.card {
-  /* margin: auto; */
-  width: 340px;
-  height: 600px;
-  border-radius: 16px;
-}
 
 .card__inner {
   width: 100%;
@@ -106,13 +100,24 @@ input {
 .submit {
   width: 60%;
   padding: 10px 0;
-  background-color: #ff4c29;
+  background-color: var(--accent);
   color: #eeeeee;
-  margin: auto;
+  margin: 0.5rem 0.5rem;
   border: none;
   outline: none;
-  font-size: 1rem;
-  letter-spacing: 1px;
+  border-radius: 8px;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+}
+.cancel {
+  width: 60%;
+  padding: 10px 0;
+  background-color: var(--dark-3);
+  color: #eeeeee;
+  margin: 0.5rem 0.5rem;
+  border: none;
+  outline: none;
   border-radius: 8px;
   display: block;
   text-align: center;
@@ -146,7 +151,7 @@ input[type="checkbox"] {
   text-align: center;
 }
 
-button {
+.nav-buttons button {
   font-size: 1em;
   margin-right: 1em;
   border: 0px;

@@ -1,0 +1,18 @@
+.drink__card__header {
+  width: 100%;
+  height: calc(150 / 200 * 100%);
+}
+
+.card__mini img {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px 10px 0 0;
+}
+
+.drink__card__body {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: calc(50 / 200 * 100%);
+  padding: 0.5rem;
+}

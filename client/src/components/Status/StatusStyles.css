@@ -24,9 +24,11 @@
 
 .alert-shown {
   opacity: 0.8;
-  transition: all 250ms linear 150ms;
+  transition: all 350ms ease-in;
+  flex-basis: 100%;
 }
 .alert-hidden {
   opacity: 0;
-  transition: all 250ms linear 150ms;
+  transition: all 350ms ease-out;
+  flex-basis: 100%;
 }

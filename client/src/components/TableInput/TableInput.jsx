@@ -6,8 +6,9 @@ function TableInput({ data, newData, setNewData, inputMap }) {
   return (
     <tr className="input">
       {keys.map((key, i) => {
+        
         return (
-          <th>
+          <th key={key+i}>
             <input
               type={inputMap[key]}
               id={key}
@@ -20,7 +21,7 @@ function TableInput({ data, newData, setNewData, inputMap }) {
           </th>
         );
       })}
-      <th>
+      <th key="submit-button">
         <button type="submit">
           <RiSendPlane2Fill />
         </button>

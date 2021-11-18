@@ -3,9 +3,9 @@ const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
 
 exports.postLogin = (req, res, next) => {
-  if (req.session.isLoggedIn){
-    console.log("User alreayd logged in.")
-    return next()
+  if (req.session.isLoggedIn) {
+    console.log("User alreayd logged in.");
+    return next();
   }
   if (!req.body.email || !req.body.password) {
     return res
@@ -28,12 +28,10 @@ exports.postLogin = (req, res, next) => {
                 req.session.user = user[0];
                 return res.status(200).json(req.session.user.id);
               } else {
-                return res
-                  .status(422)
-                  .json({
-                    success: "",
-                    error: "Incorrect e-mail or password.",
-                  });
+                return res.status(422).json({
+                  success: "",
+                  error: "Incorrect e-mail or password.",
+                });
               }
             });
         } else {
@@ -139,13 +137,9 @@ exports.findOne = (req) => {
 
 exports.logout = (req, res, next) => {
   if (req.session.isLoggedIn) {
-    req.session.isLoggedIn = False
-    req.session.destroy();
-    console.log("Logged out user");
-    return next();
-  } else {
-    console.log(req.session);
-    console.log("User was not logged in");
-    next();
+    req.session.isLoggedIn = false;
+    req.session.invalidated = new Date().toISOString();
+    req.session.save();
   }
+  next();
 };
