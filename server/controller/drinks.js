@@ -1,5 +1,5 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
-const sharp = require('sharp');
+const sharp = require("sharp");
 const prisma = new PrismaClient();
 
 exports.getDrinks = (req, res, next) => {
@@ -22,13 +22,18 @@ exports.addDrink = async (req, res, next) => {
       .status(422)
       .json({ error: "Attached file is not an image", success: "" });
   }
-  const newFileName = drink.image.slice(0,drink.image.length-4)+"_small"+drink.image.slice(drink.image.length-4, drink.image.length)
-  sharp(drink.image).resize({ height: 150, width: 150 }).toFile(newFileName)
-    .then(function(newFileInfo) {
-        drink.image = newFileName
+  const newFileName =
+    drink.image.slice(0, drink.image.length - 4) +
+    "_small" +
+    drink.image.slice(drink.image.length - 4, drink.image.length);
+  sharp(drink.image)
+    .resize({ height: 150, width: 150 })
+    .toFile(newFileName)
+    .then(function (newFileInfo) {
+      drink.image = newFileName;
     })
-    .catch(function(err) {
-        console.log(err);
+    .catch(function (err) {
+      console.log(err);
     });
   const cur_num = await prisma.drinks.findMany({
     where: {

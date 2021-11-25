@@ -1,9 +1,8 @@
 import React from "react";
-import "./NavBarStyle.css";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
-import { FiLogOut } from "react-icons/fi";
-import { BiUser } from "react-icons/bi";
+
+import { Header, Menu, MenuItem, ProfileIcon, NeonSign, LogoutIcon } from "./NavBarStyles";
 
 function NavBar() {
   const [cookies, setCookie, removeCookie] = useCookies(["session"]);
@@ -23,23 +22,25 @@ function NavBar() {
   }
 
   return (
-    <header>
-      <div className="header__left">
-        <Link to={"/admin"}>
-          <BiUser className="header__menu-logos" />
-        </Link>
-      </div>
+    <Header>
+      <Menu>
+        <MenuItem>
+          <Link to={"/admin"}>
+            <ProfileIcon />
+          </Link>
+        </MenuItem>
 
-      <div className="header__center">
-        <Link to={"/"} className="neon-button">
-          Wingman
-        </Link>
-      </div>
+        <MenuItem>
+          <Link to={"/"}>
+            <NeonSign>Wingman</NeonSign>
+          </Link>
+        </MenuItem>
 
-      <div className="header__right">
-        <FiLogOut className="header__menu-logos" onClick={Logout} />
-      </div>
-    </header>
+        <MenuItem>
+          <LogoutIcon onClick={Logout} />
+        </MenuItem>
+      </Menu>
+    </Header>
   );
 }
 

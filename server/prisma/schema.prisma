@@ -13,7 +13,7 @@ model User {
   username   String   @unique
   email      String   @unique
   password   String
-  privileges Int      @default(0)
+  privileges PrivilegeType      @default(USER)
 
   drinks UserDrinks[]
   tokens Token[]
@@ -62,4 +62,9 @@ model Token {
 enum TokenType {
   EMAIL // used as a short lived token sent to the user's email
   SESSION
+}
+
+enum PrivilegeType {
+  USER
+  ADMIN
 }

@@ -1,15 +1,21 @@
-import React, {useEffect} from "react";
-import "./StatusStyles.css";
-function Status({ status, setStatus }) {
-  
+import React from "react";
+
+import { Wrapper } from "./StatusStyles";
+import { COLORS } from "../../constants";
+
+
+function Status({ status }) {
+  let color = "";
+  console.log(status)
+  status.error ? (color = COLORS.accent) : (color = "");
+  status.success ? (color = COLORS.success) : (color = color);
   return (
-    <div
-      className={` ${status.success ? "success" : ""} ${
-        status.error ? "error" : ""
-      } ${status.success || status.error ? "alert-shown" : "alert-hidden"}`}
+    <Wrapper
+      className={status.error || status.success ? "shown" : "hidden"}
+      style={{ "--cur-status": color }}
     >
       {status.error ? status.error : status.success}
-    </div>
+    </Wrapper>
   );
 }
 

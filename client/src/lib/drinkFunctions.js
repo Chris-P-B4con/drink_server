@@ -27,14 +27,20 @@ exports.bookDrink = (catchError, drink) => {
     },
     body: JSON.stringify({ drink }),
   })
-  .then((res) => {
-    if (res.status === 403) throw new Error("You are not properly signed in.");
-    else if (res.status !== 200 && res.status !== 201)
-      throw new Error("Error while fetching drinks!");
-    else throw new Error("", "Prost. Wurde gebucht.")
-  }).catch(err => {
-    catchError(err)
-  })
+    .then((res) => {
+      if (res.status === 403)
+        return {
+          success: "",
+          error: "You are not properly signed in.",
+        };
+      else if (res.status !== 200 && res.status !== 201)
+        return { error: "Error while fetching drinks!", success: "" };
+      else return { error: "", success: "Prost. Wurde gebucht." };
+    })
+    .catch((err) => {
+      console.log("Booking Error")
+      console.log(err);
+    });
 };
 
 exports.getDrinks = (catchError, setDrinks) => {
@@ -42,7 +48,8 @@ exports.getDrinks = (catchError, setDrinks) => {
     method: "GET",
   })
     .then((res) => {
-      if (res.status === 403) throw new Error("You are not properly signed in.");
+      if (res.status === 403)
+        throw new Error("You are not properly signed in.");
       else if (res.status !== 200 && res.status !== 201)
         throw new Error("Error while fetching drinks!");
       return res.json();
@@ -65,13 +72,14 @@ exports.addDrink = (catchError, formData) => {
     body: formData,
   })
     .then((res) => {
-      if (res.status === 403) throw new Error("You are not properly signed in.");
+      if (res.status === 403)
+        throw new Error("You are not properly signed in.");
       else if (res.status !== 200 && res.status !== 201)
         throw new Error("Error while fetching drinks!");
       return res.json();
     })
     .then((data) => {
-      catchError(data.error, data.success)
+      catchError(data.error, data.success);
     })
     .catch((err) => {
       console.log(err);

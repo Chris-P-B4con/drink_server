@@ -1,35 +1,36 @@
 import React, { useState } from "react";
-import "./App.css";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { GlobalStyles, MasterWrapper } from "./GlobalStyles";
 import dotenv from "dotenv";
-import Cookies from 'js-cookie';
-import LoginRegisterCard from "./components/LoginRegisterCard/LoginRegisterCard.jsx";
-import { BrowserRouter as Router,Routes, Route,} from 'react-router-dom';
-import Admin from "./components/Admin/Admin";
-import Home from "./components/Home/Home";
-dotenv.config();
+import Cookies from "js-cookie";
+
+//Components
+import Home from "./pages/Home/Home";
+import LoginRegister from "./pages/LoginRegister/LoginRegister";
 
 function App() {
   const [user, setUser] = useState({ userId: "" });
-  const sessionCookie = Cookies.get("Session")
+  const sessionCookie = Cookies.get("Session");
 
-  // HTML Portion
   return (
-    <Router>
-      {sessionCookie ? (
-        <div className="wrapper_center dark">
+    <MasterWrapper>
+      <BrowserRouter>
+        <Routes>
+          {sessionCookie ? (
+            // <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={<Home />}
+            />
+          ) : (
+            <Route path="/" element={<LoginRegister setUser={setUser} />} />
+          )}
+        </Routes>
 
-          <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/admin" element={<Admin/>} />
-          </Routes>
-        </div>
-      ) : (
-        // THIS IS LOGIN/REGISTER PAGE
-        <div className="wrapper_center dark">
-          <LoginRegisterCard  setUser={setUser}/>
-        </div>
-      )}
-    </Router>
+        <GlobalStyles />
+      </BrowserRouter>
+    </MasterWrapper>
   );
 }
+
 export default App;
