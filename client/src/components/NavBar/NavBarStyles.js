@@ -53,6 +53,9 @@ export const NeonSign = styled.div`
   box-shadow: inset 0 0 0.5em 0 var(--accent), 0 0 0.5em 0 var(--accent);
   position: relative;
 
+  &::after{
+    content: ${props=> props.item};
+  }
   /* &::before {
     pointer-events: none;
     content: "";

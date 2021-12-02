@@ -22,11 +22,17 @@ function NavBar() {
       window.location.reload(true);
     });
   }
+  const [openNav, setOpenNav] = useState(false);
 
   return (
     <Header>
       <Nav>
-        <NavItem link="#" icon={<NeonSign>Wingman</NeonSign>}>
+        <NavItem
+          link="#"
+          icon={<NeonSign item={openNav ? "x" : ">"}>Wingman</NeonSign>}
+          openNav={openNav}
+          setOpenNav={setOpenNav}
+        >
           <Dropdown />
         </NavItem>
       </Nav>

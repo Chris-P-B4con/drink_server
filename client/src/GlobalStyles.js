@@ -41,6 +41,7 @@ export const GlobalStyles = createGlobalStyle`
   html, body {
     height: 100%;
     background: var(--dark-1);
+    color: var(--text-color);
   }
  
   body {

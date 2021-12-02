@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 
 import { Wrapper } from "../../Dropdown/DropdownStyles";
 function NavItem(props) {
-  const [openNav, setOpenNav] = useState(false);
 
   return (
     <MenuItem>
-      <Link to={props.link} onClick={() => setOpenNav(!openNav)}>
+      <Link to={props.link} onClick={() => props.setOpenNav(!props.openNav)}>
         {props.icon}
       </Link>
-      <Wrapper className={openNav ? "" : "inactive"}>{props.children}</Wrapper>
+      <Wrapper className={props.openNav ? "" : "inactive"}>{props.children}</Wrapper>
     </MenuItem>
   );
 }

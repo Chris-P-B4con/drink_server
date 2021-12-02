@@ -1,12 +1,11 @@
 import React from "react";
 
+//Components
 import DropdownItem from "./DropdownItem/DropdownItem";
 
+//React icons
 import { BiUser, BiHomeAlt } from "react-icons/bi";
-import { RiAdminLine } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
-
-import { Line, Wrapper } from "./DropdownStyles";
 
 function Dropdown(props) {
   return (
@@ -16,7 +15,7 @@ function Dropdown(props) {
           <BiHomeAlt />
         </span>
       </DropdownItem>
-      <DropdownItem link="/profile">
+      <DropdownItem link="/admin">
         <span>
           <BiUser />
         </span>

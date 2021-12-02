@@ -62,24 +62,20 @@ exports.getDrinks = async (setStatus, setDrinks) => {
     });
 };
 
-exports.addDrink = (catchError, formData) => {
+exports.updateDrink = (formData) => {
   // Check that he fields contain the correct type of info
 
-  fetch("/drinks/add", {
-    method: "POST",
-    body: formData,
-  })
-    .then((res) => {
-      if (res.status === 403)
-        throw new Error("You are not properly signed in.");
-      else if (res.status !== 200 && res.status !== 201)
-        throw new Error("Error while fetching drinks!");
-      return res.json();
-    })
-    .then((data) => {
-      catchError(data.error, data.success);
-    })
-    .catch((err) => {
-      console.log(err);
+  try {
+    const response = fetch("/drinks/add", {
+      method: "POST",
+      body: formData,
     });
+    if (response.status === 403)
+      return { error: "You are not properly signed in.", success: "" };
+    else if (response.status !== 200 && response.status !== 201)
+      return { error: "Error while fetching drinks!", success: "" };
+    return { error: response.error, success: response.success };
+  } catch (err) {
+    console.log(err);
+  }
 };
