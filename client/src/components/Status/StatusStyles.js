@@ -14,7 +14,8 @@ export const Wrapper = styled(CardWrapper)`
     opacity: 0.8;
     transition: all 500ms ease-in;
     flex-basis: 100%;
-    height: 30px;
+    min-height: 30px;
+    margin-bottom:5px;
   }
   &.hidden {
     opacity: 0;

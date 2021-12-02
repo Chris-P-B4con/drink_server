@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link } from "react-router-dom";
 
-import { Header, Menu, MenuItem, ProfileIcon, NeonSign, LogoutIcon } from "./NavBarStyles";
+import Dropdown from "../Dropdown/Dropdown";
+import NavItem from "./NavItem/NavItem";
+
+import { Header, Menu, Nav, NeonSign } from "./NavBarStyles";
 
 function NavBar() {
   const [cookies, setCookie, removeCookie] = useCookies(["session"]);
@@ -23,23 +25,11 @@ function NavBar() {
 
   return (
     <Header>
-      <Menu>
-        <MenuItem>
-          <Link to={"/admin"}>
-            <ProfileIcon />
-          </Link>
-        </MenuItem>
-
-        <MenuItem>
-          <Link to={"/"}>
-            <NeonSign>Wingman</NeonSign>
-          </Link>
-        </MenuItem>
-
-        <MenuItem>
-          <LogoutIcon onClick={Logout} />
-        </MenuItem>
-      </Menu>
+      <Nav>
+        <NavItem link="#" icon={<NeonSign>Wingman</NeonSign>}>
+          <Dropdown />
+        </NavItem>
+      </Nav>
     </Header>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { updateStatus } from "../../../lib/helpFunctions";
+
 //Style Components
 import {
   Action,
@@ -26,7 +28,8 @@ function LoginForm({ setStatus, setUser, registerToggle, flip }) {
     }).then((response) => {
       if (response.status === 422) {
         response.json().then((data) => {
-          setStatus({ error: data.error, success: data.success });
+          const status = { error: data.error, success: data.success }
+          updateStatus(setStatus, status)
         });
       } else {
         response.json().then((data) => {

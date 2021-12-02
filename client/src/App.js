@@ -9,6 +9,13 @@ import Home from "./pages/Home/Home";
 import LoginRegister from "./pages/LoginRegister/LoginRegister";
 
 function App() {
+
+  React.useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--scrollbar-width',
+      window.innerWidth - document.documentElement.clientWidth + 'px'
+    );
+  }, []);
   const [user, setUser] = useState({ userId: "" });
   const sessionCookie = Cookies.get("Session");
 

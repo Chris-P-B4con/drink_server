@@ -18,40 +18,38 @@
 //   setNewDrink({ drink_name: "", available: "", volume: "", price: "" });
 // };
 
-exports.bookDrink = (catchError, drink) => {
-  fetch("/drinks/book", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ drink }),
-  })
-    .then((res) => {
-      if (res.status === 403)
-        return {
-          success: "",
-          error: "You are not properly signed in.",
-        };
-      else if (res.status !== 200 && res.status !== 201)
-        return { error: "Error while fetching drinks!", success: "" };
-      else return { error: "", success: "Prost. Wurde gebucht." };
-    })
-    .catch((err) => {
-      console.log("Booking Error")
-      console.log(err);
+exports.bookDrink = async (drink) => {
+  try {
+    const booking = await fetch("/drinks/book", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ drink }),
     });
+    if (booking.status === 403)
+      return {
+        success: "",
+        error: "You are not properly signed in.",
+      };
+    else if (booking.status !== 200 && booking.status !== 201)
+      return { error: "Error while booking drinks!", success: "" };
+    else return { error: "", success: "Prost. Wurde gebucht." };
+  } catch (err) {
+    console.log("Booking Error");
+  }
 };
 
-exports.getDrinks = (catchError, setDrinks) => {
+exports.getDrinks = async (setStatus, setDrinks) => {
   fetch("/drinks/get", {
     method: "GET",
   })
     .then((res) => {
       if (res.status === 403)
-        throw new Error("You are not properly signed in.");
+        setStatus({ success: "", error: "You are not properly signed in." });
       else if (res.status !== 200 && res.status !== 201)
-        throw new Error("Error while fetching drinks!");
+        setStatus({ success: "", error: "Error while fetching drinks!" });
       return res.json();
     })
     .then((data) => {
@@ -60,7 +58,7 @@ exports.getDrinks = (catchError, setDrinks) => {
       }
     })
     .catch((err) => {
-      catchError(err);
+      console.log(err);
     });
 };
 

@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   
   @media(max-width: 800px){
     min-width: 80%;
-    top:30px;
+    top:60px;
     position: absolute;
   }
 `;

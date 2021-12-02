@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
+const { response } = require("express");
 
 exports.postLogin = (req, res, next) => {
   if (req.session.isLoggedIn) {
@@ -142,4 +143,56 @@ exports.logout = (req, res, next) => {
     req.session.save();
   }
   next();
+};
+
+exports.getUserDrinks = async (req, res, next) => {
+  if (!req.session.user) {
+    return res
+      .status(401)
+      .json({ error: "You are not properly logged in.", succes: "" });
+  }
+
+  // Get all drinks (paid=true) or all unpaid drinks (paid=false)
+  const paid = req.params.paid;
+  const drinks = paid
+    ? await prisma.userDrinks.findMany({
+        where: { userId: req.session.user.id },
+        select: { drink: true , orderedAt: true},
+      })
+    : await prisma.userDrinks.findMany({
+        where: { userId: req.sessions.user.id, paid: true },
+        select: { drink: true, orderedAt: true },
+      });
+
+  if (!drinks) {
+    return res.status(500).json({
+      error: "Couldn't find any drinks under that user (did you already pay?)",
+      success: "",
+    });
+  }
+  let answer = {};
+  const type = req.params.type; //total_volume,summarized, detailed
+  if (type === "total_volume") {
+    answer = 0;
+    for ( let drink of drinks){
+      answer += drink.drink.volume
+    }
+    res.status(200).json(answer)
+  } else if (type === "detailed") {
+    for (let drink of drinks) {
+      console.log(drink.orderedAt)
+      let cur_id = drink.drink.drinkName;
+      // drink_map[cur_id] ? ("") : drink_map[cur_id] = drink.drink.drinkName;
+      if (!answer[cur_id]) {
+        answer[cur_id] = { volume: drink.drink.volume, bottles: 1 };
+      } else {
+        answer[cur_id].volume += drink.drink.volume;
+        answer[cur_id].bottles += 1;
+      }
+    }
+    res.json(answer);
+  } else
+    return res
+      .status(422)
+      .json({ error: "Wrong data configuration provided.", success: "" });
 };

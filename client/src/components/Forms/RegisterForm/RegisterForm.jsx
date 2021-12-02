@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 
+import { updateStatus } from "../../../lib/helpFunctions";
+
 //Style components
-import {
-  Action,
-  Button,
-  Input,
-  Password,
-  PasswordIcon,
-} from "../FormStyles";
+import { Action, Button, Input, Password, PasswordIcon } from "../FormStyles";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
 
 function RegisterForm({ setStatus, flip, registerToggle }) {
   const Register = (e) => {
@@ -25,7 +20,8 @@ function RegisterForm({ setStatus, flip, registerToggle }) {
     })
       .then((data) => data.json())
       .then((data) => {
-        setStatus({ error: data.error, success: data.success });
+        const status = { error: data.error, success: data.success };
+        updateStatus(setStatus, status);
       });
   };
 

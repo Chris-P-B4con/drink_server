@@ -2,17 +2,32 @@ import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 :root {
-    --dark-1: #001214;
-    --dark-2: #001f29;
-    --dark-3: #002837;
-    --dark-4: #003246;
-    --dark-5: #01394c;
-    --dark-6: #013f51;
-    --accent: #f4a261;
-    --clr-neon: hsl(317 100% 54%);
+    --dark-1: hsl(186 100% 4%);
+    --dark-2: hsl(195 100% 8%);
+    --dark-3: hsl(196, 100%, 11%);
+    --dark-4: hsl(197, 100%, 14%);
+    --dark-5: hsl(195, 97%, 15%);
+    --dark-6: hsl(193, 98%, 16%);
+    --accent: hsl(27, 87%, 67%);
+    --neon-pink: hsl(317 100% 54%);
     --clr-bg: hsl(323 21% 16%);
     --error: var(--accent);
     --success: green;
+    --text-color: white;
+
+    @media(prefers-color-scheme: light) {
+      --dark-1: hsl(49, 94%, 93%);
+    --dark-2: hsl(195 100% 8%);
+    --dark-3: hsl(34, 100%, 89%);
+    --dark-5: hsl(30, 79%, 85%);
+    --dark-6: hsl(193, 98%, 16%);
+    --accent: hsl(181, 43%, 77%);
+    --neon-pink: hsl(317 100% 54%);
+    --clr-bg: hsl(323 21% 16%);
+    --error: var(--accent);
+    --success: green;
+    --text-color: black;
+    }
   }
   
   *, *::before, *::after {
@@ -31,8 +46,12 @@ export const GlobalStyles = createGlobalStyle`
   body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    
   }
-  
+  a{
+    color:var(--text-color);
+    text-decoration: none;
+  }
   img,
   picture {
     max-width: 100%;

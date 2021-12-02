@@ -131,3 +131,8 @@ exports.bookDrink = (req, res) => {
       });
   }
 };
+
+
+exports.updateDrink = async (req, res, next) => {
+// TODO: Update drinks 
+}

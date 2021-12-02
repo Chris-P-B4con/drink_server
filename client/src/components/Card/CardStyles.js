@@ -11,7 +11,7 @@ export const CardHeader = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 150px;
+  min-height: 100px;
   color: white;
   width: 105%;
   box-shadow: 0px 3px 18px 10px rgba(0, 0, 0, 0.5);

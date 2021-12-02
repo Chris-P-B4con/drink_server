@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { FiLogOut } from "react-icons/fi";
-import { BiUser } from "react-icons/bi";
 
 export const Header = styled.header`
   align-self: flex-start;
@@ -9,30 +7,36 @@ export const Header = styled.header`
   height: 6rem;
   margin-bottom: 3.5rem;
   width: 100%;
-  margin-bottom: auto;
+  height: fit-content;
+`;
+
+export const Nav = styled.nav`
+  height: var(--nav-size);
+  background-color: var(--dark-1);
+  padding: 0 1rem;
+  border-bottom: var(--border);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Menu = styled.ul`
   padding: 0;
   margin: 0;
   text-align: center;
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const MenuItem = styled.li`
-  display: inline-block;
+  display: flex;
   padding: 0;
   margin: 0 16px;
   font-size: 2rem;
-  color: white;
-`;
-
-export const ProfileIcon = styled(BiUser)`
-  cursor: pointer;
-  color: white;
-`;
-
-export const LogoutIcon = styled(FiLogOut)`
-  cursor: pointer;
 `;
 
 export const NeonSign = styled.div`
@@ -49,7 +53,7 @@ export const NeonSign = styled.div`
   box-shadow: inset 0 0 0.5em 0 var(--accent), 0 0 0.5em 0 var(--accent);
   position: relative;
 
-  &::before {
+  /* &::before {
     pointer-events: none;
     content: "";
     position: absolute;
@@ -62,7 +66,7 @@ export const NeonSign = styled.div`
     filter: blur(1em);
     opacity: 0.7;
     z-index: 1;
-  }
+  } */
 
   &:hover,
   &:focus {
@@ -71,10 +75,10 @@ export const NeonSign = styled.div`
     background-color: var(--accent);
     box-shadow: inset 0 0 1.5em 0 var(--accent), 0 0 1.5em 0 var(--accent);
   }
-  &:hover::before{
+  &:hover::before {
     opacity: 1;
   }
-  &:hover::after{
+  &:hover::after {
     opacity: 1;
   }
 `;
