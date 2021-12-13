@@ -21,7 +21,7 @@ function DrinkListItem(props) {
         <p>Available: {props.drink.available}</p>
       </ItemBody>
       <ItemFooter>
-        <MdOutlineModeEdit
+        <MdOutlineModeEdit id={props.drink.id}
           onClick={() => {
             setEditDrink(!editDrink);
           }}

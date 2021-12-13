@@ -5,11 +5,8 @@ export const Section = styled.section`
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-
-  h2 {
-    color: var(--text-color);
-    text-decoration: underline;
-  }
+  box-shadow: var(--shadow-elevation-high);
+  padding: 10px 3px;
 `;
 
 export const Article = styled.article`
@@ -19,11 +16,11 @@ export const Article = styled.article`
   background-color: var(--dark-3);
   flex-direction: column;
   min-height: 200px;
-  box-shadow: 0px 3px 18px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-elevation-medium);
   transition: all 500 ease-in-out;
   width: 150px;
-  
-  @media (hover: hover) and (pointer:fine){
+
+  @media (hover: hover) and (pointer: fine) {
     &:hover {
       width: 200px;
       position: relative;
@@ -32,7 +29,6 @@ export const Article = styled.article`
       margin-top: -20px;
       margin-bottom: -20px;
       border: 1px solid var(--accent);
-
       transition: all 500ms ease-in-out;
     }
   }
@@ -45,16 +41,19 @@ export const CardHeader = styled.div`
 `;
 
 export const CardBody = styled.div`
-  color: white;
+  color: var(--text-color);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 8px;
+  height: 60px;
 
   h2 {
     font-size: 16px;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
   }
 `;
 

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import Cookies from "js-cookie";
 
 //Components
+import Logout from "./pages/Logout/Logout";
 import Home from "./pages/Home/Home";
 import LoginRegister from "./pages/LoginRegister/LoginRegister";
 import Admin from "./pages/Admin/Admin";
@@ -18,7 +19,7 @@ function App() {
   }, []);
   const [user, setUser] = useState({ userId: "" });
   const sessionCookie = Cookies.get("Session");
-
+  console.log(sessionCookie);
   return (
     <MasterWrapper>
       <BrowserRouter>
@@ -28,9 +29,17 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/login" element={<Navigate to="/" />} />
             </Fragment>
           ) : (
-            <Route path="/" element={<LoginRegister setUser={setUser} />} />
+            <Fragment>
+              <Route path="/*" element={<Navigate to="/login" />} />
+              <Route
+                path="/login"
+                element={<LoginRegister setUser={setUser} />}
+              />
+            </Fragment>
           )}
         </Routes>
 

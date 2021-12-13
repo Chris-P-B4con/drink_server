@@ -12,15 +12,15 @@ export const Input = styled.input`
   padding: 10px 10px;
   margin-bottom: 20px;
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid var(--text-color);
   background-color: transparent;
-  color: white;
+  color: var(--text-color);
   outline: none;
 `;
 
 export const Button = styled.input`
   width: 40%;
-  padding: 10px 0;
+  padding: 10px 15px;
   margin: 0.5rem;
   border: none;
   outline: none;
@@ -31,12 +31,12 @@ export const Button = styled.input`
 
   &.submit {
     background-color: var(--accent);
-    color: white;
+    color: var(--text-color);
   }
 
   &.cancel {
-    background-color: var(--dark-4);
-    color: white;
+    background-color: var(--dark-5);
+    color: var(--text-color);
   }
 `;
 
@@ -50,7 +50,7 @@ export const PasswordIcon = styled.i`
   position: absolute;
   top: 10px;
   right: 5px;
-  color: white;
+  color: var(--text-color);
 `;
 
 export const LoginButton = styled.button`
@@ -58,7 +58,7 @@ export const LoginButton = styled.button`
   margin-right: 1em;
   border: 0px;
   cursor: pointer;
-  color: #fff;
+  color: var(--text-color);
   border: none;
   background-color: transparent;
 `;

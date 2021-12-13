@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 // Components
 import Status from "../Status/Status";
@@ -23,27 +23,41 @@ function DrinkCards() {
     },
   ]);
 
-  useEffect(() => {
-    getDrinks(setStatus, setDrinks);
-  }, []);
+  const getDrinkHandler = async (e) => {
+    let res = await getDrinks();
+    if (res.length > 0) {
+      res.sort((a, b) => (a.drinkName > b.drinkName ? 1 : -1));
+      setDrinks(res);
+    } else {
+      updateStatus(setStatus, res);
+    }
+  };
 
   const bookingHandler = async (e) => {
     e.preventDefault();
     const drink = e.currentTarget.id;
     const statusMessage = await bookDrink(drink);
-    updateStatus(setStatus, statusMessage)
+    updateStatus(setStatus, statusMessage);
   };
 
+  useEffect(() => {
+    getDrinkHandler();
+  }, []);
 
   return (
-    <Section>
+    <Fragment>
       <h2>Getränke Buchen</h2>
       <br></br>
       <Status status={status} setStatus={setStatus} />
-      {drinks[0].drinkName && drinks.map((drink, index) => {
-        return <DrinkCard drink={drink} bookDrink={bookingHandler}></DrinkCard>;
-      })}
-    </Section>
+      <Section>
+        {drinks[0].drinkName &&
+          drinks.map((drink, index) => {
+            return (
+              <DrinkCard drink={drink} bookDrink={bookingHandler}></DrinkCard>
+            );
+          })}
+      </Section>
+    </Fragment>
   );
 }
 

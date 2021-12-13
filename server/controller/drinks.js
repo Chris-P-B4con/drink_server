@@ -10,89 +10,95 @@ exports.getDrinks = (req, res, next) => {
 };
 
 exports.addDrink = async (req, res, next) => {
-  let drink = {
-    drinkName: req.body.drinkName,
-    volume: Number(req.body.volume),
-    available: parseInt(req.body.available, 10),
-    price: Number(req.body.price),
-    image: req.file.path,
-  };
-  if (!drink.image) {
-    res
-      .status(422)
-      .json({ error: "Attached file is not an image", success: "" });
-  }
-  const newFileName =
-    drink.image.slice(0, drink.image.length - 4) +
-    "_small" +
-    drink.image.slice(drink.image.length - 4, drink.image.length);
-  sharp(drink.image)
-    .resize({ height: 150, width: 150 })
-    .toFile(newFileName)
-    .then(function (newFileInfo) {
-      drink.image = newFileName;
-    })
-    .catch(function (err) {
-      console.log(err);
+  try {
+    if (!req.file) {
+      return res
+        .status(422)
+        .json({ error: "Attached file is not an image.", success: "" });
+    }
+    let drink = {
+      drinkName: req.body.drinkName,
+      volume: Number(req.body.volume),
+      available: parseInt(req.body.available, 10),
+      price: Number(req.body.price),
+      image: req.file.path,
+    };
+    const newFileName =
+      drink.image.slice(0, drink.image.length - 4) +
+      "_small" +
+      drink.image.slice(drink.image.length - 4, drink.image.length);
+    sharp(drink.image)
+      .resize({ height: 150, width: 150 })
+      .toFile(newFileName)
+      .then(function (newFileInfo) {
+        drink.image = newFileName;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    const cur_num = await prisma.drinks.findMany({
+      where: {
+        drinkName: drink.drinkName,
+      },
+      select: {
+        available: true,
+      },
     });
-  const cur_num = await prisma.drinks.findMany({
-    where: {
-      drinkName: drink.drinkName,
-    },
-    select: {
-      available: true,
-    },
-  });
 
-  if (cur_num.length > 0) {
-    let available = drink.available + cur_num[0].available;
-    if (available > 0) {
-      try {
-        const update = await prisma.drinks.update({
-          where: {
-            drinkName: drink.drinkName,
-          },
-          data: {
-            available,
-          },
+    if (cur_num.length > 0) {
+      let available = drink.available + cur_num[0].available;
+      if (available > 0) {
+        try {
+          const update = await prisma.drinks.update({
+            where: {
+              drinkName: drink.drinkName,
+            },
+            data: {
+              available,
+            },
+          });
+          return res
+            .status(200)
+            .json({ success: "Updated database", error: "" });
+        } catch (err) {
+          return res.json({ succes: "", error: err });
+        }
+      } else if (available < 0)
+        return res.status(400).json({
+          succes: "",
+          error: "Cant update due to negative available number.",
         });
-        return res.status(200).json({ success: "Updated database", error: "" });
-      } catch (err) {
-        return res.json({ succes: "", error: err });
-      }
-    } else if (available < 0)
-      return res.status(400).json({
-        succes: "",
-        error: "Cant update due to negative available number.",
-      });
-  }
+    }
 
-  for (key in drink) {
-    if (drink[key] === "" || Number.isNaN(drink[key]) || drink[key] === 0)
-      return res.json({ succes: "", error: "Please fill out all fields." });
-  }
-  prisma.drinks
-    .create({
-      data: drink,
-    })
+    for (key in drink) {
+      if (drink[key] === "" || Number.isNaN(drink[key]) || drink[key] === 0)
+        return res.json({ succes: "", error: "Please fill out all fields." });
+    }
+    prisma.drinks
+      .create({
+        data: drink,
+      })
 
-    .then((data) => {
-      return res.status(200).json({
-        success: "Drink added to database.",
-        error: "",
-      });
-    })
-    .catch((err) => {
-      res.status(422).json(err);
-      if (err.code === "P2002")
-        res.json({
-          success: "",
-          error: "Drink already exists in database.",
+      .then((data) => {
+        return res.status(200).json({
+          success: "Drink added to database.",
+          error: "",
         });
-      else {
+      })
+      .catch((err) => {
         res.status(422).json(err);
-      }
-    });
+        if (err.code === "P2002")
+          res.json({
+            success: "",
+            error: "Drink already exists in database.",
+          });
+        else {
+          res.status(422).json(err);
+        }
+      });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.bookDrink = (req, res) => {
@@ -121,7 +127,17 @@ exports.bookDrink = (req, res) => {
               },
             })
             .then((answer) => {
-              return res.status(200).json({ success: "Prost", error: "" });
+              prisma.drinks
+                .update({
+                  where: { drinkName: drink },
+                  data: { available: { decrement: 1 } },
+                })
+                .then((response) => {
+                  return res.status(200).json({ success: "Prost", error: "" });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((err) => console.log(err));
         }
@@ -132,7 +148,6 @@ exports.bookDrink = (req, res) => {
   }
 };
 
-
 exports.updateDrink = async (req, res, next) => {
-// TODO: Update drinks 
-}
+  // TODO: Update drinks
+};

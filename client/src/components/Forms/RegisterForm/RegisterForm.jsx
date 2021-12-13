@@ -7,7 +7,7 @@ import { Action, Button, Input, Password, PasswordIcon } from "../FormStyles";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-function RegisterForm({ setStatus, flip, registerToggle }) {
+function RegisterForm({ setStatus }) {
   const Register = (e) => {
     e.preventDefault();
     fetch("/users/register", {

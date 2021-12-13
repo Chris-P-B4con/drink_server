@@ -8,9 +8,7 @@ import RegisterForm from "../../components/Forms/RegisterForm/RegisterForm";
 //Style Components
 import { Wrapper } from "./LoginRegisterStyles";
 import { CardBody, CardHeader } from "../../components/Card/CardStyles";
-import {
-  LoginButton,
-} from "../../components/Forms/FormStyles";
+import { LoginButton } from "../../components/Forms/FormStyles";
 
 function LoginRegister({ setUser }) {
   const [status, setStatus] = useState({ success: "", error: "" });
@@ -32,27 +30,23 @@ function LoginRegister({ setUser }) {
     setStatus({ error: "", success: "" });
   };
 
-  
   return (
     <Wrapper>
       <Status status={status} />
       <CardHeader>
         <h2>{registerToggle ? "Register" : "Login"}</h2>
       </CardHeader>
-      <CardBody className={loginToggle ? "active" : "inactive"} style={{"--height": "400px"}}>
-        <LoginForm
-          flip={flip}
-          registerToggle={registerToggle}
-          setStatus={setStatus}
-          setUser={setUser}
-        />
+      <CardBody
+        className={loginToggle ? "active" : "inactive"}
+        style={{ "--height": "400px" }}
+      >
+        <LoginForm setStatus={setStatus} setUser={setUser} />
       </CardBody>
-      <CardBody className={registerToggle ? "active" : "inactive"} style={{"--height": "400px"}}>
-        <RegisterForm
-          flip={flip}
-          registerToggle={registerToggle}
-          setStatus={setStatus}
-        />
+      <CardBody
+        className={registerToggle ? "active" : "inactive"}
+        style={{ "--height": "400px" }}
+      >
+        <RegisterForm setStatus={setStatus} />
       </CardBody>
       <LoginButton
         onClick={flip}
