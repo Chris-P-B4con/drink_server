@@ -14,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
     --error: var(--accent);
     --success: green;
     --text-color: white;
-
+    --danger: hsl(12 100% 53%); 
 
     --shadow-color:186 100% 4%;
     --shadow-elevation-low:
@@ -92,8 +92,8 @@ export const GlobalStyles = createGlobalStyle`
   
 `;
 export const MasterWrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

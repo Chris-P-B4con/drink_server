@@ -12,4 +12,6 @@ router.post("/add", isAuth, files.upload.single("file"), drinks.addDrink);
 
 router.post("/book", isAuth, drinks.bookDrink)
 
+router.post("/delete/:drinkId", isAuth, drinks.deleteDrink)
+
 module.exports = router;

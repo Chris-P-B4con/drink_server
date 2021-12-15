@@ -127,7 +127,7 @@ function DrinkList() {
       <Status status={status} setStatus={setStatus} />
       {drinks[0].drinkName &&
         drinks.map((drink, index) => {
-          return <DrinkListItem drink={drink} updateDrink={drinkHandler} />;
+          return <DrinkListItem drink={drink} updateDrink={drinkHandler} getDrinkHandler={getDrinkHandler}/>;
         })}
       <AddSection>
         <MdAddCircleOutline onClick={showModal} />

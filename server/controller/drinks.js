@@ -151,3 +151,42 @@ exports.bookDrink = (req, res) => {
 exports.updateDrink = async (req, res, next) => {
   // TODO: Update drinks
 };
+
+exports.deleteDrink = async (req, res, next) => {
+  const drinkId = Number(req.params.drinkId);
+  // First try to find if there are unpaid drinks for this drink
+
+  prisma.userDrinks
+    .findMany({
+      where: { drinkId: drinkId, paid: false },
+      select: { drink: true, orderedAt: true },
+    })
+    .then((data) => {
+      if (data[0]) {
+        return res.status(422).json({
+          error: "There are useres who havent paid for this drink.",
+          succes: "",
+        });
+      } else {
+        prisma.userDrinks
+          .deleteMany({
+            where: { drinkId: drinkId },
+          })
+          .then((data) => {
+            prisma.drinks
+              .deleteMany({
+                where: { id: drinkId },
+              })
+              .then((data) => {
+                return res
+                  .status(200)
+                  .json({ success: "Successfully deleted drink.", error: "" });
+              });
+          });
+      }
+    })
+
+    .catch((err) => {
+      console.log(err);
+    });
+};

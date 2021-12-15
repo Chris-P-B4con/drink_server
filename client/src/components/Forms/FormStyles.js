@@ -18,6 +18,19 @@ export const Input = styled.input`
   outline: none;
 `;
 
+export const ActionWrapper = styled.div`
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    .modal {
+      width: 40rem;
+      left: calc((100% - 40rem) / 2);
+    }
+  }
+`;
 export const Button = styled.input`
   width: 40%;
   padding: 10px 15px;
@@ -34,6 +47,11 @@ export const Button = styled.input`
     color: var(--text-color);
   }
 
+   &.delete {
+     background-color: var(--danger);
+     color: var(--text-color);
+   }
+  
   &.cancel {
     background-color: var(--dark-5);
     color: var(--text-color);
