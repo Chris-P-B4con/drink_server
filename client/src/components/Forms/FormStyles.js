@@ -53,7 +53,7 @@ export const Button = styled.input`
    }
   
   &.cancel {
-    background-color: var(--dark-5);
+    background-color: var(--bg3);
     color: var(--text-color);
   }
 `;

@@ -29,6 +29,6 @@ export const ItemWrapper = styled.div`
 `;
 
 export const Line = styled.hr`
-  border: 1px var(--dark-3) solid;
+  border: 1px var(--bg2) solid;
   width: 100%;
 `;

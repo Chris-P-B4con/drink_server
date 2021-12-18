@@ -12,7 +12,7 @@ export const Header = styled.header`
 
 export const Nav = styled.nav`
   height: var(--nav-size);
-  background-color: var(--dark-1);
+  background-color: var(--bg);
   padding: 0 1rem;
   border-bottom: var(--border);
 
@@ -43,7 +43,7 @@ export const NeonSign = styled.div`
   font-size: 2rem;
   display: inline-block;
   cursor: pointer;
-  background-color: var(--dark-1);
+  background-color: var(--bg);
   text-decoration: none;
   color: var(--accent);
   border: var(--accent) 0.125em solid;
@@ -73,7 +73,7 @@ export const NeonSign = styled.div`
 
   &:hover,
   &:focus {
-    color: var(--dark-1);
+    color: var(--bg2);
     text-shadow: none;
     background-color: var(--accent);
     box-shadow: inset 0 0 1.5em 0 var(--accent), 0 0 1.5em 0 var(--accent);

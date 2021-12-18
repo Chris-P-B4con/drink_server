@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
-import { GlobalStyles, MasterWrapper } from "./GlobalStyles";
-import dotenv from "dotenv";
+import { GlobalStyles, MasterWrapper } from "./constants/GlobalStyles";
 import Cookies from "js-cookie";
 
 //Components

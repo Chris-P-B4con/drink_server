@@ -177,7 +177,7 @@ exports.deleteDrink = async (req, res, next) => {
               .deleteMany({
                 where: { id: drinkId },
               })
-              .then((data) => {
+              .then((data) => {   
                 return res
                   .status(200)
                   .json({ success: "Successfully deleted drink.", error: "" });

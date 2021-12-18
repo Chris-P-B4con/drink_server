@@ -10,7 +10,7 @@ export const ModalWrapper = styled.form`
   right: 0;
   margin: auto;
   border-radius: 16px;
-  background-color:var(--dark-3);
+  background-color:var(--bg2);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   color: var(--text-color);
   z-index:6;

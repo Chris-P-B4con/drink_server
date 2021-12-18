@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Wrapper } from "./StatusStyles";
-import { COLORS } from "../../constants";
+import { COLORS } from "../../constants/constants";
 
 
 function Status({ status }) {
@@ -12,8 +12,7 @@ function Status({ status }) {
   return (
     <Wrapper
       className={status.error || status.success ? "shown" : "hidden"}
-      style={{ "--cur-status": color }}
-    >
+      style={{ "--cur-status": color }}>
       {status.error ? status.error : status.success}
     </Wrapper>
   );

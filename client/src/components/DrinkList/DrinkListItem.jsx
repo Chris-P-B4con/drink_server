@@ -13,55 +13,42 @@ import {
   ItemWrapper,
   Title,
 } from "./DrinkListStyles";
-import { updateStatus } from "../../lib/helpFunctions";
+
+import { responseHandler, updateStatus } from "../../lib/helpFunctions";
 
 function DrinkListItem(props) {
   const [status, setStatus] = useState({ success: "", error: "" });
   const [editDrink, setEditDrink] = useState(false);
 
-  const deleteButton = (e) => {
-    fetch(`/drinks/delete/${props.drink.id}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.status === 500) {
-          updateStatus(setStatus, {
-            error: "Something went wrong.",
-            succes: "",
-          });
-        }
-        return res.json();
-      })
-      .then((stat) => {
-        updateStatus(setStatus, stat);
-        props.getDrinkHandler();
-      })
-      .catch((err) => {
-        console.log(err);
+  const deleteButton = async (e) => {
+    try {
+      const res = await fetch(`/drinks/delete/${props.drink.id}`, {
+        method: "POST",
       });
+      const message = await responseHandler(res);
+      updateStatus(setStatus, message);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const editDrinkHandler = (e) => {
     const formData = new FormData();
     formData.append("drinkName", props.drink.drinkName);
-      formData.append("available", props.drink.available);
-      formData.append("price", props.drink.price);
-      formData.append("volume", props.drink.volume);
-      formData.append(
-        "file",
-        document.querySelector('input[type="file"]').files[0]
-      );
-      (async () => {
-        const statusMessage = await props.updateDrink(formData, true);
-        updateStatus(setStatus, statusMessage);
-        setTimeout(() => {
-          props.getDrinkHandler();
-        }, 3000);
-      })();
+    formData.append("available", props.drink.available);
+    formData.append("price", props.drink.price);
+    formData.append("volume", props.drink.volume);
+    formData.append(
+      "file",
+      document.querySelector('input[type="file"]').files[0]
+    );
+    (async () => {
+      const statusMessage = await props.updateDrink(formData, true);
+      updateStatus(setStatus, statusMessage);
+      setTimeout(() => {
+        props.getDrinkHandler();
+      }, 3000);
+    })();
   };
   return (
     <Fragment>

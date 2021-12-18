@@ -13,12 +13,13 @@ export const Article = styled.article`
   display: flex;
   border-radius: 5px;
   margin: 5px;
-  background-color: var(--dark-3);
+  background-color: var(--bg2);
   flex-direction: column;
   min-height: 200px;
   box-shadow: var(--shadow-elevation-medium);
   transition: all 500 ease-in-out;
   width: 150px;
+  position: relative;
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {

@@ -17,8 +17,8 @@ export const CardHeader = styled.div`
   box-shadow: var(--shadow-elevation-medium);
   background-image: linear-gradient(
     to bottom left,
-    var(--dark-5),
-    var(--dark-1)
+    var(--bg),
+    var(--bg3)
   );
   border-radius: 16px 16px;
   margin-left: -10px;
@@ -29,7 +29,7 @@ export const CardHeader = styled.div`
 export const CardBody = styled(CardWrapper)`
   padding: 30px;
   border-radius: 0 0 16px 16px;
-  background-color: var(--dark-3);
+  background-color: var(--bg2);
   overflow: hidden;
   height: 100%;
   &.active {

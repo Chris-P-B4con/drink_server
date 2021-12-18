@@ -2,22 +2,23 @@ import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 :root {
-    --dark-1: hsl(195 100% 8%);
-    --dark-2: hsl(195 100% 8%);
-    --dark-3: hsl(196 100% 11%);
-    --dark-4: hsl(197 100% 14%);
-    --dark-5: hsl(195 97% 15%);
-    --dark-6: hsl(193 98% 16%);
-    --accent: hsl(27 87% 67%);
-    --neon-pink: hsl(317 100% 54%);
-    --clr-bg: hsl(323 21% 16%);
-    --error: var(--accent);
-    --success: green;
-    --text-color: white;
-    --danger: hsl(12 100% 53%); 
+  --bg: hsl(195 100% 8%);
+  --bg2: hsl(196 100% 11%);
+  --bg3: hsl(197 100% 14%);
+  --bg4: hsl(195 97% 15%);
+  --bg5: hsl(193 98% 16%);
+  --accent: hsl(27 87% 67%);
+  --shadow-color:186 100% 4%;
+  --text-color: white;
 
-    --shadow-color:186 100% 4%;
-    --shadow-elevation-low:
+
+  --neon-pink: hsl(317 100% 54%);
+  --clr-bg: hsl(323 21% 16%);
+  --error: var(--accent);
+  --success: green;
+  --danger: hsl(12 100% 53%); 
+
+  --shadow-elevation-low:
     0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
     0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
     1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
@@ -36,21 +37,16 @@ export const GlobalStyles = createGlobalStyle`
     17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
     25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
 
-    @media(prefers-color-scheme: light) {
-      --shadow-color:195 100% 8%;
-      --dark-1: hsl(49, 94%, 93%);
-    --dark-2: hsl(195 100% 8%);
-    --dark-3: hsl(34, 100%, 89%);
-    --dark-5: hsl(30, 79%, 85%);
-    --dark-6: hsl(193, 98%, 16%);
+  @media(prefers-color-scheme: light) {
+    --shadow-color:195 100% 8%;
+    --bg: hsl(49, 94%, 93%);
+    --bg2: hsl(34, 100%, 89%);
+    --bg3: hsl(30, 79%, 85%);
     --accent: hsl(181, 43%, 77%);
-    --neon-pink: hsl(317 100% 54%);
     --clr-bg: hsl(323 21% 16%);
-    --error: var(--accent);
-    --success: green;
     --text-color: black;
     }
-  }
+}
   
   *, *::before, *::after {
     box-sizing: border-box;
@@ -62,7 +58,7 @@ export const GlobalStyles = createGlobalStyle`
   
   html, body {
     height: 100%;
-    background: var(--dark-1);
+    background: var(--bg);
     color: var(--text-color);
   }
  

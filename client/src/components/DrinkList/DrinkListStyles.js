@@ -19,9 +19,9 @@ export const ItemWrapper = styled.article`
   color: var(--text-color);
   width: 350px;
   justify-content: space-between;
-  background-color: var(--dark-3);
+  background-color: var(--bg2);
   border-radius: 8px;
-  border: 1px solid var(--dark-5);
+  border: 1px solid var(--bg3);
   margin: 5px 8px;
   box-shadow: var(--shadow-elevation-medium);
   transition: all 500ms ease-in-out;

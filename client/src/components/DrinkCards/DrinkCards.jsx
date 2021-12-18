@@ -53,7 +53,7 @@ function DrinkCards() {
         {drinks[0].drinkName &&
           drinks.map((drink, index) => {
             return (
-              <DrinkCard drink={drink} bookDrink={bookingHandler}></DrinkCard>
+              <DrinkCard newTag={true} drink={drink} bookDrink={bookingHandler}></DrinkCard>
             );
           })}
       </Section>
