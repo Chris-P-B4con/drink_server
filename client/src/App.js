@@ -18,7 +18,7 @@ function App() {
   }, []);
   const [user, setUser] = useState({ userId: "" });
   const sessionCookie = Cookies.get("Session");
-  console.log(sessionCookie);
+  
   return (
     <MasterWrapper>
       <BrowserRouter>

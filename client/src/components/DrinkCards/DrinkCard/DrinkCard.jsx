@@ -12,7 +12,7 @@ function DrinkCard({ drink, bookDrink }) {
     const curDate = new Date();
     const changedAt = new Date(drink.changedAt);
     const diff = (curDate - changedAt) / 1000 / 60 / 60 / 24;
-    if (diff < 30) settagType("new");
+    if (diff < 14) settagType("new");
     if (drink.available < 1) settagType("unavailable");
   }, []);
 

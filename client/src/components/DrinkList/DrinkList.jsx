@@ -20,6 +20,7 @@ function DrinkList() {
   const [spin, setSpin] = useState(true);
   const [drinks, setDrinks] = useState([
     {
+      id:"",
       drinkName: "",
       available: "",
       volume: "",
@@ -55,13 +56,6 @@ function DrinkList() {
     setModalStatus(!modalStatus);
   };
 
-  const editDrinkHandler = async (e) => {
-    e.preventDefault();
-    const drink = e.currentTarget.id;
-    const statusMessage = await addDrink(drink);
-    updateStatus(setStatus, statusMessage);
-  };
-
   const addDrinkHandler = (e) => {
     e.preventDefault();
     showModal();
@@ -95,9 +89,17 @@ function DrinkList() {
         "file",
         document.querySelector('input[type="file"]').files[0]
       );
+
       (async () => {
         const statusMessage = await addDrink(formData);
         updateStatus(setStatus, statusMessage);
+        setNewDrink({
+          drinkName: "",
+          available: "",
+          volume: "",
+          price: "",
+          image: null,
+        });
         setTimeout(() => {
           getDrinkHandler();
         }, 2000);
@@ -123,11 +125,7 @@ function DrinkList() {
       {drinks[0].drinkName &&
         drinks.map((drink, index) => {
           return (
-            <DrinkListItem
-              drink={drink}
-              updateDrink={editDrinkHandler}
-              getDrinkHandler={getDrinkHandler}
-            />
+            <DrinkListItem drink={drink} getDrinkHandler={getDrinkHandler} />
           );
         })}
       <AddSection>

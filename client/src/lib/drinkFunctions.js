@@ -45,17 +45,28 @@ export const getDrinks = async () => {
 
 export const addDrink = async (formData) => {
   // Check that he fields contain the correct type of info
-
+  console.log(formData);
   try {
     const addedDrink = await fetch("/drinks/add", {
       method: "POST",
       body: formData,
     });
     const response = await responseHandler(addedDrink);
-    if (response.success === "") {
-      return { error: "", success: "Succesfully added Drink." };
-    } else return response;
+    return response;
   } catch (err) {
-    console.log("Error while adding Drink");
+    console.log("Error while adding drink");
+  }
+};
+
+export const updateDrink = async (formData) => {
+  try {
+    const updatedDrink = await fetch("/drinks/update", {
+      method: "POST",
+      body: formData,
+    });
+    const response = await responseHandler(updatedDrink);
+    return response;
+  } catch (err) {
+    console.log("Error while updating drink.");
   }
 };

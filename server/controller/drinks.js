@@ -72,7 +72,7 @@ exports.addDrink = async (req, res, next) => {
           success: "Drink added to database.",
           error: "",
         });
-      })
+      });
   } catch (err) {
     console.log(err);
   }
@@ -134,6 +134,91 @@ exports.bookDrink = (req, res) => {
 
 exports.updateDrink = async (req, res, next) => {
   // TODO: Update drinks
+  try {
+    let drink = {
+      id: Number(req.body.id),
+      drinkName: req.body.drinkName,
+      volume: Number(req.body.volume),
+      available: parseInt(req.body.available, 10),
+      price: Number(req.body.price),
+    };
+    if (req.file) {
+      const newFileName =
+        req.file.path.slice(0, 7) +
+        "cropped_" +
+        req.file.path.slice(7, req.file.path.length);
+      drink.image = newFileName;
+      sharp(req.file.path)
+        .resize({ height: 300, width: 300 })
+        .toFile(newFileName)
+        .then(function (newFileInfo) {
+          fs.unlinkSync(req.file.path);
+          //Validity check to see if nothing is empty
+          for (key in drink) {
+            if (drink[key] === "" || Number.isNaN(drink[key]))
+              return res.json({
+                succes: "",
+                error: "Please fill out all fields.",
+              });
+          }
+          prisma.drinks
+            .findMany({ where: { id: drink.id }, select: { image: true } })
+            .then((data) => {
+              if (
+                fs.existsSync(data[0].image) &&
+                req.file &&
+                drink.image !== data[0].image
+              )
+                fs.unlinkSync(data[0].image);
+              prisma.drinks
+                .update({
+                  where: { id: drink.id },
+                  data: {
+                    drinkName: drink.drinkName,
+                    volume: drink.volume,
+                    available: drink.available,
+                    price: drink.price,
+                    image: drink.image,
+                  },
+                })
+                .then((response) => {
+                  return res.status(200).json({
+                    success: "Successfully updated drink.",
+                    error: "",
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            });
+        })
+        .catch(function (err) {
+          console.log("Error in sharp:" + err);
+        });
+    } else {
+      prisma.drinks
+        .update({
+          where: { id: drink.id },
+          data: {
+            drinkName: drink.drinkName,
+            volume: drink.volume,
+            available: drink.available,
+            price: drink.price,
+          },
+        })
+        .then((response) => {
+          return res.status(200).json({
+            success: "Successfully updated drink.",
+            error: "",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.deleteDrink = async (req, res, next) => {

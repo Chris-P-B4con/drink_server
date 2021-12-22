@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import { MdOutlineModeEdit } from "react-icons/md";
 
@@ -14,11 +14,13 @@ import {
   Title,
 } from "./DrinkListStyles";
 
+import { updateDrink } from "../../lib/drinkFunctions";
 import { responseHandler, updateStatus } from "../../lib/helpFunctions";
 
 function DrinkListItem(props) {
   const [status, setStatus] = useState({ success: "", error: "" });
   const [editDrink, setEditDrink] = useState(false);
+  const [updatedDrink, setUpdatedDrink] = useState(props.drink);
 
   const deleteButton = async (e) => {
     try {
@@ -26,7 +28,7 @@ function DrinkListItem(props) {
         method: "POST",
       });
       const message = await responseHandler(res);
-      if(message.error === "") setEditDrink(!editDrink)
+      if (message.error === "") setEditDrink(!editDrink);
       updateStatus(setStatus, message);
     } catch (err) {
       console.log(err);
@@ -34,35 +36,42 @@ function DrinkListItem(props) {
   };
 
   const editDrinkHandler = (e) => {
+    e.preventDefault();
     const formData = new FormData();
-    formData.append("drinkName", props.drink.drinkName);
-    formData.append("available", props.drink.available);
-    formData.append("price", props.drink.price);
-    formData.append("volume", props.drink.volume);
+    formData.append("id", updatedDrink.id);
+    formData.append("drinkName", updatedDrink.drinkName);
+    formData.append("available", updatedDrink.available);
+    formData.append("price", updatedDrink.price);
+    formData.append("volume", updatedDrink.volume);
     formData.append(
       "file",
       document.querySelector('input[type="file"]').files[0]
     );
+    
     (async () => {
-      const statusMessage = await props.updateDrink(formData, true);
+      const statusMessage = await updateDrink(formData);
       updateStatus(setStatus, statusMessage);
       setTimeout(() => {
         props.getDrinkHandler();
-      }, 3000);
+      }, 2000);
     })();
   };
+
+  useEffect(() => {
+    setUpdatedDrink(props.drink)
+  }, [props.drink])
   return (
     <Fragment>
       <Status status={status} />
       <ItemWrapper className={editDrink ? "show" : ""}>
-        <Image className={editDrink ? "show" : ""} src={props.drink.image} />
+        <Image className={editDrink ? "show" : ""} src={updatedDrink.image} />
         <ItemBody className={editDrink ? "show" : ""}>
-          <Title>{props.drink.drinkName}</Title>
-          <p>Available: {props.drink.available}</p>
+          <Title>{updatedDrink.drinkName}</Title>
+          <p>Available: {updatedDrink.available}</p>
         </ItemBody>
         <ItemFooter className={editDrink ? "show" : ""}>
           <MdOutlineModeEdit
-            id={props.drink.id}
+            id={updatedDrink.id}
             onClick={() => {
               setEditDrink(!editDrink);
             }}
@@ -78,9 +87,12 @@ function DrinkListItem(props) {
                 id="drinkName"
                 placeholder="Drink Name"
                 onChange={(e) =>
-                  props.setDrink({ ...props.drink, drinkName: e.target.value })
+                  setUpdatedDrink({
+                    ...updatedDrink,
+                    drinkName: e.target.value,
+                  })
                 }
-                value={props.drink.drinkName}
+                value={updatedDrink.drinkName}
               />
               <Input
                 type="text"
@@ -88,9 +100,12 @@ function DrinkListItem(props) {
                 id="available"
                 placeholder="Available"
                 onChange={(e) =>
-                  props.setDrink({ ...props.drink, available: e.target.value })
+                  setUpdatedDrink({
+                    ...updatedDrink,
+                    available: e.target.value,
+                  })
                 }
-                value={props.drink.available}
+                value={updatedDrink.available}
               />
               <Input
                 type="text"
@@ -98,9 +113,9 @@ function DrinkListItem(props) {
                 id="price"
                 placeholder="Price"
                 onChange={(e) =>
-                  props.setDrink({ ...props.drink, price: e.target.value })
+                  setUpdatedDrink({ ...updatedDrink, price: e.target.value })
                 }
-                value={props.drink.price}
+                value={updatedDrink.price}
               />
               <Input
                 type="text"
@@ -108,11 +123,18 @@ function DrinkListItem(props) {
                 id="volume"
                 placeholder="Volume"
                 onChange={(e) =>
-                  props.setDrink({ ...props.drink, volume: e.target.value })
+                  setUpdatedDrink({ ...updatedDrink, volume: e.target.value })
                 }
-                value={props.drink.volume}
+                value={updatedDrink.volume}
               />
-              <Input type="file" name="image" id={`image_${props.drink.id}`} />
+              <Input
+                type="file"
+                name="image"
+                id={`image_${updatedDrink.id}`}
+                onChange={(e) =>
+                  setUpdatedDrink({ ...updatedDrink, image: e.target.value })
+                }
+              />
               <ActionWrapper>
                 <Button className="submit" value="Submit" type="submit" />
                 <Button
