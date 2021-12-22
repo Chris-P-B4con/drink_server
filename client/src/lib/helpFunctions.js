@@ -9,9 +9,9 @@ exports.responseHandler = async (response) => {
   let message = { error: "", succes: "" };
 
   if (response.status === 500) {
-    message.error = "Internal server error occured";
+    message.error = "Internal server error occured.";
   } else if (response.status === 422) {
-    message.error = "The data you entered was incorrect";
+    message.error = "The data you entered was incorrect.";
   } else if (response.status === 404) {
     message.error = "The site you tried to reach is invalid.";
   } else if (response.status === 403) {

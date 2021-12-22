@@ -9,6 +9,7 @@ export const COLORS = {
   clrbg: "hsl(323 21% 16%)",
   error: "hsl(27, 87%, 67%)",
   success: "green",
+  danger: "hsl(12 100% 53%)"
 };
 
 export const BREAKPOINTS = {

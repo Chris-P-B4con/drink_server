@@ -19,6 +19,7 @@ function DrinkCards() {
       available: "",
       volume: "",
       price: "",
+      updatedAt: "",
       image: null,
     },
   ]);
@@ -53,7 +54,7 @@ function DrinkCards() {
         {drinks[0].drinkName &&
           drinks.map((drink, index) => {
             return (
-              <DrinkCard newTag={true} drink={drink} bookDrink={bookingHandler}></DrinkCard>
+              <DrinkCard drink={drink} bookDrink={bookingHandler}></DrinkCard>
             );
           })}
       </Section>

@@ -26,6 +26,7 @@ function DrinkListItem(props) {
         method: "POST",
       });
       const message = await responseHandler(res);
+      if(message.error === "") setEditDrink(!editDrink)
       updateStatus(setStatus, message);
     } catch (err) {
       console.log(err);

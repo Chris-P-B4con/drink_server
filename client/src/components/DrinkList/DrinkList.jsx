@@ -11,7 +11,7 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { Input } from "../Forms/FormStyles";
 import { AddSection, Wrapper } from "./DrinkListStyles";
 
-import { getDrinks, updateDrink } from "../../lib/drinkFunctions";
+import { getDrinks, addDrink } from "../../lib/drinkFunctions";
 import { updateStatus } from "../../lib/helpFunctions";
 
 function DrinkList() {
@@ -55,10 +55,10 @@ function DrinkList() {
     setModalStatus(!modalStatus);
   };
 
-  const drinkHandler = async (e) => {
+  const editDrinkHandler = async (e) => {
     e.preventDefault();
     const drink = e.currentTarget.id;
-    const statusMessage = await updateDrink(drink);
+    const statusMessage = await addDrink(drink);
     updateStatus(setStatus, statusMessage);
   };
 
@@ -86,11 +86,6 @@ function DrinkList() {
         error: "Please fill out the volume field.",
         succes: "",
       });
-    } else if (!newDrink.file) {
-      updateStatus(setStatus, {
-        error: "Please provide an image.",
-        succes: "",
-      });
     } else {
       formData.append("drinkName", newDrink.drinkName);
       formData.append("available", newDrink.available);
@@ -101,11 +96,11 @@ function DrinkList() {
         document.querySelector('input[type="file"]').files[0]
       );
       (async () => {
-        const statusMessage = await updateDrink(formData);
+        const statusMessage = await addDrink(formData);
         updateStatus(setStatus, statusMessage);
         setTimeout(() => {
           getDrinkHandler();
-        }, 3000);
+        }, 2000);
       })();
     }
   };
@@ -127,7 +122,13 @@ function DrinkList() {
       <Status status={status} setStatus={setStatus} />
       {drinks[0].drinkName &&
         drinks.map((drink, index) => {
-          return <DrinkListItem drink={drink} updateDrink={drinkHandler} getDrinkHandler={getDrinkHandler}/>;
+          return (
+            <DrinkListItem
+              drink={drink}
+              updateDrink={editDrinkHandler}
+              getDrinkHandler={getDrinkHandler}
+            />
+          );
         })}
       <AddSection>
         <MdAddCircleOutline onClick={showModal} />

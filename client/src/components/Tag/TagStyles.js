@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-background-color: var(--accent);
-color: black;
-border-radius: 8px 20px 20px 0;
-min-width: 70px;
-max-height: 40px;
+background-color: var(--type);
+color: var(--bg2);
+border-radius: 8px 15px 15px 0;
+min-width: 50px;
+max-height: 30px;
 padding: 3px 6px;
 position: absolute;
 display: flex;

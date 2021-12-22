@@ -24,7 +24,7 @@ export const Article = styled.article`
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       width: 200px;
-      position: relative;
+      z-index:400;
       margin-left: -20px;
       margin-right: -20px;
       margin-top: -20px;

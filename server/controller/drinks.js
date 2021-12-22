@@ -1,4 +1,5 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
+const fs = require("fs");
 const sharp = require("sharp");
 const prisma = new PrismaClient();
 
@@ -23,19 +24,30 @@ exports.addDrink = async (req, res, next) => {
       price: Number(req.body.price),
       image: req.file.path,
     };
+
+    //Validity check to see if nothing is empty
+    for (key in drink) {
+      if (drink[key] === "" || Number.isNaN(drink[key]) || drink[key] === 0)
+        return res.json({ succes: "", error: "Please fill out all fields." });
+    }
+
+    //Resize image to 300x300 pixels and save to new variable
     const newFileName =
-      drink.image.slice(0, drink.image.length - 4) +
-      "_small" +
-      drink.image.slice(drink.image.length - 4, drink.image.length);
+      drink.image.slice(0, 7) +
+      "cropped_" +
+      drink.image.slice(7, drink.image.length);
     sharp(drink.image)
-      .resize({ height: 150, width: 150 })
+      .resize({ height: 300, width: 300 })
       .toFile(newFileName)
       .then(function (newFileInfo) {
-        drink.image = newFileName;
+        fs.unlinkSync(req.file.path);
       })
       .catch(function (err) {
-        console.log(err);
+        console.log("Error in sharp:" + err);
       });
+    drink.image = newFileName;
+
+    //Catch if the drink already exists in database
     const cur_num = await prisma.drinks.findMany({
       where: {
         drinkName: drink.drinkName,
@@ -44,58 +56,23 @@ exports.addDrink = async (req, res, next) => {
         available: true,
       },
     });
-
     if (cur_num.length > 0) {
-      let available = drink.available + cur_num[0].available;
-      if (available > 0) {
-        try {
-          const update = await prisma.drinks.update({
-            where: {
-              drinkName: drink.drinkName,
-            },
-            data: {
-              available,
-            },
-          });
-          return res
-            .status(200)
-            .json({ success: "Updated database", error: "" });
-        } catch (err) {
-          return res.json({ succes: "", error: err });
-        }
-      } else if (available < 0)
-        return res.status(400).json({
-          succes: "",
-          error: "Cant update due to negative available number.",
-        });
+      return res
+        .status(422)
+        .json({ error: "This drink already exists.", sucess: "" });
     }
 
-    for (key in drink) {
-      if (drink[key] === "" || Number.isNaN(drink[key]) || drink[key] === 0)
-        return res.json({ succes: "", error: "Please fill out all fields." });
-    }
+    // Add to database
     prisma.drinks
       .create({
         data: drink,
       })
-
       .then((data) => {
         return res.status(200).json({
           success: "Drink added to database.",
           error: "",
         });
       })
-      .catch((err) => {
-        res.status(422).json(err);
-        if (err.code === "P2002")
-          res.json({
-            success: "",
-            error: "Drink already exists in database.",
-          });
-        else {
-          res.status(422).json(err);
-        }
-      });
   } catch (err) {
     console.log(err);
   }
@@ -108,9 +85,12 @@ exports.bookDrink = (req, res) => {
     res.status(422).json({ error: "Invalid drink given.", success: "" });
   } else {
     prisma.drinks
-      .findMany({ where: { drinkName: drink }, select: { id: true } })
+      .findMany({
+        where: { drinkName: drink },
+        select: { id: true, available: true },
+      })
       .then((foundDrink) => {
-        if (foundDrink[0]) {
+        if (foundDrink[0] && foundDrink[0].available > 0) {
           prisma.userDrinks
             .create({
               data: {
@@ -140,6 +120,10 @@ exports.bookDrink = (req, res) => {
                 });
             })
             .catch((err) => console.log(err));
+        } else {
+          res
+            .status(422)
+            .json({ error: "This drink is not available.", success: "" });
         }
       })
       .catch((err) => {
@@ -155,7 +139,6 @@ exports.updateDrink = async (req, res, next) => {
 exports.deleteDrink = async (req, res, next) => {
   const drinkId = Number(req.params.drinkId);
   // First try to find if there are unpaid drinks for this drink
-
   prisma.userDrinks
     .findMany({
       where: { drinkId: drinkId, paid: false },
@@ -168,6 +151,17 @@ exports.deleteDrink = async (req, res, next) => {
           succes: "",
         });
       } else {
+        (async () => {
+          try {
+            const image = await prisma.drinks.findMany({
+              where: { id: drinkId },
+              select: { image: true },
+            });
+            fs.unlinkSync(image[0].image);
+          } catch (err) {
+            console.log(err);
+          }
+        })();
         prisma.userDrinks
           .deleteMany({
             where: { drinkId: drinkId },
@@ -177,7 +171,7 @@ exports.deleteDrink = async (req, res, next) => {
               .deleteMany({
                 where: { id: drinkId },
               })
-              .then((data) => {   
+              .then((data) => {
                 return res
                   .status(200)
                   .json({ success: "Successfully deleted drink.", error: "" });

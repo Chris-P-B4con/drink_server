@@ -1,21 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 
-import Tag from "../../Tag/Tag"
+import Tag from "../../Tag/Tag";
 
-import { Article,Button, CardBody, CardHeader} from "../DrinkCardsStyles"
+import { Article, Button, CardBody, CardHeader } from "../DrinkCardsStyles";
 
-function DrinkCard({drink, bookDrink, newTag}) {
-    return (
-        <Article>
-            <CardHeader>
-                {newTag && <Tag type="newType">New </Tag>}
-                <Button type="image" src={drink.image} alt={drink.drinkName} id={drink.drinkName} onClick={bookDrink}/>
-            </CardHeader>
-            <CardBody>
-               <h2> {drink.drinkName}</h2>
-            </CardBody>
-        </Article>
-    )
+function DrinkCard({ drink, bookDrink }) {
+  const [tagType, settagType] = useState(null);
+
+  // Check if the drink has recently been managed. If so toggle the Tag 
+  useEffect(() => {
+    const curDate = new Date();
+    const changedAt = new Date(drink.changedAt);
+    const diff = (curDate - changedAt) / 1000 / 60 / 60 / 24;
+    if (diff < 30) settagType("new");
+    if (drink.available < 1) settagType("unavailable");
+  }, []);
+
+  return (
+    <Article>
+      <CardHeader>
+        {tagType && <Tag type={tagType}>{tagType}</Tag>}
+        <Button
+          type="image"
+          src={drink.image}
+          alt={drink.drinkName}
+          id={drink.drinkName}
+          onClick={bookDrink}
+        />
+      </CardHeader>
+      <CardBody>
+        <h2> {drink.drinkName}</h2>
+      </CardBody>
+    </Article>
+  );
 }
 
-export default DrinkCard
+export default DrinkCard;

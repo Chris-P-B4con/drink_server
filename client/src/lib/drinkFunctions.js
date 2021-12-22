@@ -1,4 +1,6 @@
-exports.bookDrink = async (drink) => {
+import { responseHandler } from "./helpFunctions";
+
+export const bookDrink = async (drink) => {
   try {
     const booking = await fetch("/drinks/book", {
       method: "POST",
@@ -8,25 +10,21 @@ exports.bookDrink = async (drink) => {
       },
       body: JSON.stringify({ drink }),
     });
-    if (booking.status === 403)
-      return {
-        success: "",
-        error: "You are not properly signed in.",
-      };
-    else if (booking.status !== 200 && booking.status !== 201)
-      return { error: "Error while booking drinks!", success: "" };
-    else return { error: "", success: "Prost. Wurde gebucht." };
+
+    const response = await responseHandler(booking);
+    if (response.success === "") {
+      return { error: "", success: "Prost. Wurde gebucht." };
+    } else return response;
   } catch (err) {
     console.log("Booking Error");
   }
 };
 
-exports.getDrinks = async () => {
+export const getDrinks = async () => {
   try {
     const res = await fetch("/drinks/get", {
       method: "GET",
     });
-
     if (res.status === 403)
       return {
         success: "",
@@ -45,20 +43,19 @@ exports.getDrinks = async () => {
   }
 };
 
-exports.updateDrink = async (formData) => {
+export const addDrink = async (formData) => {
   // Check that he fields contain the correct type of info
 
   try {
-    const response = await fetch("/drinks/add", {
+    const addedDrink = await fetch("/drinks/add", {
       method: "POST",
       body: formData,
     });
-    if (response.status === 403)
-      return { error: "You are not properly signed in.", success: "" };
-    else if (response.status !== 200 && response.status !== 201)
-      return { error: "Error while updating drinks!", success: "" };
-    return { error: response.error, success: response.success };
+    const response = await responseHandler(addedDrink);
+    if (response.success === "") {
+      return { error: "", success: "Succesfully added Drink." };
+    } else return response;
   } catch (err) {
-    console.log(err);
+    console.log("Error while adding Drink");
   }
 };

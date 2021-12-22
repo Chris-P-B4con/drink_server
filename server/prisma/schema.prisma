@@ -8,12 +8,12 @@ generator client {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
-  username   String   @unique
-  email      String   @unique
+  id         Int           @id @default(autoincrement())
+  createdAt  DateTime      @default(now())
+  username   String        @unique
+  email      String        @unique
   password   String
-  privileges PrivilegeType      @default(USER)
+  privileges PrivilegeType @default(USER)
 
   drinks UserDrinks[]
   tokens Token[]
@@ -21,14 +21,17 @@ model User {
 }
 
 model Drinks {
-  id        Int    @id @default(autoincrement())
-  drinkName String @unique
-  volume    Float
-  price     Float
-  available Int
-  image     String
+  id         Int          @id @default(autoincrement())
+  drinkName  String       @unique
+  volume     Float
+  price      Float
+  available  Int
+  image      String
+  addedAt    DateTime     @default(now())
+  changedAt  DateTime     @updatedAt
 
   userDrinks UserDrinks[]
+
   @@map(name: "drinks")
 }
 
@@ -36,7 +39,7 @@ model UserDrinks {
   id        Int       @id @default(autoincrement())
   orderedAt DateTime  @default(now())
   paid      Boolean   @default(false)
-  paidAt    DateTime?  @updatedAt
+  paidAt    DateTime? @updatedAt
 
   drink   Drinks @relation(fields: [drinkId], references: [id])
   user    User   @relation(fields: [userId], references: [id])
