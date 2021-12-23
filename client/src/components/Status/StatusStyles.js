@@ -5,6 +5,8 @@ export const Wrapper = styled(CardWrapper)`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  top:0;
   color: black;
   background-color: var(--cur-status);
   border-radius: 10px;

@@ -16,11 +16,12 @@ import { updateStatus } from "../../lib/helpFunctions";
 
 function DrinkList() {
   const [status, setStatus] = useState({ error: "", success: "" });
+  const [editDrink, setEditDrink] = useState({});
   const [modalStatus, setModalStatus] = useState(false);
   const [spin, setSpin] = useState(true);
   const [drinks, setDrinks] = useState([
     {
-      id:"",
+      id: "",
       drinkName: "",
       available: "",
       volume: "",
@@ -51,6 +52,13 @@ function DrinkList() {
       setSpin(false);
     }, 1000);
   };
+
+  const showEdit = (index) => {
+    let newArr = Array(editDrink.length).fill(false); 
+    newArr[index] = !editDrink[index]
+    setEditDrink(newArr)
+    console.log(newArr)
+  }
 
   const showModal = (e) => {
     setModalStatus(!modalStatus);
@@ -110,6 +118,11 @@ function DrinkList() {
   useEffect(() => {
     setSpin(true);
     getDrinkHandler();
+    let numEdits = [];
+    for (let i = 0; i < drinks.length; i++) {
+      numEdits.push(false);
+      setEditDrink(numEdits);
+    }
   }, []);
 
   return (
@@ -125,7 +138,13 @@ function DrinkList() {
       {drinks[0].drinkName &&
         drinks.map((drink, index) => {
           return (
-            <DrinkListItem drink={drink} getDrinkHandler={getDrinkHandler} />
+            <DrinkListItem
+              drink={drink}
+              index={index}
+              editDrink={editDrink[index]}
+              showEdit={showEdit}
+              getDrinkHandler={getDrinkHandler}
+            />
           );
         })}
       <AddSection>

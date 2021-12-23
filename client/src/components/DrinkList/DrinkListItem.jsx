@@ -19,7 +19,6 @@ import { responseHandler, updateStatus } from "../../lib/helpFunctions";
 
 function DrinkListItem(props) {
   const [status, setStatus] = useState({ success: "", error: "" });
-  const [editDrink, setEditDrink] = useState(false);
   const [updatedDrink, setUpdatedDrink] = useState(props.drink);
 
   const deleteButton = async (e) => {
@@ -28,7 +27,7 @@ function DrinkListItem(props) {
         method: "POST",
       });
       const message = await responseHandler(res);
-      if (message.error === "") setEditDrink(!editDrink);
+      if (message.error === "") props.showEdit(props.index)
       updateStatus(setStatus, message);
     } catch (err) {
       console.log(err);
@@ -63,23 +62,23 @@ function DrinkListItem(props) {
   return (
     <Fragment>
       <Status status={status} />
-      <ItemWrapper className={editDrink ? "show" : ""}>
-        <Image className={editDrink ? "show" : ""} src={updatedDrink.image} />
-        <ItemBody className={editDrink ? "show" : ""}>
+      <ItemWrapper className={props.editDrink ? "show" : ""}>
+        <Image className={props.editDrink ? "show" : ""} src={updatedDrink.image} />
+        <ItemBody className={props.editDrink ? "show" : ""}>
           <Title>{updatedDrink.drinkName}</Title>
           <p>Available: {updatedDrink.available}</p>
         </ItemBody>
-        <ItemFooter className={editDrink ? "show" : ""}>
+        <ItemFooter className={props.editDrink ? "show" : ""}>
           <MdOutlineModeEdit
             id={updatedDrink.id}
             onClick={() => {
-              setEditDrink(!editDrink);
+              props.showEdit(props.index);
             }}
           />
         </ItemFooter>
 
-        <ItemExpanded className={editDrink ? "show" : ""}>
-          {editDrink && (
+        <ItemExpanded className={props.editDrink ? "show" : ""}>
+          {props.editDrink && (
             <form onSubmit={editDrinkHandler}>
               <Input
                 type="text"
