@@ -16,7 +16,7 @@ function Dropdown(props) {
           <BiHomeAlt />
         </span>
       </DropdownItem>
-      <DropdownItem link="/admin">
+      <DropdownItem link="/profile">
         <span>
           <BiUser />
         </span>

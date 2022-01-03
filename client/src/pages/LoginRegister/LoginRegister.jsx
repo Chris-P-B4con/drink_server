@@ -10,7 +10,7 @@ import { Wrapper } from "./LoginRegisterStyles";
 import { CardBody, CardHeader } from "../../components/Card/CardStyles";
 import { LoginButton } from "../../components/Forms/FormStyles";
 
-function LoginRegister({ setUser }) {
+function LoginRegister() {
   const [status, setStatus] = useState({ success: "", error: "" });
   const [registerToggle, setRegisterToggle] = useState(false);
   const [loginToggle, setLoginToggle] = useState(true);
@@ -40,7 +40,7 @@ function LoginRegister({ setUser }) {
         className={loginToggle ? "active" : "inactive"}
         style={{ "--height": "400px" }}
       >
-        <LoginForm setStatus={setStatus} setUser={setUser} />
+        <LoginForm setStatus={setStatus} />
       </CardBody>
       <CardBody
         className={registerToggle ? "active" : "inactive"}

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import { updateStatus } from "../../../lib/helpFunctions";
+import { responseHandler, updateStatus } from "../../../lib/helpFunctions";
 
 //Style Components
 import { Action, Button, Input, Password, PasswordIcon } from "../FormStyles";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-function LoginForm({ setStatus, setUser }) {
+function LoginForm({ setStatus }) {
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -26,19 +26,11 @@ function LoginForm({ setStatus, setUser }) {
       },
       body: JSON.stringify(login),
     }).then((response) => {
-      if (response.status === 422) {
-        response.json().then((data) => {
-          const status = { error: data.error, success: data.success };
-          updateStatus(setStatus, status);
-        });
-      } else if (response.status === 500) {
-        const status = { error: "Server error has occurred.", success: "" };
-        updateStatus(setStatus, status);
-      } else {
-        response.json().then((data) => {
-          setUser({ userID: data });
-        });
-      }
+      (async () => {
+        const message = await responseHandler(response);
+        updateStatus(setStatus, message);
+        window.location.reload(true);
+      })();
     });
   };
 

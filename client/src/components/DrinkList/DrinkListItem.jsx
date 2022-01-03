@@ -63,7 +63,7 @@ function DrinkListItem(props) {
     <Fragment>
       <Status status={status} />
       <ItemWrapper className={props.editDrink ? "show" : ""}>
-        <Image className={props.editDrink ? "show" : ""} src={updatedDrink.image} />
+        <Image className={props.editDrink ? "show" : ""} src={updatedDrink.image} width="125px"/>
         <ItemBody className={props.editDrink ? "show" : ""}>
           <Title>{updatedDrink.drinkName}</Title>
           <p>Available: {updatedDrink.available}</p>

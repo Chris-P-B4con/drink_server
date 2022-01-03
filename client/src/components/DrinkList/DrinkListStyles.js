@@ -4,6 +4,7 @@ export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 export const RightSection = styled.div`
@@ -34,8 +35,8 @@ export const ItemWrapper = styled.article`
 `;
 
 export const Image = styled.img`
-  width: 125px;
-  height: 125px;
+  width: ${props => props.width};
+  height: ${props => props.width};
   border-radius: 8px 0px 0px 8px;
   margin-right: 8px;
   transition: all 500ms ease-in-out;

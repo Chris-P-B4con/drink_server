@@ -28,4 +28,6 @@ router.post(
   drinks.updateDrink
 );
 
+router.post("/deleteBooking/:id", isAuth, drinks.deleteBooking);
+
 module.exports = router;

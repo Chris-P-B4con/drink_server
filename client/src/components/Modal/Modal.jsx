@@ -23,9 +23,9 @@ const Modal = (props) => {
               <Button
                 className={button.toLowerCase()}
                 value={button}
-                type={button.toLowerCase() === "submit" ? "submit" : "reset"}
+                type={button.toLowerCase()}
                 onClick={
-                  button.toLowerCase() == "cancel" ? props.cancelAction : ""
+                  button.toLowerCase() === "cancel" ? props.cancelAction : undefined
                 }
               />
             );

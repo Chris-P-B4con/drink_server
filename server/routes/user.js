@@ -3,6 +3,7 @@ const { check, body } = require("express-validator/check");
 
 
 const userController = require("../controller/user");
+const isAuth = require("../middleware/is-auth");
 
 router.post(
   "/login",
@@ -17,6 +18,6 @@ router.post("/register",userController.postRegister);
 
 router.get("/logout", userController.logout)
 
-router.get("/getUserDrinks/:paid/:type", userController.getUserDrinks)
+router.get("/userdrinks/:paid/:type",isAuth, userController.getUserDrinks)
 
 module.exports = router;

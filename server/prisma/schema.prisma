@@ -17,18 +17,19 @@ model User {
 
   drinks UserDrinks[]
   tokens Token[]
+  Log    Log[]
   @@map(name: "user")
 }
 
 model Drinks {
-  id         Int          @id @default(autoincrement())
-  drinkName  String       @unique
-  volume     Float
-  price      Float
-  available  Int
-  image      String
-  addedAt    DateTime     @default(now())
-  changedAt  DateTime     @updatedAt
+  id        Int      @id @default(autoincrement())
+  drinkName String   @unique
+  volume    Float
+  price     Float
+  available Int
+  image     String
+  addedAt   DateTime @default(now())
+  changedAt DateTime @updatedAt
 
   userDrinks UserDrinks[]
 
@@ -60,6 +61,17 @@ model Token {
   user   User @relation(fields: [userId], references: [id])
   userId Int
   @@map(name: "token")
+}
+
+model UserDrinksLog {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  
+  
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+
+  @@map(name: "userdrinkslog")
 }
 
 enum TokenType {

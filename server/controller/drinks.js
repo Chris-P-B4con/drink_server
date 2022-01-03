@@ -1,6 +1,7 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
 const fs = require("fs");
 const sharp = require("sharp");
+const { checkObjects } = require("../lib/helperFunctions");
 const prisma = new PrismaClient();
 
 exports.getDrinks = (req, res, next) => {
@@ -265,6 +266,26 @@ exports.deleteDrink = async (req, res, next) => {
       }
     })
 
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.deleteBooking = (req, res, next) => {
+  const bookingId = Number(req.params.id);
+  prisma.userDrinks
+    .findMany({
+      where: { id: bookingId },
+      select: { user: true },
+    })
+    .then((user) => {
+      if (checkObjects(user[0].user, req.session.user))
+        prisma.userDrinks
+          .delete({ where: { id: bookingId } })
+          .then((booking) => {
+            res.status(200).json({ success: "Deleted booking.", error: "" });
+          });
+    })
     .catch((err) => {
       console.log(err);
     });

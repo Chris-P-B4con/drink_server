@@ -57,7 +57,6 @@ function DrinkList() {
     let newArr = Array(editDrink.length).fill(false); 
     newArr[index] = !editDrink[index]
     setEditDrink(newArr)
-    console.log(newArr)
   }
 
   const showModal = (e) => {

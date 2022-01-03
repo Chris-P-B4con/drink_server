@@ -10,16 +10,16 @@ export const Wrapper = styled(CardWrapper)`
   color: black;
   background-color: var(--cur-status);
   border-radius: 10px;
+  transition: all 500ms ease-in-out;
+  padding: 6px 10px;
 
   &.shown{
     opacity: 0.8;
-    transition: all 500ms ease-in;
     max-height: 30px;
     margin-bottom:5px;
   }
   &.hidden {
     opacity: 0;
-    transition: all 500ms ease-out;
     max-height: 0px;
   }
 

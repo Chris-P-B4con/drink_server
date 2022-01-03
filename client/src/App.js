@@ -16,9 +16,8 @@ function App() {
       window.innerWidth - document.documentElement.clientWidth + "px"
     );
   }, []);
-  const [user, setUser] = useState({ userId: "" });
   const sessionCookie = Cookies.get("Session");
-  
+
   return (
     <MasterWrapper>
       <BrowserRouter>
@@ -36,7 +35,7 @@ function App() {
               <Route path="/*" element={<Navigate to="/login" />} />
               <Route
                 path="/login"
-                element={<LoginRegister setUser={setUser} />}
+                element={<LoginRegister/>}
               />
             </Fragment>
           )}

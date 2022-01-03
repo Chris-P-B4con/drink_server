@@ -20,6 +20,25 @@ export const bookDrink = async (drink) => {
   }
 };
 
+export const getUserDrinks = async () => {
+  try {
+    const userDrinks = await fetch(`/users/userdrinks/false/list`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    const response = await responseHandler(userDrinks);
+    if (response.error !== "") {
+      return response;
+    } else return userDrinks;
+  } catch (err) {
+    console.log("Error while getting user drinks.");
+  }
+};
+
 export const getDrinks = async () => {
   try {
     const res = await fetch("/drinks/get", {

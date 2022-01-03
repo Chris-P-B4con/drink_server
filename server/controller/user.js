@@ -1,12 +1,14 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
+const s = require("connect-redis");
 const { response } = require("express");
 
 exports.postLogin = (req, res, next) => {
   if (req.session.isLoggedIn) {
-    console.log("User alreayd logged in.");
-    return next();
+    return res
+      .status(422)
+      .json({ success: "User already logged in. Refresh page", error: "" });
   }
   if (!req.body.email || !req.body.password) {
     return res
@@ -157,7 +159,7 @@ exports.getUserDrinks = async (req, res, next) => {
   const drinks = paid
     ? await prisma.userDrinks.findMany({
         where: { userId: req.session.user.id },
-        select: { drink: true , orderedAt: true},
+        select: { id: true, drink: true, orderedAt: true },
       })
     : await prisma.userDrinks.findMany({
         where: { userId: req.sessions.user.id, paid: true },
@@ -174,13 +176,12 @@ exports.getUserDrinks = async (req, res, next) => {
   const type = req.params.type; //total_volume,summarized, detailed
   if (type === "total_volume") {
     answer = 0;
-    for ( let drink of drinks){
-      answer += drink.drink.volume
+    for (let drink of drinks) {
+      answer += drink.drink.volume;
     }
-    res.status(200).json(answer)
+    res.status(200).json(answer);
   } else if (type === "detailed") {
     for (let drink of drinks) {
-      console.log(drink.orderedAt)
       let cur_id = drink.drink.drinkName;
       // drink_map[cur_id] ? ("") : drink_map[cur_id] = drink.drink.drinkName;
       if (!answer[cur_id]) {
@@ -191,6 +192,8 @@ exports.getUserDrinks = async (req, res, next) => {
       }
     }
     res.json(answer);
+  } else if (type === "list") {
+    res.status(200).json(drinks);
   } else
     return res
       .status(422)
