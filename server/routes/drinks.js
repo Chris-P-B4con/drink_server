@@ -6,7 +6,7 @@ const isAdmin = require("../middleware/is-admin");
 const drinks = require("../controller/drinks");
 const files = require("../lib/files");
 
-router.get("/get", isAuth, drinks.getDrinks);
+router.get("/getAll/", isAuth, drinks.getAllDrinks);
 
 router.post(
   "/add",

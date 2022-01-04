@@ -9,8 +9,12 @@ import { Title, Wrapper } from "../DrinkList/DrinkListStyles";
 import { getUserDrinks } from "../../lib/drinkFunctions";
 import { updateStatus } from "../../lib/helpFunctions";
 
+import Pagination from "../Pagination/Pagination";
+
 function UserDrinks() {
   const [status, setStatus] = useState({ error: "", success: "" });
+  const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(9);
   const [drinks, setDrinks] = useState([
     {
       id: null,
@@ -28,13 +32,13 @@ function UserDrinks() {
   ]);
   const [spin, setSpin] = useState(true);
 
-  let total = 0;
   const getDrinkHandler = async (e) => {
     setSpin(true);
-    let res = await getUserDrinks();
-    if (res.length > 0) {
-      res.sort((a, b) => (a.orderedAt > b.orderedAt ? 1 : -1));
-      setDrinks(res);
+    let res = await getUserDrinks(page);
+    if (res.drinks.length > 0) {
+      res.drinks.sort((a, b) => (a.orderedAt > b.orderedAt ? 1 : -1));
+      setDrinks(res.drinks);
+      setMaxPage(res.numElem);
       setTimeout(() => {
         setSpin(false);
       }, 2000);
@@ -45,7 +49,7 @@ function UserDrinks() {
 
   useEffect(() => {
     getDrinkHandler();
-  }, []);
+  }, [page]);
 
   return (
     <Wrapper>
@@ -54,7 +58,6 @@ function UserDrinks() {
       <Status status={status} setStatus={setStatus} />
       {drinks[0].drink.id ? (
         drinks.map((drink, index) => {
-          total += drink.drink.price;
           return (
             <UserDrinkItem
               drink={drink}
@@ -70,7 +73,7 @@ function UserDrinks() {
           reloadHandler={getDrinkHandler}
         />
       )}
-      <Title>Total: {total.toFixed(2)}</Title>
+      <Pagination setPage={setPage} page={page} maxPage={maxPage} />
     </Wrapper>
   );
 }

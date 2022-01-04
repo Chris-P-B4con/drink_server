@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const s = require("connect-redis");
 const { response } = require("express");
 
+
 exports.postLogin = (req, res, next) => {
   if (req.session.isLoggedIn) {
     return res
@@ -154,48 +155,55 @@ exports.getUserDrinks = async (req, res, next) => {
       .json({ error: "You are not properly logged in.", succes: "" });
   }
 
-  // Get all drinks (paid=true) or all unpaid drinks (paid=false)
-  const paid = req.params.paid;
-  const drinks = paid
-    ? await prisma.userDrinks.findMany({
-        where: { userId: req.session.user.id },
-        select: { id: true, drink: true, orderedAt: true },
-      })
-    : await prisma.userDrinks.findMany({
-        where: { userId: req.sessions.user.id, paid: true },
-        select: { drink: true, orderedAt: true },
-      });
+  // Get all paid drinks (paid=true) or all unpaid drinks (paid=false)
+  const ITEMS_PER_PAGE = 5;
+  let paid = null;
+  if (req.query.paid === "false") paid = false;
+  else if (req.query.paid === "true") paid = true;
+  const page = Number(req.params.page);
+  let drinks = null;
 
-  if (!drinks) {
-    return res.status(500).json({
-      error: "Couldn't find any drinks under that user (did you already pay?)",
-      success: "",
-    });
+  try {
+    let numElem = paid 
+      ? await prisma.userDrinks.findMany({
+          where: { userId: req.session.user.id, paid: paid },
+        })
+      : await prisma.userDrinks.findMany({ where: { userId: req.session.user.id } });
+    numElem = numElem.length
+    if (page !== null) {
+      drinks = paid
+        ? await prisma.userDrinks.findMany({
+            skip: (page - 1) * ITEMS_PER_PAGE,
+            take: ITEMS_PER_PAGE,
+            where: { userId: req.session.user.id, paid: paid },
+            select: { id: true, drink: true, orderedAt: true },
+          })
+        : await prisma.userDrinks.findMany({
+            skip: (page - 1) * ITEMS_PER_PAGE,
+            take: ITEMS_PER_PAGE,
+            where: { userId: req.session.user.id },
+            select: { id: true, drink: true, orderedAt: true },
+          });
+    } else {
+      drinks = paid
+        ? await prisma.userDrinks.findMany({
+            where: { userId: req.session.user.id, paid: paid },
+            select: { id: true, drink: true, orderedAt: true },
+          })
+        : await prisma.userDrinks.findMany({
+            where: { userId: req.session.user.id },
+            select: { id: true, drink: true, orderedAt: true },
+          });
+    }
+    if (!drinks) {
+      return res.status(500).json({
+        error:
+          "Couldn't find any drinks under that user (did you already pay?)",
+        success: "",
+      });
+    }
+    return res.status(200).json({numElem: Math.ceil(numElem / ITEMS_PER_PAGE), drinks});
+  } catch (err) {
+    console.log(err);
   }
-  let answer = {};
-  const type = req.params.type; //total_volume,summarized, detailed
-  if (type === "total_volume") {
-    answer = 0;
-    for (let drink of drinks) {
-      answer += drink.drink.volume;
-    }
-    res.status(200).json(answer);
-  } else if (type === "detailed") {
-    for (let drink of drinks) {
-      let cur_id = drink.drink.drinkName;
-      // drink_map[cur_id] ? ("") : drink_map[cur_id] = drink.drink.drinkName;
-      if (!answer[cur_id]) {
-        answer[cur_id] = { volume: drink.drink.volume, bottles: 1 };
-      } else {
-        answer[cur_id].volume += drink.drink.volume;
-        answer[cur_id].bottles += 1;
-      }
-    }
-    res.json(answer);
-  } else if (type === "list") {
-    res.status(200).json(drinks);
-  } else
-    return res
-      .status(422)
-      .json({ error: "Wrong data configuration provided.", success: "" });
 };

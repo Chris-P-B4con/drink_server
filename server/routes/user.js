@@ -18,6 +18,6 @@ router.post("/register",userController.postRegister);
 
 router.get("/logout", userController.logout)
 
-router.get("/userdrinks/:paid/:type",isAuth, userController.getUserDrinks)
+router.get("/userdrinks/:page",isAuth, userController.getUserDrinks)
 
 module.exports = router;

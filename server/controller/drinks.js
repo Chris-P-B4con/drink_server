@@ -4,7 +4,11 @@ const sharp = require("sharp");
 const { checkObjects } = require("../lib/helperFunctions");
 const prisma = new PrismaClient();
 
-exports.getDrinks = (req, res, next) => {
+const ITEMS_PER_PAGE = 5;
+
+
+
+exports.getAllDrinks = (req, res, next) => {
   prisma.drinks
     .findMany()
     .then((data) => res.json(data))
@@ -276,15 +280,25 @@ exports.deleteBooking = (req, res, next) => {
   prisma.userDrinks
     .findMany({
       where: { id: bookingId },
-      select: { user: true },
+      select: { user: true, drink: true },
     })
     .then((user) => {
-      if (checkObjects(user[0].user, req.session.user))
+      if (checkObjects(user[0].user, req.session.user)) {
         prisma.userDrinks
           .delete({ where: { id: bookingId } })
           .then((booking) => {
-            res.status(200).json({ success: "Deleted booking.", error: "" });
+            prisma.drinks
+              .update({
+                where: { id: user[0].drink.id },
+                data: { available: { increment: 1 } },
+              })
+              .then((update) => {
+                res
+                  .status(200)
+                  .json({ success: "Deleted booking.", error: "" });
+              });
           });
+      }
     })
     .catch((err) => {
       console.log(err);

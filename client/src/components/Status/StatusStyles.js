@@ -12,6 +12,7 @@ export const Wrapper = styled(CardWrapper)`
   border-radius: 10px;
   transition: all 500ms ease-in-out;
   padding: 6px 10px;
+  width: 100%;
 
   &.shown{
     opacity: 0.8;

@@ -4,6 +4,7 @@ export const COLORS = {
   bg3: "hsl(197, 100%, 14%)",
   bg4: "hsl(195, 97%, 15%)",
   bg5: "hsl(193, 98%, 16%)",
+  inactive: "hsl(0, 0%, 50%)",
   accent: "hsl(27, 87%, 67%)",
   neonPink: "hsl(317 100% 54%)",
   clrbg: "hsl(323 21% 16%)",

@@ -20,14 +20,10 @@ export const bookDrink = async (drink) => {
   }
 };
 
-export const getUserDrinks = async () => {
+export const getUserDrinks = async (page = null, paid=false) => {
   try {
-    const userDrinks = await fetch(`/users/userdrinks/false/list`, {
+    const userDrinks = await fetch(`/users/userdrinks/${page}?paid=${paid}`, {
       method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
     });
 
     const response = await responseHandler(userDrinks);
@@ -41,7 +37,7 @@ export const getUserDrinks = async () => {
 
 export const getDrinks = async () => {
   try {
-    const res = await fetch("/drinks/get", {
+    const res = await fetch("/drinks/getAll", {
       method: "GET",
     });
     if (res.status === 403)
