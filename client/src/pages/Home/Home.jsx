@@ -6,6 +6,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import Cookies from "js-cookie";
 
 import { Main } from "./HomeStyles.js";
+import Barplot from "../../components/Barplot/Barplot";
 
 function Home() {
   const sessionCookie = Cookies.get("Session");
@@ -14,6 +15,7 @@ function Home() {
     <Fragment>
       <NavBar />
       <Main>
+        <Barplot />
         <DrinkCards />
       </Main>
     </Fragment>

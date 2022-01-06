@@ -12,15 +12,13 @@ export const bookDrink = async (drink) => {
     });
 
     const response = await responseHandler(booking);
-    if (response.success === "") {
-      return { error: "", success: "Prost. Wurde gebucht." };
-    } else return response;
+    return response;
   } catch (err) {
     console.log("Booking Error");
   }
 };
 
-export const getUserDrinks = async (page = null, paid=false) => {
+export const getUserDrinks = async (page = null, paid = false) => {
   try {
     const userDrinks = await fetch(`/users/userdrinks/${page}?paid=${paid}`, {
       method: "GET",
@@ -53,6 +51,20 @@ export const getDrinks = async () => {
     if (JSON.parse(JSON.stringify(res)).length !== 0) {
       return res.json();
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAllUserDrinks = async () => {
+  try {
+    const res = await fetch("/users/alluserdrinks", {
+      method: "GET",
+    });
+
+    const response = await responseHandler(res);
+    if (response.error !== "") return response;
+    return res.json();
   } catch (err) {
     console.log(err);
   }

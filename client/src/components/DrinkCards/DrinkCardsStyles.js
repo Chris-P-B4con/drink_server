@@ -5,7 +5,9 @@ export const Section = styled.section`
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  box-shadow: var(--shadow-elevation-high);
+  box-shadow: var(--shadow-elevation-medium);
+  margin-bottom: 30px;
+  width: 95%;
   padding: 10px 3px;
 `;
 

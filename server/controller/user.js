@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const s = require("connect-redis");
 const { response } = require("express");
 
-
 exports.postLogin = (req, res, next) => {
   if (req.session.isLoggedIn) {
     return res
@@ -164,21 +163,25 @@ exports.getUserDrinks = async (req, res, next) => {
   let drinks = null;
 
   try {
-    let numElem = paid 
+    let numElem = paid
       ? await prisma.userDrinks.findMany({
           where: { userId: req.session.user.id, paid: paid },
         })
-      : await prisma.userDrinks.findMany({ where: { userId: req.session.user.id } });
-    numElem = numElem.length
+      : await prisma.userDrinks.findMany({
+          where: { userId: req.session.user.id },
+        });
+    numElem = numElem.length;
     if (page !== null) {
       drinks = paid
         ? await prisma.userDrinks.findMany({
+            orderBy: { orderedAt: "asc" },
             skip: (page - 1) * ITEMS_PER_PAGE,
             take: ITEMS_PER_PAGE,
             where: { userId: req.session.user.id, paid: paid },
             select: { id: true, drink: true, orderedAt: true },
           })
         : await prisma.userDrinks.findMany({
+            orderBy: { orderedAt: "asc" },
             skip: (page - 1) * ITEMS_PER_PAGE,
             take: ITEMS_PER_PAGE,
             where: { userId: req.session.user.id },
@@ -187,10 +190,12 @@ exports.getUserDrinks = async (req, res, next) => {
     } else {
       drinks = paid
         ? await prisma.userDrinks.findMany({
+            orderBy: { orderedAt: "asc" },
             where: { userId: req.session.user.id, paid: paid },
             select: { id: true, drink: true, orderedAt: true },
           })
         : await prisma.userDrinks.findMany({
+            orderBy: { orderedAt: "asc" },
             where: { userId: req.session.user.id },
             select: { id: true, drink: true, orderedAt: true },
           });
@@ -202,7 +207,39 @@ exports.getUserDrinks = async (req, res, next) => {
         success: "",
       });
     }
-    return res.status(200).json({numElem: Math.ceil(numElem / ITEMS_PER_PAGE), drinks});
+    return res
+      .status(200)
+      .json({ numElem: Math.ceil(numElem / ITEMS_PER_PAGE), drinks });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.getAllUserDrinks = async (req, res, next) => {
+  if (!req.session.user) {
+    return res
+      .status(401)
+      .json({ error: "You are not properly logged in.", succes: "" });
+  }
+
+  try {
+    const drinks = await prisma.userDrinks.findMany({
+      orderBy: { userId: "asc" },
+      select: {
+        user: { select: { id: true, username: true } },
+        drink: { select: { drinkName: true, volume: true, price: true } },
+        orderedAt: true,
+      },
+    });
+
+    if (!drinks) {
+      return res.status(500).json({
+        error:
+          "Couldn't find any drinks under that user (did you already pay?)",
+        success: "",
+      });
+    }
+    return res.status(200).json(drinks);
   } catch (err) {
     console.log(err);
   }

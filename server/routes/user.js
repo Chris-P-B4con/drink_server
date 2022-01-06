@@ -20,4 +20,6 @@ router.get("/logout", userController.logout)
 
 router.get("/userdrinks/:page",isAuth, userController.getUserDrinks)
 
+router.get("/alluserdrinks/", isAuth, userController.getAllUserDrinks)
+
 module.exports = router;

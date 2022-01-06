@@ -7,21 +7,24 @@ export const Header = styled.header`
   height: 6rem;
   margin-bottom: 3.5rem;
   width: 100%;
-  height: fit-content;
+  position: sticky;
+  top:0;
+  z-index: 9999;
+  background-color: var(--bg);
+
 `;
 
 export const Nav = styled.nav`
   height: var(--nav-size);
-  background-color: var(--bg);
   padding: 0 1rem;
   border-bottom: var(--border);
-
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 export const Menu = styled.ul`
+
   padding: 0;
   margin: 0;
   text-align: center;
