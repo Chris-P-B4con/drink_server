@@ -54,12 +54,13 @@ export const GlobalStyles = createGlobalStyle`
   
   body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, ul, ol, dl, dt, dd {
     margin: 0;
+    background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
+    transition: all 0.50s ease-in-out;
   }
   
   html, body {
     height: 100%;
-    background: var(--bg);
-    color: var(--text-color);
   }
  
   body {
@@ -68,7 +69,7 @@ export const GlobalStyles = createGlobalStyle`
     
   }
   a{
-    color:var(--text-color);
+    color: ${({ theme }) => theme.text};
     text-decoration: none;
   }
   img,

@@ -15,12 +15,13 @@ export const Article = styled.article`
   display: flex;
   border-radius: 5px;
   margin: 5px;
-  background-color: var(--bg2);
+  background-color: ${({theme})=> theme.article};
   flex-direction: column;
   min-height: 200px;
   box-shadow: var(--shadow-elevation-medium);
   transition: all 500 ease-in-out;
   width: 150px;
+  border: none;
   position: relative;
 
   @media (hover: hover) and (pointer: fine) {
@@ -44,7 +45,7 @@ export const CardHeader = styled.div`
 `;
 
 export const CardBody = styled.div`
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -53,6 +54,7 @@ export const CardBody = styled.div`
   height: 60px;
 
   h2 {
+    background-color: transparent;
     font-size: 16px;
     text-decoration: none;
     display: flex;

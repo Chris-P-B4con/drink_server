@@ -11,18 +11,18 @@ export const RightSection = styled.div`
   align-self: flex-end;
   padding: 10px;
   font-size: 1.5rem;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   cursor: pointer;
 `;
 
 export const ItemWrapper = styled.article`
   display: flex;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   width: 350px;
   justify-content: space-between;
-  background-color: var(--bg2);
+  background-color: ${({theme})=> theme.article};
   border-radius: 8px;
-  border: 1px solid var(--bg3);
+  border: 1px solid ${({theme})=> theme.borderColor};
   margin: 5px 8px;
   box-shadow: var(--shadow-elevation-medium);
   transition: all 500ms ease-in-out;
@@ -43,11 +43,13 @@ export const Image = styled.img`
 
   &.show{
     border-radius: 8px;
+    overflow: hidden;
   }
 `;
 
 export const ItemBody = styled.div`
   display: flex;
+  background-color: transparent;
   justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
@@ -73,7 +75,7 @@ export const ItemFooter = styled.div`
   align-items: center;
   justify-content: center;
   width: 40px;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   cursor: pointer;
   transition: all 500ms ease-in-out;
   margin-left: auto;
@@ -90,7 +92,7 @@ export const AddSection = styled.section`
   padding: 10px;
   cursor: pointer;
   font-size: 1.5rem;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
 `;
 
 export const ItemExpanded = styled.div`

@@ -21,7 +21,7 @@ export const ItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   transition: all 200ms ease-in-out;
   padding: 5px;
   margin-left: 10px;
@@ -29,6 +29,6 @@ export const ItemWrapper = styled.div`
 `;
 
 export const Line = styled.hr`
-  border: 1px var(--bg2) solid;
+  border: 1px ${({theme})=> theme.article}; solid;
   width: 100%;
 `;

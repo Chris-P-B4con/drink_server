@@ -6,7 +6,6 @@ export const ReloadWrapper = styled.div`
   align-items: center;
   padding: 10px;
   font-size: 1.5rem;
-  color: var(--text-color);
   cursor: pointer;
   @keyframes rotate {
     from {

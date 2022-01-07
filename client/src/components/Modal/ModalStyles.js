@@ -10,9 +10,9 @@ export const ModalWrapper = styled.form`
   right: 0;
   margin: auto;
   border-radius: 16px;
-  background-color:var(--bg2);
+  background-color: ${({theme})=> theme.section};;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   z-index:6;
   display: flex;
   justify-content: center;
@@ -21,7 +21,7 @@ export const ModalWrapper = styled.form`
 
   &h1 {
     font-size: 1.5rem;
-    color: var(--accent);
+    color: ${({theme})=> theme.accent};
     margin: 1rem;
     align-self:flex-start;
     margin-bottom:auto;
@@ -41,9 +41,9 @@ export const ModalWrapperForm = styled.form`
   right: 0;
   margin: auto;
   border-radius: 16px;
-  background-color:var(--dark-3);
+  background-color: ${({theme})=> theme.article};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   z-index:6;
   display: flex;
   justify-content: center;
@@ -52,7 +52,7 @@ export const ModalWrapperForm = styled.form`
 
   &h1 {
     font-size: 1.5rem;
-    color: var(--accent);
+    color: ${({theme})=> theme.accent};
     margin: 1rem;
     align-self:flex-start;
     margin-bottom:auto;

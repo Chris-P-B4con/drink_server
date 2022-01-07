@@ -7,6 +7,6 @@ export const Wrapper = styled.section`
   box-shadow: var(--shadow-elevation-medium);
   padding: 10px;
   width: 95%;
-  height: 300px;
+  height: 400px;
   margin-bottom: 30px;
 `;

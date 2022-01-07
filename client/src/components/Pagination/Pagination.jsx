@@ -1,10 +1,11 @@
 import React from "react";
 
-import { COLORS } from "../../constants/constants";
+import { COLORS_LIGHT } from "../../constants/constants";
 
 import { LeftArrow, RightArrow, Wrapper } from "./PaginationStyles";
 
 function Pagination(props) {
+  
   return (
     <Wrapper>
       {props.page !== 1 ? (
@@ -14,10 +15,10 @@ function Pagination(props) {
           }}
         />
       ) : (
-        <LeftArrow color={COLORS.inactive} />
+        <LeftArrow color={COLORS_LIGHT.inactive} />
       )}
       {props.page === props.maxPage ? (
-        <RightArrow color={COLORS.inactive} />
+        <RightArrow color={COLORS_LIGHT.inactive} />
       ) : (
         <RightArrow
           onClick={() => {

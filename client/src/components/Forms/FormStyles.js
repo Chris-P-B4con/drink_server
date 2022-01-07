@@ -12,9 +12,9 @@ export const Input = styled.input`
   padding: 10px 10px;
   margin-bottom: 20px;
   border: none;
-  border-bottom: 1px solid var(--text-color);
+  border-bottom: 1px solid ${({theme})=> theme.text};
   background-color: transparent;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   outline: none;
 `;
 
@@ -43,18 +43,18 @@ export const Button = styled.input`
   box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.5);
 
   &.submit {
-    background-color: var(--accent);
-    color: var(--text-color);
+    background-color: ${({theme})=> theme.accent};
+    color: ${({theme})=> theme.text};
   }
 
    &.delete {
-     background-color: var(--danger);
-     color: var(--text-color);
+     background-color: ${({theme})=> theme.danger};
+     color: ${({theme})=> theme.text};
    }
   
   &.cancel {
-    background-color: var(--bg3);
-    color: var(--text-color);
+    background-color: ${({theme})=> theme.article};
+    color: ${({theme})=> theme.text};
   }
 `;
 
@@ -68,7 +68,7 @@ export const PasswordIcon = styled.i`
   position: absolute;
   top: 10px;
   right: 5px;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
 `;
 
 export const LoginButton = styled.button`
@@ -76,7 +76,7 @@ export const LoginButton = styled.button`
   margin-right: 1em;
   border: 0px;
   cursor: pointer;
-  color: var(--text-color);
+  color: ${({theme})=> theme.text};
   border: none;
   background-color: transparent;
 `;

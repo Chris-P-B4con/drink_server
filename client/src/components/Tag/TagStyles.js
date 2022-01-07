@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
 background-color: var(--type);
-color: var(--bg2);
+color: ${({theme})=> theme.article};
 border-radius: 8px 15px 15px 0;
 min-width: 50px;
 max-height: 30px;
@@ -13,5 +13,5 @@ justify-content: center;
 align-items: center;
 top:0;
 left:0;
-border: 4px solid var(--bg2);
+border: 4px solid ${({theme})=> theme.article};
 `

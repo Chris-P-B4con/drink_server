@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from "react";
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { GlobalStyles, MasterWrapper } from "./constants/GlobalStyles";
+import { ThemeProvider } from "styled-components";
+import { COLORS_DARK, COLORS_LIGHT } from "./constants/constants";
 import Cookies from "js-cookie";
 
 //Components
@@ -15,35 +17,40 @@ function App() {
       "--scrollbar-width",
       window.innerWidth - document.documentElement.clientWidth + "px"
     );
+    setTheme(Cookies.get("theme"))
   }, []);
   const sessionCookie = Cookies.get("Session");
+  const [theme, setTheme] = useState("dark");
+  const themeToggler = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+    Cookies.get("theme") ==="light"? Cookies.set("theme", "dark") : Cookies.set("theme", "light")
+  };
 
   return (
-    <MasterWrapper>
-      <BrowserRouter>
-        <Routes>
-          {sessionCookie ? (
-            <Fragment>
-              <Route path="/" element={<Home />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/logout" element={<Logout />} />
-              <Route path="/login" element={<Navigate to="/" />} />
-            </Fragment>
-          ) : (
-            <Fragment>
-              <Route path="/*" element={<Navigate to="/login" />} />
-              <Route
-                path="/login"
-                element={<LoginRegister/>}
-              />
-            </Fragment>
-          )}
-        </Routes>
+    <ThemeProvider theme={theme === "light" ? COLORS_LIGHT : COLORS_DARK}>
+      <MasterWrapper>
+        <BrowserRouter>
+          <Routes>
+            {sessionCookie ? (
+              <Fragment>
+                <Route path="/" element={<Home />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/profile" element={<Profile theme={theme} themeToggler={themeToggler}/>} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/login" element={<Navigate to="/" />} />
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Route path="/*" element={<Navigate to="/login" />} />
+                <Route path="/login" element={<LoginRegister />} />
+              </Fragment>
+            )}
+          </Routes>
 
-        <GlobalStyles />
-      </BrowserRouter>
-    </MasterWrapper>
+          <GlobalStyles />
+        </BrowserRouter>
+      </MasterWrapper>
+    </ThemeProvider>
   );
 }
 

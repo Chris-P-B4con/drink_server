@@ -52,7 +52,7 @@ function DrinkCards() {
       <Status status={status} setStatus={setStatus} />
       <Section>
         {drinks[0].drinkName &&
-          drinks.map((drink, index) => {
+          drinks.map((drink) => {
             return (
               <DrinkCard drink={drink} bookDrink={bookingHandler}></DrinkCard>
             );

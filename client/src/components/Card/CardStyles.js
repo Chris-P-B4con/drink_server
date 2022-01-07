@@ -12,13 +12,13 @@ export const CardHeader = styled.div`
   align-items: center;
   position: relative;
   min-height: 100px;
-  color: white;
+  color: ${({theme})=> theme.text};
   width: 105%;
   box-shadow: var(--shadow-elevation-medium);
   background-image: linear-gradient(
     to bottom left,
-    var(--bg),
-    var(--bg3)
+    ${({theme})=> theme.body},
+    ${({theme})=> theme.article}
   );
   border-radius: 16px 16px;
   margin-left: -10px;
@@ -29,7 +29,7 @@ export const CardHeader = styled.div`
 export const CardBody = styled(CardWrapper)`
   padding: 30px;
   border-radius: 0 0 16px 16px;
-  background-color: var(--bg2);
+  background-color: ${({theme})=> theme.section};
   overflow: hidden;
   height: 100%;
   &.active {

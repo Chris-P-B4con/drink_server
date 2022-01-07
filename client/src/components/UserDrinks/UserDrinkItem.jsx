@@ -7,7 +7,6 @@ import {
   ItemWrapper,
   Image,
   ItemBody,
-  Title,
   ItemFooter,
 } from "../DrinkList/DrinkListStyles";
 
@@ -21,7 +20,7 @@ function UserDrinkItem(props) {
       (async () => {
         const serverMessage = await responseHandler(response);
         updateStatus(props.setStatus, serverMessage);
-        props.getDrinkHandler()
+        props.getDrinkHandler();
       })();
     });
   };
@@ -35,10 +34,7 @@ function UserDrinkItem(props) {
     <ItemWrapper>
       <Image src={props.drink.drink.image} width="75px" />
       <ItemBody className={props.editDrink ? "show" : ""}>
-        <p>{props.drink.drink.price} €</p>
-        <p>
-          <i>{date}</i>
-        </p>
+        {props.drink.drink.price} €<i>{date}</i>
       </ItemBody>
       <ItemFooter className={props.editDrink ? "show" : ""}>
         <BiTrash id={props.drink.drink.id} onClick={deleteDrink} />

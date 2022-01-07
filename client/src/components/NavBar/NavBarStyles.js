@@ -10,14 +10,14 @@ export const Header = styled.header`
   position: sticky;
   top:0;
   z-index: 9999;
-  background-color: var(--bg);
+  background-color: ${({theme})=> theme.body};
 
 `;
 
 export const Nav = styled.nav`
   height: var(--nav-size);
   padding: 0 1rem;
-  border-bottom: var(--border);
+  border-bottom: ${({theme})=> theme.borderColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,14 +46,13 @@ export const NeonSign = styled.div`
   font-size: 2rem;
   display: inline-block;
   cursor: pointer;
-  background-color: var(--bg);
   text-decoration: none;
-  color: var(--accent);
-  border: var(--accent) 0.125em solid;
+  color: ${({theme})=> theme.accent};
+  border: ${({theme})=> theme.accent} 0.125em solid;
   padding: 0.25em 1em;
   border-radius: 0.25em;
   text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
-  box-shadow: inset 0 0 0.5em 0 var(--accent), 0 0 0.5em 0 var(--accent);
+  box-shadow: inset 0 0 0.5em 0 ${({theme})=> theme.accent}, 0 0 0.5em 0 ${({theme})=> theme.accent};
   position: relative;
 
   &::after{
@@ -76,10 +75,10 @@ export const NeonSign = styled.div`
 
   &:hover,
   &:focus {
-    color: var(--bg2);
+    color: ${({theme})=> theme.article};
     text-shadow: none;
-    background-color: var(--accent);
-    box-shadow: inset 0 0 1.5em 0 var(--accent), 0 0 1.5em 0 var(--accent);
+    background-color: ${({theme})=> theme.accent};
+    box-shadow: inset 0 0 1.5em 0 ${({theme})=> theme.accent}, 0 0 1.5em 0 ${({theme})=> theme.accent};
   }
   &:hover::before {
     opacity: 1;
