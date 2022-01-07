@@ -1,22 +1,25 @@
 import React, { useState, useEffect, Fragment } from "react";
-import ResizableBox from "../ResizableBox/ResizableBox";
-import { AxisOptions, Chart } from "react-charts";
-import Reload from "../Reload/Reload";
-import { getAllUserDrinks } from "../../lib/drinkFunctions";
-import { useMediaQuery } from "react-responsive";
-import { Wrapper } from "./BarplotStyles";
-import CanvasJSReact from "../../lib/canvasjs.react";
-import { COLORS_LIGHT, COLORS_DARK } from "../../constants/constants";
-import { updateStatus } from "../../lib/helpFunctions";
+import Cookies from "js-cookie";
+
 import Status from "../Status/Status";
+import CanvasJSReact from "../../lib/canvasjs.react";
+import Reload from "../Reload/Reload";
+
+import { updateStatus } from "../../lib/helpFunctions";
+import { COLORS_LIGHT, COLORS_DARK } from "../../constants/constants";
+import { getAllUserDrinks } from "../../lib/drinkFunctions";
+
+import { Wrapper } from "./BarplotStyles";
+
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function Barplot(props) {
   const [options, setOptions] = useState({ data: [] });
   const [status, setStatus ] = useState({succes:"", error: ""})
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(Cookies.get("theme")==="dark");
 
   useEffect(() => {
+
     (async () => {
       const allUserDrinks = await getAllUserDrinks();
       if (allUserDrinks.length > 0) {
@@ -30,33 +33,33 @@ function Barplot(props) {
         }, {});
 
         setOptions({
-          backgroundColor: isDark ? COLORS_DARK.bg : COLORS_LIGHT.bg,
+          backgroundColor: isDark ? COLORS_DARK.body : COLORS_LIGHT.body,
           animationEnabled: true,
           theme: "transparent",
           title: {
-            fontColor: isDark ? COLORS_DARK.textColor : COLORS_LIGHT.textColor,
+            fontColor: isDark ? COLORS_DARK.text : COLORS_LIGHT.text,
             text: "Bestenliste",
           },
           axisX: {
             tickThickness: 0,
             title: "Benutzer",
             titleFontColor: isDark
-              ? COLORS_DARK.textColor
-              : COLORS_LIGHT.textColor,
+              ? COLORS_DARK.text
+              : COLORS_LIGHT.text,
             labelFontColor: isDark
-              ? COLORS_DARK.textColor
-              : COLORS_LIGHT.textColor,
+              ? COLORS_DARK.text
+              : COLORS_LIGHT.text,
           },
           axisY: {
             gridDashType: "dot",
             tickThickness: 0,
             titleFontColor: isDark
-              ? COLORS_DARK.textColor
-              : COLORS_LIGHT.textColor,
+              ? COLORS_DARK.text
+              : COLORS_LIGHT.text,
             title: "Trinkvolumen",
             labelFontColor: isDark
-              ? COLORS_DARK.textcolor
-              : COLORS_LIGHT.textcolor,
+              ? COLORS_DARK.text
+              : COLORS_LIGHT.text,
           },
           data: [
             {
@@ -78,13 +81,6 @@ function Barplot(props) {
     })();
   }, []);
 
-  const systemPrefersDark = useMediaQuery(
-    {
-      query: "(prefers-color-scheme: dark)",
-    },
-    undefined,
-    (isSystemDark) => setIsDark(isSystemDark)
-  );
 
   return (
     <Fragment>

@@ -19,8 +19,8 @@ export const COLORS_LIGHT = {
   section: "hsl(34, 100%, 89%)",
   article: "hsl(30, 79%, 85%)",
   borderColor: "hsl(30, 79%, 80%)",
-  accent: "hsl(181, 43%, 77%)",
-  textColor: "black",
+  accent: "hsl(317 100% 54%)",
+  text: "black",
 
   clrbg: "hsl(323 21% 16%)",
   inactive: "hsl(0, 0%, 50%)",
