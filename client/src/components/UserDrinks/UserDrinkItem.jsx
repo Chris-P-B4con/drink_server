@@ -28,15 +28,15 @@ function UserDrinkItem(props) {
   useEffect(() => {
     let temp = new Date(props.drink.orderedAt);
     setDate(temp.toLocaleString());
-  }, []);
+  }, [props.drink.orderedAt]);
 
   return (
     <ItemWrapper>
       <Image src={props.drink.drink.image} width="75px" />
-      <ItemBody className={props.editDrink ? "show" : ""}>
+      <ItemBody>
         {props.drink.drink.price} €<i>{date}</i>
       </ItemBody>
-      <ItemFooter className={props.editDrink ? "show" : ""}>
+      <ItemFooter>
         <BiTrash id={props.drink.drink.id} onClick={deleteDrink} />
       </ItemFooter>
     </ItemWrapper>

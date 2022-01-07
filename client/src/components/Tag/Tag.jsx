@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import useMediaQuery from "react-responsive";
-import { Wrapper } from "./TagStyles";
+import React from "react";
 
-import { COLORS_LIGHT, COLORS_DARK } from "../../constants/constants";
+//Styled Components
+import { Wrapper } from "./TagStyles";
 
 function Tag(props) {
   

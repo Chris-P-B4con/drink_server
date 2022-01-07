@@ -11,40 +11,44 @@ export const RightSection = styled.div`
   align-self: flex-end;
   padding: 10px;
   font-size: 1.5rem;
-  color: ${({theme})=> theme.text};
+  color: ${({ theme }) => theme.text};
   cursor: pointer;
 `;
 
 export const ItemWrapper = styled.article`
   display: flex;
-  color: ${({theme})=> theme.text};
+  color: ${({ theme }) => theme.text};
   width: 350px;
   justify-content: space-between;
-  background-color: ${({theme})=> theme.article};
+  background-color: ${({ theme }) => theme.article};
   border-radius: 8px;
-  border: 1px solid ${({theme})=> theme.borderColor};
+  border: 1px solid ${({ theme }) => theme.borderColor};
   margin: 5px 8px;
   box-shadow: var(--shadow-elevation-medium);
   transition: all 500ms ease-in-out;
   align-items: space-between;
-  &.show {
+  ${(props) => {
+    if (props.show)
+      return `
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-  }
+    align-items: center;`;
+  }}
 `;
 
 export const Image = styled.img`
-  width: ${props => props.width};
-  height: ${props => props.width};
+  width: ${(props) => props.width};
+  height: ${(props) => props.width};
   border-radius: 8px 0px 0px 8px;
   margin-right: 8px;
   transition: all 500ms ease-in-out;
 
-  &.show{
+  ${(props) => {
+    if (props.show)
+      return `
     border-radius: 8px;
-    overflow: hidden;
-  }
+    overflow: hidden;`;
+  }}
 `;
 
 export const ItemBody = styled.div`
@@ -55,12 +59,12 @@ export const ItemBody = styled.div`
   flex-direction: column;
   transition: all 500ms ease-in-out;
   padding: 10px;
-
-  &.show {
-    overflow: hidden;
+  ${(props) => {
+    if (props.show)
+      return `overflow: hidden;
     height: 0px;
-    padding: 0px;
-  }
+    padding: 0px;`;
+  }}
 `;
 
 export const Title = styled.p`
@@ -68,6 +72,7 @@ export const Title = styled.p`
   justify-content: space-between;
   font-size: 1.3rem;
   font-weight: bold;
+  background-color: transparent;
 `;
 
 export const ItemFooter = styled.div`
@@ -75,13 +80,15 @@ export const ItemFooter = styled.div`
   align-items: center;
   justify-content: center;
   width: 40px;
-  color: ${({theme})=> theme.text};
+  color: ${({ theme }) => theme.text};
   cursor: pointer;
   transition: all 500ms ease-in-out;
   margin-left: auto;
-  &.show {
-    align-self: flex-end;
-  }
+  ${(props) => {
+    if (props.show)
+      return `
+    align-self: flex-end;`;
+  }}
 `;
 export const Span = styled.span`
   margin-right: 6px;
@@ -92,7 +99,6 @@ export const AddSection = styled.section`
   padding: 10px;
   cursor: pointer;
   font-size: 1.5rem;
-  color: ${({theme})=> theme.text};
 `;
 
 export const ItemExpanded = styled.div`
@@ -104,8 +110,10 @@ export const ItemExpanded = styled.div`
   justify-content: center;
   align-items: center;
 
-  &.show {
+  ${(props) => {
+    if (props.show)
+      return `
     overflow: auto;
-    height: 500px;
-  }
+    height: 500px;`;
+  }}
 `;

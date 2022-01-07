@@ -16,14 +16,13 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 function Barplot(props) {
   const [options, setOptions] = useState({ data: [] });
   const [status, setStatus ] = useState({succes:"", error: ""})
-  const [isDark, setIsDark] = useState(Cookies.get("theme")==="dark");
-
+  
   useEffect(() => {
+    const isDark = Cookies.get("theme")==="dark";
 
     (async () => {
       const allUserDrinks = await getAllUserDrinks();
       if (allUserDrinks.length > 0) {
-        const data = {};
 
         const userVolumes = allUserDrinks.reduce((acc, userDrink) => {
           const { username } = userDrink.user;

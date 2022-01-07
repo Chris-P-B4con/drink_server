@@ -1,6 +1,6 @@
 export const COLORS_DARK = {
   body: "hsl(195 100% 8%)",
-  section: "hsl(196, 100%, 11%)",
+  section: "hsl(195 100% 8%)",
   article: "hsl(196, 100%, 11%)",
   borderColor: "hsl(195, 97%, 15%)",
   accent: "hsl(27, 87%, 67%)",
@@ -15,11 +15,11 @@ export const COLORS_DARK = {
 };
 
 export const COLORS_LIGHT = {
-  body: "hsl(49, 94%, 93%)",
-  section: "hsl(34, 100%, 89%)",
-  article: "hsl(30, 79%, 85%)",
-  borderColor: "hsl(30, 79%, 80%)",
-  accent: "hsl(317 100% 54%)",
+  body: "#eeeeee",
+  section: "#eeeeee",
+  article: "#dddddd",
+  borderColor: "#bbbbbb",
+  accent: "#29a8ab",
   text: "black",
 
   clrbg: "hsl(323 21% 16%)",

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 
+//Components
+import Pagination from "../Pagination/Pagination";
 import Reload from "../Reload/Reload";
 import Status from "../Status/Status";
 import UserDrinkItem from "./UserDrinkItem";
 
-import { Title, Wrapper } from "../DrinkList/DrinkListStyles";
+//Styled Components
+import { Wrapper } from "../DrinkList/DrinkListStyles";
 
+//Custom Fucntions
 import { getUserDrinks } from "../../lib/drinkFunctions";
 import { updateStatus } from "../../lib/helpFunctions";
 
-import Pagination from "../Pagination/Pagination";
 
 function UserDrinks() {
   const [status, setStatus] = useState({ error: "", success: "" });

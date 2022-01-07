@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MenuItem } from "../NavBarStyles";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function NavItem(props) {
       <Link to={props.link} onClick={() => props.setOpenNav(!props.openNav)}>
         {props.icon}
       </Link>
-      <Wrapper className={props.openNav ? "" : "inactive"}>{props.children}</Wrapper>
+      <Wrapper show={props.openNav} >{props.children}</Wrapper>
     </MenuItem>
   );
 }

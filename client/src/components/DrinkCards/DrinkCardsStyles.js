@@ -9,6 +9,7 @@ export const Section = styled.section`
   margin-bottom: 30px;
   width: 95%;
   padding: 10px 3px;
+  background-color: ${({theme})=> theme.section}
 `;
 
 export const Article = styled.article`
@@ -21,7 +22,6 @@ export const Article = styled.article`
   box-shadow: var(--shadow-elevation-medium);
   transition: all 500 ease-in-out;
   width: 150px;
-  border: none;
   position: relative;
 
   @media (hover: hover) and (pointer: fine) {
@@ -32,7 +32,7 @@ export const Article = styled.article`
       margin-right: -20px;
       margin-top: -20px;
       margin-bottom: -20px;
-      border: 1px solid var(--accent);
+      border: 1px solid ${({theme})=> theme.accent};
       transition: all 500ms ease-in-out;
     }
   }

@@ -1,16 +1,18 @@
 import React, { Fragment, useState, useEffect } from "react";
 
+//Components
 import Reload from "../Reload/Reload";
 import Backdrop from "../Backdrop/Backdrop";
 import Modal from "../Modal/Modal";
 import DrinkListItem from "./DrinkListItem";
 import Status from "../Status/Status";
 
-import { MdAddCircleOutline } from "react-icons/md";
-
+//Styled Components
 import { Input } from "../Forms/FormStyles";
 import { AddSection, Wrapper } from "./DrinkListStyles";
+import { MdAddCircleOutline } from "react-icons/md";
 
+//Custom Functions
 import { getDrinks, addDrink } from "../../lib/drinkFunctions";
 import { updateStatus } from "../../lib/helpFunctions";
 
@@ -122,7 +124,7 @@ function DrinkList() {
       numEdits.push(false);
       setEditDrink(numEdits);
     }
-  }, []);
+  }, [drinks.length]);
 
   return (
     <Wrapper>

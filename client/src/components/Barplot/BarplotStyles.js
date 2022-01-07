@@ -5,6 +5,7 @@ export const Wrapper = styled.section`
   justify-content: center;
   align-items: center;
   box-shadow: var(--shadow-elevation-medium);
+  background-color: ${({theme})=> theme.section}
   padding: 10px;
   width: 95%;
   height: 400px;

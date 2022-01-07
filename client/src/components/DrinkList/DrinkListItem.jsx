@@ -62,13 +62,13 @@ function DrinkListItem(props) {
   return (
     <Fragment>
       <Status status={status} />
-      <ItemWrapper className={props.editDrink ? "show" : ""}>
-        <Image className={props.editDrink ? "show" : ""} src={updatedDrink.image} width="125px"/>
-        <ItemBody className={props.editDrink ? "show" : ""}>
+      <ItemWrapper show={props.editDrink}>
+        <Image show={props.editDrink} src={updatedDrink.image} width="125px"/>
+        <ItemBody show={props.editDrink}>
           <Title>{updatedDrink.drinkName}</Title>
-          <p>Available: {updatedDrink.available}</p>
+          Available: {updatedDrink.available}
         </ItemBody>
-        <ItemFooter className={props.editDrink ? "show" : ""}>
+        <ItemFooter show={props.editDrink}>
           <MdOutlineModeEdit
             id={updatedDrink.id}
             onClick={() => {
@@ -77,7 +77,7 @@ function DrinkListItem(props) {
           />
         </ItemFooter>
 
-        <ItemExpanded className={props.editDrink ? "show" : ""}>
+        <ItemExpanded show={props.editDrink}>
           {props.editDrink && (
             <form onSubmit={editDrinkHandler}>
               <Input

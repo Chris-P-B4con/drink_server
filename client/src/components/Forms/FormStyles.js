@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Action = styled.div`
   display: flex;
@@ -12,9 +12,9 @@ export const Input = styled.input`
   padding: 10px 10px;
   margin-bottom: 20px;
   border: none;
-  border-bottom: 1px solid ${({theme})=> theme.text};
+  border-bottom: 1px solid ${({ theme }) => theme.text};
   background-color: transparent;
-  color: ${({theme})=> theme.text};
+  color: ${({ theme }) => theme.text};
   outline: none;
 `;
 
@@ -41,21 +41,24 @@ export const Button = styled.input`
   text-align: center;
   cursor: pointer;
   box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.5);
-
-  &.submit {
-    background-color: ${({theme})=> theme.accent};
-    color: ${({theme})=> theme.text};
-  }
-
-   &.delete {
-     background-color: ${({theme})=> theme.danger};
-     color: ${({theme})=> theme.text};
-   }
-  
-  &.cancel {
-    background-color: ${({theme})=> theme.article};
-    color: ${({theme})=> theme.text};
-  }
+  ${({ type }) => {
+    if (type === "submit") {
+      return css`
+        background-color: ${({ theme }) => theme.accent};
+        color: ${({ theme }) => theme.text};
+      `;
+    } else if (type === "delete") {
+      return css`
+        background-color: ${({ theme }) => theme.danger};
+        color: ${({ theme }) => theme.text};
+      `;
+    } else if (type === "cancel") {
+      return css`
+        background-color: ${({ theme }) => theme.article};
+        color: ${({ theme }) => theme.text};
+      `;
+    }
+  }}
 `;
 
 export const Password = styled.div`
@@ -68,7 +71,7 @@ export const PasswordIcon = styled.i`
   position: absolute;
   top: 10px;
   right: 5px;
-  color: ${({theme})=> theme.text};
+  color: ${({ theme }) => theme.text};
 `;
 
 export const LoginButton = styled.button`
@@ -76,7 +79,7 @@ export const LoginButton = styled.button`
   margin-right: 1em;
   border: 0px;
   cursor: pointer;
-  color: ${({theme})=> theme.text};
+  color: ${({ theme }) => theme.text};
   border: none;
   background-color: transparent;
 `;
