@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+//Icons 
 import { BiTrash } from "react-icons/bi";
+
+//Custom Functions
 import { responseHandler, updateStatus } from "../../lib/helpFunctions";
 
+//Styled Components
 import {
   ItemWrapper,
   Image,
