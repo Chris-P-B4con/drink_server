@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { Button } from "../Forms/FormStyles";
+//Styled Components
 import {
+  Button,
   ModalWrapper,
   ModalContent,
   ModalHeader,

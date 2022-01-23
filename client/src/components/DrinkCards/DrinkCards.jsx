@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 // Components
 import Status from "../Status/Status";
-import DrinkCard from "./DrinkCard/DrinkCard";
+import DrinkCard from "./DrinkCard";
 
 //Custom functions
 import { getDrinks, bookDrink } from "../../lib/drinkFunctions";

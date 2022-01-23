@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import Tag from "../../Tag/Tag";
+import Tag from "../Tag/Tag";
 
-import { Article, Button, CardBody, CardHeader } from "../DrinkCardsStyles";
+import { Article, Button, CardBody, CardHeader } from "./DrinkCardsStyles";
 
 function DrinkCard({ drink, bookDrink }) {
   const [tagType, settagType] = useState(null);

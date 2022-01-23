@@ -8,8 +8,7 @@ import DrinkListItem from "./DrinkListItem";
 import Status from "../Status/Status";
 
 //Styled Components
-import { Input } from "../Forms/FormStyles";
-import { AddSection, Wrapper } from "./DrinkListStyles";
+import { AddSection, Input, Wrapper } from "./DrinkListStyles";
 import { MdAddCircleOutline } from "react-icons/md";
 
 //Custom Functions

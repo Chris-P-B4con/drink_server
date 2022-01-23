@@ -1,7 +1,7 @@
 import React from "react";
 
 //Components
-import DropdownItem from "./DropdownItem/DropdownItem";
+import DropdownItem from "./DropdownItem";
 
 //React icons
 import { BiUser, BiHomeAlt } from "react-icons/bi";

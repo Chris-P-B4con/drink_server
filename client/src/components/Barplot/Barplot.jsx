@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
 //Components
@@ -28,18 +28,18 @@ function Barplot(props) {
       (async () => {
         const allUserDrinks = await getAllUserDrinks();
         if (allUserDrinks.length > 0) {
-          // const userVolumes = allUserDrinks.reduce((acc, userDrink) => {
-          //   const { username } = userDrink.user;
-          //   const { volume } = userDrink.drink;
-          //   const date = new Date(userDrink.orderedAt);
-          //   const oneJan = new Date(date.getFullYear(), 0, 1);
-          //   const numberOfDays = Math.floor(
-          //     (date - oneJan) / (24 * 60 * 60 * 1000)
-          //   );
-          //   const week = Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
-          //   const newVolume = acc[username][String(oneJan)+String(week)] ? acc[username][String(oneJan)+String(week)] + volume : volume;
-          //   return { ...acc, [username]: {[String(oneJan)+String(week)]: newVolume }};
-          // }, {});
+          const userVolumes = allUserDrinks.reduce((acc, userDrink) => {
+            const { username } = userDrink.user;
+            const { volume } = userDrink.drink;
+            const date = new Date(userDrink.orderedAt);
+            const oneJan = new Date(date.getFullYear(), 0, 1);
+            const numberOfDays = Math.floor(
+              (date - oneJan) / (24 * 60 * 60 * 1000)
+            );
+            const week = Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
+            const newVolume = acc[username][String(oneJan)+String(week)] ? acc[username][String(oneJan)+String(week)] + volume : volume;
+            return { ...acc, [username]: {[String(oneJan)+String(week)]: newVolume }};
+          }, {});
           // console.log(userVolumes)
           // setOptions({
           //   backgroundColor: isDark ? COLORS_DARK.body : COLORS_LIGHT.body,
@@ -143,7 +143,7 @@ function Barplot(props) {
         {options.data.length > 0 ? (
           <CanvasJSChart options={options} />
         ) : (
-          <Reload />
+          <Reload spin={true}/>
         )}
       </PlotWrapper>
     </Wrapper>

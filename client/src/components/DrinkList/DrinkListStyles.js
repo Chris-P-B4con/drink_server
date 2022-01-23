@@ -15,6 +15,18 @@ export const RightSection = styled.div`
   cursor: pointer;
 `;
 
+export const Input = styled.input`
+  position: relative;
+  width: 100%;
+  padding: 10px 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.text};
+  background-color: transparent;
+  color: ${({ theme }) => theme.text};
+  outline: none;
+`;
+
 export const ItemWrapper = styled.article`
   display: flex;
   color: ${({ theme }) => theme.text};

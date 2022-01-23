@@ -7,7 +7,7 @@ import Status from "../Status/Status";
 import UserDrinkItem from "./UserDrinkItem";
 
 //Styled Components
-import { Wrapper } from "../DrinkList/DrinkListStyles";
+import { Wrapper } from "./UserDrinksStyles";
 
 //Custom Fucntions
 import { getUserDrinks } from "../../lib/drinkFunctions";
