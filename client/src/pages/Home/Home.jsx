@@ -9,7 +9,6 @@ import NavBar from "../../components/NavBar/NavBar";
 import { Main } from "./HomeStyles.js";
 
 function Home() {
-
   return (
     <Fragment>
       <NavBar />

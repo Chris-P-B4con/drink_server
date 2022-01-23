@@ -1,8 +1,9 @@
 import React from "react";
-import { MenuItem } from "../NavBarStyles";
 import { Link } from "react-router-dom";
 
-import { Wrapper } from "../../Dropdown/DropdownStyles";
+//Styled Components
+import { MenuItem, ItemWrapper } from "./NavBarStyles";
+
 function NavItem(props) {
 
   return (
@@ -10,7 +11,7 @@ function NavItem(props) {
       <Link to={props.link} onClick={() => props.setOpenNav(!props.openNav)}>
         {props.icon}
       </Link>
-      <Wrapper show={props.openNav} >{props.children}</Wrapper>
+      <ItemWrapper show={props.openNav} >{props.children}</ItemWrapper>
     </MenuItem>
   );
 }

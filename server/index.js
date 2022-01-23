@@ -13,7 +13,7 @@ const helmet = require("helmet");
 
 // Server Setup
 dotenv.config();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 const app = express();
 const RedisStore = connectRedis(session);
 
@@ -61,7 +61,6 @@ app.use(
     saveUninitialized: false,
     secret: process.env.secret,
     cookie: {
-      sameSite: "none",
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie
       maxAge: 1000 * 60 * 60 * 24 * 30, // session max age in miliseconds

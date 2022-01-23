@@ -7,12 +7,23 @@ export const LinePlot = styled(VscGraphLine)`
 export const BarPlot = styled(VscGraph)`
   color: ${({ theme, color }) => theme[color]};
 `;
+
 export const Wrapper = styled.section`
   display: flex;
   justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
   box-shadow: var(--shadow-elevation-medium);
-  background-color: ${({ theme }) => theme.section}
+  width: 95%;
+  padding: 10px 3px;
+  margin: 3rem 0;
+  background-color: ${({ theme }) => theme.section};
+`;
+
+export const PlotWrapper = styled.article`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.section};
   padding: 10px;
   width: 95%;
   height: 400px;
@@ -38,7 +49,6 @@ export const Radio = styled.input`
   transition: all 0.2s;
   width: 2rem;
   height: 2rem;
-
 `;
 
 export const RadioGroup = styled.div`

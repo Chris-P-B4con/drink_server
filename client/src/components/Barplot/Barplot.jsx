@@ -1,16 +1,19 @@
 import React, { useState, useEffect, Fragment } from "react";
 import Cookies from "js-cookie";
 
-import Status from "../Status/Status";
+//Components
 import CanvasJSReact from "../../lib/canvasjs.react";
+import PlotPicker from "./PlotPicker";
 import Reload from "../Reload/Reload";
+import Status from "../Status/Status";
 
+//Styled Components
+import { Wrapper, PlotWrapper } from "./BarplotStyles";
+
+//Custom Functions
 import { updateStatus } from "../../lib/helpFunctions";
 import { COLORS_LIGHT, COLORS_DARK } from "../../constants/constants";
 import { getAllUserDrinks } from "../../lib/drinkFunctions";
-
-import { Wrapper } from "./BarplotStyles";
-import PlotPicker from "./PlotPicker";
 
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -133,17 +136,17 @@ function Barplot(props) {
   }, [selectPlot]);
 
   return (
-    <Fragment>
+    <Wrapper>
       <Status status={status} />
       <PlotPicker selectPlot={selectPlot} setSelectPlot={setSelectPlot} />
-      <Wrapper>
+      <PlotWrapper>
         {options.data.length > 0 ? (
           <CanvasJSChart options={options} />
         ) : (
           <Reload />
         )}
-      </Wrapper>
-    </Fragment>
+      </PlotWrapper>
+    </Wrapper>
   );
 }
 

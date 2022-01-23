@@ -6,9 +6,13 @@ import LoginForm from "../../components/Forms/LoginForm/LoginForm";
 import RegisterForm from "../../components/Forms/RegisterForm/RegisterForm";
 
 //Style Components
-import { Wrapper } from "./LoginRegisterStyles";
-import { CardBody, CardHeader } from "../../components/Card/CardStyles";
-import { LoginButton } from "../../components/Forms/FormStyles";
+import {
+  Wrapper,
+  CardBody,
+  CardHeader,
+  CardHider,
+  LoginButton,
+} from "./LoginRegisterStyles";
 
 function LoginRegister() {
   const [status, setStatus] = useState({ success: "", error: "" });
@@ -37,16 +41,18 @@ function LoginRegister() {
         <h2>{registerToggle ? "Register" : "Login"}</h2>
       </CardHeader>
       <CardBody
-        className={loginToggle ? "active" : "inactive"}
-        style={{ "--height": "400px" }}
+        show={loginToggle}
       >
-        <LoginForm setStatus={setStatus} />
+        <CardHider>
+          <LoginForm setStatus={setStatus} />
+        </CardHider>
       </CardBody>
       <CardBody
-        className={registerToggle ? "active" : "inactive"}
-        style={{ "--height": "400px" }}
+        show={registerToggle}
       >
-        <RegisterForm setStatus={setStatus} />
+        <CardHider>
+          <RegisterForm setStatus={setStatus} />
+        </CardHider>
       </CardBody>
       <LoginButton
         onClick={flip}

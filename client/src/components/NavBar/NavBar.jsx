@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 //Components
 import Dropdown from "../Dropdown/Dropdown";
-import NavItem from "./NavItem/NavItem";
+import NavItem from "./NavItem";
 
 //Styled Components
-import { Header, Nav, NeonSign } from "./NavBarStyles";
+import { Header, Menu, Nav, NeonSign } from "./NavBarStyles";
 
 function NavBar() {
   const [openNav, setOpenNav] = useState(false);
@@ -13,14 +13,16 @@ function NavBar() {
   return (
     <Header>
       <Nav>
-        <NavItem
-          link="#"
-          icon={<NeonSign item={openNav ? "x" : ">"}>Wingman</NeonSign>}
-          openNav={openNav}
-          setOpenNav={setOpenNav}
-        >
-          <Dropdown />
-        </NavItem>
+        <Menu>
+          <NavItem
+            link="#"
+            icon={<NeonSign>Wingman</NeonSign>}
+            openNav={openNav}
+            setOpenNav={setOpenNav}
+          >
+            <Dropdown />
+          </NavItem>
+        </Menu>
       </Nav>
     </Header>
   );

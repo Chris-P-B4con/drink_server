@@ -1,17 +1,27 @@
 import styled from "styled-components";
 
+export const ItemWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  width: 0;
+  overflow: hidden;
+  transition: all 500ms ease-in-out;
+
+  ${(props) => {
+    if (props.show) return `width: 150px;`;
+  }}
+`;
+
 export const Header = styled.header`
-  align-self: flex-start;
-  /* box-shadow: 0px 3px 18px 2px rgba(0, 0, 0, 0.4); */
   padding-top: 1rem;
   height: 6rem;
-  margin-bottom: 3.5rem;
   width: 100%;
-  position: sticky;
+  position: fixed;
   top:0;
   z-index: 9999;
   background-color: ${({theme})=> theme.body};
-
 `;
 
 export const Nav = styled.nav`

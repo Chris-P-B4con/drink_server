@@ -47,10 +47,10 @@ function DrinkCards() {
 
   return (
     <Fragment>
-      <h2>Getränke Buchen</h2>
-      <br></br>
-      <Status status={status} setStatus={setStatus} />
       <Section>
+        <h2>Getränke Buchen</h2>
+        <br></br>
+        <Status status={status} setStatus={setStatus} />
         {drinks[0].drinkName &&
           drinks.map((drink) => {
             return (
