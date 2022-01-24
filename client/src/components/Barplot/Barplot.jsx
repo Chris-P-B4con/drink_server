@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import CanvasJSReact from "../../lib/canvasjs.react";
 import PlotPicker from "./PlotPicker";
 import Reload from "../Reload/Reload";
+import Section from "../Section/Section"
 import Status from "../Status/Status";
 
 //Styled Components
@@ -19,7 +20,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function Barplot(props) {
   const [options, setOptions] = useState({ data: [] });
-  const [selectPlot, setSelectPlot] = useState("lineplot");
+  const [selectPlot, setSelectPlot] = useState("barplot");
   const [status, setStatus] = useState({ succes: "", error: "" });
 
   useEffect(() => {
@@ -28,18 +29,18 @@ function Barplot(props) {
       (async () => {
         const allUserDrinks = await getAllUserDrinks();
         if (allUserDrinks.length > 0) {
-          const userVolumes = allUserDrinks.reduce((acc, userDrink) => {
-            const { username } = userDrink.user;
-            const { volume } = userDrink.drink;
-            const date = new Date(userDrink.orderedAt);
-            const oneJan = new Date(date.getFullYear(), 0, 1);
-            const numberOfDays = Math.floor(
-              (date - oneJan) / (24 * 60 * 60 * 1000)
-            );
-            const week = Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
-            const newVolume = acc[username][String(oneJan)+String(week)] ? acc[username][String(oneJan)+String(week)] + volume : volume;
-            return { ...acc, [username]: {[String(oneJan)+String(week)]: newVolume }};
-          }, {});
+          // const userVolumes = allUserDrinks.reduce((acc, userDrink) => {
+          //   const { username } = userDrink.user;
+          //   const { volume } = userDrink.drink;
+          //   const date = new Date(userDrink.orderedAt);
+          //   const oneJan = new Date(date.getFullYear(), 0, 1);
+          //   const numberOfDays = Math.floor(
+          //     (date - oneJan) / (24 * 60 * 60 * 1000)
+          //   );
+          //   const week = Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
+          //   const newVolume = acc[username][String(oneJan)+String(week)] ? acc[username][String(oneJan)+String(week)] + volume : volume;
+          //   return { ...acc, [username]: {[String(oneJan)+String(week)]: newVolume }};
+          // }, {});
           // console.log(userVolumes)
           // setOptions({
           //   backgroundColor: isDark ? COLORS_DARK.body : COLORS_LIGHT.body,
@@ -136,7 +137,7 @@ function Barplot(props) {
   }, [selectPlot]);
 
   return (
-    <Wrapper>
+    <Section>
       <Status status={status} />
       <PlotPicker selectPlot={selectPlot} setSelectPlot={setSelectPlot} />
       <PlotWrapper>
@@ -146,7 +147,7 @@ function Barplot(props) {
           <Reload spin={true}/>
         )}
       </PlotWrapper>
-    </Wrapper>
+    </Section>
   );
 }
 

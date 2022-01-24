@@ -20,7 +20,7 @@ export const Header = styled.header`
   width: 100%;
   position: fixed;
   top:0;
-  z-index: 9999;
+  z-index: 2;
   background-color: ${({theme})=> theme.body};
 `;
 

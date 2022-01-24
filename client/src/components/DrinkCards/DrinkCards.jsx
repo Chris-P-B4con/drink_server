@@ -1,15 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Components
 import Status from "../Status/Status";
 import DrinkCard from "./DrinkCard";
+import Section from "../Section/Section";
 
 //Custom functions
 import { getDrinks, bookDrink } from "../../lib/drinkFunctions";
 import { updateStatus } from "../../lib/helpFunctions";
-
-// Styled Components
-import { Section } from "./DrinkCardsStyles.js";
 
 function DrinkCards() {
   const [status, setStatus] = useState({ success: "", error: "" });
@@ -46,19 +44,21 @@ function DrinkCards() {
   }, []);
 
   return (
-    <Fragment>
-      <Section>
-        <h2>Getränke Buchen</h2>
-        <br></br>
-        <Status status={status} setStatus={setStatus} />
-        {drinks[0].drinkName &&
-          drinks.map((drink) => {
-            return (
-              <DrinkCard drink={drink} bookDrink={bookingHandler}></DrinkCard>
-            );
-          })}
-      </Section>
-    </Fragment>
+    <Section>
+      <h2>Getränke Buchen</h2>
+      <br></br>
+      <Status status={status} setStatus={setStatus} />
+      {drinks[0].drinkName &&
+        drinks.map((drink) => {
+          return (
+            <DrinkCard
+              drink={drink}
+              bookDrink={bookingHandler}
+              key={drink.id}
+            />
+          );
+        })}
+    </Section>
   );
 }
 

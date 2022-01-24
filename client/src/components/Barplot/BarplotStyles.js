@@ -8,17 +8,6 @@ export const BarPlot = styled(VscGraph)`
   color: ${({ theme, color }) => theme[color]};
 `;
 
-export const Wrapper = styled.section`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  box-shadow: var(--shadow-elevation-medium);
-  width: 95%;
-  padding: 10px 3px;
-  margin: 3rem 0;
-  background-color: ${({ theme }) => theme.section};
-`;
-
 export const PlotWrapper = styled.article`
   display: flex;
   justify-content: center;

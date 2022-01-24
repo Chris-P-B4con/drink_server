@@ -3,16 +3,16 @@ import React, { useState, useEffect } from "react";
 //Components
 import Pagination from "../Pagination/Pagination";
 import Reload from "../Reload/Reload";
+import Section from "../Section/Section";
 import Status from "../Status/Status";
 import UserDrinkItem from "./UserDrinkItem";
 
 //Styled Components
-import { Wrapper } from "./UserDrinksStyles";
+import { Drinks } from "./UserDrinksStyles";
 
 //Custom Fucntions
 import { getUserDrinks } from "../../lib/drinkFunctions";
 import { updateStatus } from "../../lib/helpFunctions";
-
 
 function UserDrinks() {
   const [status, setStatus] = useState({ error: "", success: "" });
@@ -55,29 +55,32 @@ function UserDrinks() {
   }, [page]);
 
   return (
-    <Wrapper>
+    <Section>
       <h2>Meine Getränke:</h2>
       <br />
       <Status status={status} setStatus={setStatus} />
-      {drinks[0].drink.id ? (
-        drinks.map((drink, index) => {
-          return (
-            <UserDrinkItem
-              drink={drink}
-              setStatus={setStatus}
-              getDrinkHandler={getDrinkHandler}
-            />
-          );
-        })
-      ) : (
-        <Reload
-          spin={spin}
-          alignment="center"
-          reloadHandler={getDrinkHandler}
-        />
-      )}
-      <Pagination setPage={setPage} page={page} maxPage={maxPage} />
-    </Wrapper>
+      <Drinks>
+        {drinks[0].drink.id ? (
+          drinks.map((drink, index) => {
+            return (
+              <UserDrinkItem
+                drink={drink}
+                key={drink.id}
+                setStatus={setStatus}
+                getDrinkHandler={getDrinkHandler}
+              />
+            );
+          })
+        ) : (
+          <Reload
+            spin={spin}
+            alignment="center"
+            reloadHandler={getDrinkHandler}
+          />
+        )}
+        <Pagination setPage={setPage} page={page} maxPage={maxPage} />
+      </Drinks>
+    </Section>
   );
 }
 

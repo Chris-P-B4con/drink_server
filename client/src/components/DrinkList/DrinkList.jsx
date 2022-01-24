@@ -2,13 +2,13 @@ import React, { Fragment, useState, useEffect } from "react";
 
 //Components
 import Reload from "../Reload/Reload";
-import Backdrop from "../Backdrop/Backdrop";
+import Section from "../Section/Section"
 import Modal from "../Modal/Modal";
 import DrinkListItem from "./DrinkListItem";
 import Status from "../Status/Status";
 
 //Styled Components
-import { AddSection, Input, Wrapper } from "./DrinkListStyles";
+import { AddSection, Input} from "./DrinkListStyles";
 import { MdAddCircleOutline } from "react-icons/md";
 
 //Custom Functions
@@ -18,7 +18,7 @@ import { updateStatus } from "../../lib/helpFunctions";
 function DrinkList() {
   const [status, setStatus] = useState({ error: "", success: "" });
   const [editDrink, setEditDrink] = useState({});
-  const [modalStatus, setModalStatus] = useState(false);
+  const [showDialog, setShowDialog] = React.useState(false);
   const [spin, setSpin] = useState(true);
   const [drinks, setDrinks] = useState([
     {
@@ -55,18 +55,18 @@ function DrinkList() {
   };
 
   const showEdit = (index) => {
-    let newArr = Array(editDrink.length).fill(false); 
-    newArr[index] = !editDrink[index]
-    setEditDrink(newArr)
-  }
+    let newArr = Array(editDrink.length).fill(false);
+    newArr[index] = !editDrink[index];
+    setEditDrink(newArr);
+  };
 
-  const showModal = (e) => {
-    setModalStatus(!modalStatus);
+  const toggleModal = (e) => {
+    setShowDialog(!showDialog);
   };
 
   const addDrinkHandler = (e) => {
     e.preventDefault();
-    showModal();
+    toggleModal();
     const formData = new FormData();
     if (!newDrink.drinkName) {
       updateStatus(setStatus, {
@@ -126,7 +126,7 @@ function DrinkList() {
   }, [drinks.length]);
 
   return (
-    <Wrapper>
+    <Section>
       <h2>Getränke Editieren</h2>
       <br />
       <Reload
@@ -139,6 +139,7 @@ function DrinkList() {
         drinks.map((drink, index) => {
           return (
             <DrinkListItem
+            key={index}
               drink={drink}
               index={index}
               editDrink={editDrink[index]}
@@ -148,64 +149,63 @@ function DrinkList() {
           );
         })}
       <AddSection>
-        <MdAddCircleOutline onClick={showModal} />
+        <MdAddCircleOutline onClick={toggleModal} />
       </AddSection>
 
-      {modalStatus ? (
-        <Fragment>
-          <Backdrop onClick={showModal} />
-          <Modal
-            title="Add Drink"
-            actions={["Submit", "Cancel"]}
-            type="form"
-            formHandler={addDrinkHandler}
-            cancelAction={showModal}
-          >
-            <Input
-              type="text"
-              name="drinkName"
-              id="drinkName"
-              placeholder="Drink Name"
-              onChange={(e) =>
-                setNewDrink({ ...newDrink, drinkName: e.target.value })
-              }
-              value={newDrink.drinkName}
-            />
-            <Input
-              type="text"
-              name="available"
-              id="available"
-              placeholder="Available"
-              onChange={(e) =>
-                setNewDrink({ ...newDrink, available: e.target.value })
-              }
-              value={newDrink.available}
-            />
-            <Input
-              type="text"
-              name="price"
-              id="price"
-              placeholder="Price"
-              onChange={(e) =>
-                setNewDrink({ ...newDrink, price: e.target.value })
-              }
-              value={newDrink.price}
-            />
-            <Input
-              type="text"
-              name="volume"
-              id="volume"
-              placeholder="Volume"
-              onChange={(e) =>
-                setNewDrink({ ...newDrink, volume: e.target.value })
-              }
-              value={newDrink.volume}
-            />
-            <Input type="file" name="image" id="image" />
-          </Modal>
-        </Fragment>
+      {showDialog ? (
+        <Modal
+          title="Add Drink"
+          actions={["Submit", "Cancel"]}
+          type="form"
+          showDialog={showDialog}
+          formHandler={addDrinkHandler}
+          cancelAction={toggleModal}
+          setShowDialog={setShowDialog}
+        >
+          <Input
+            type="text"
+            name="drinkName"
+            id="drinkName"
+            placeholder="Drink Name"
+            onChange={(e) =>
+              setNewDrink({ ...newDrink, drinkName: e.target.value })
+            }
+            value={newDrink.drinkName}
+          />
+          <Input
+            type="text"
+            name="available"
+            id="available"
+            placeholder="Available"
+            onChange={(e) =>
+              setNewDrink({ ...newDrink, available: e.target.value })
+            }
+            value={newDrink.available}
+          />
+          <Input
+            type="text"
+            name="price"
+            id="price"
+            placeholder="Price"
+            onChange={(e) =>
+              setNewDrink({ ...newDrink, price: e.target.value })
+            }
+            value={newDrink.price}
+          />
+          <Input
+            type="text"
+            name="volume"
+            id="volume"
+            placeholder="Volume"
+            onChange={(e) =>
+              setNewDrink({ ...newDrink, volume: e.target.value })
+            }
+            value={newDrink.volume}
+          />
+          <Input type="file" name="image" id="image" />
+        </Modal>
       ) : null}
-    </Wrapper>
+    </Section>
   );
 }
 

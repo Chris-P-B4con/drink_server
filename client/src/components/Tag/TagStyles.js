@@ -11,7 +11,7 @@ position: absolute;
 display: flex;
 justify-content: center;
 align-items: center;
-top:0;
-left:0;
-border: 4px solid ${({theme})=> theme.article};
+top:-1px;
+left:-1px;
+border: 3px solid ${({theme})=> theme.article};
 `

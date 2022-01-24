@@ -2,6 +2,7 @@ import React from "react";
 
 import { COLORS_LIGHT } from "../../constants/constants";
 
+//Styled Components
 import { LeftArrow, RightArrow, Wrapper } from "./PaginationStyles";
 
 function Pagination(props) {

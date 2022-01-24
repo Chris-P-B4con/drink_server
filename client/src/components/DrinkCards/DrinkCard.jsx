@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Tag from "../Tag/Tag";
 
-import { Article, Button, CardBody, CardHeader } from "./DrinkCardsStyles";
+import { AccentLine, Article, Button, CardBody, CardHeader } from "./DrinkCardsStyles";
 
 function DrinkCard({ drink, bookDrink }) {
   const [tagType, settagType] = useState(null);
@@ -28,6 +28,7 @@ function DrinkCard({ drink, bookDrink }) {
           onClick={bookDrink}
         />
       </CardHeader>
+      <AccentLine/>
       <CardBody>
         <h2> {drink.drinkName}</h2>
       </CardBody>

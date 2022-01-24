@@ -1,16 +1,9 @@
 import styled from "styled-components";
 
-export const Section = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  box-shadow: var(--shadow-elevation-medium);
-  margin-bottom: 30px;
-  width: 95%;
-  padding: 10px 3px;
-  background-color: ${({theme})=> theme.section}
-`;
+export const AccentLine = styled.div`
+  border: solid 2px var(--accent);
+  width: 100%;
+`
 
 export const Article = styled.article`
   display: flex;
@@ -41,7 +34,6 @@ export const Article = styled.article`
 export const CardHeader = styled.div`
   width: 100%;
   height: 100%;
-  padding: 3px;
 `;
 
 export const CardBody = styled.div`

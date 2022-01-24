@@ -2,9 +2,14 @@ import styled from "styled-components";
 
 export const Wrapper = styled.section`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  box-shadow: var(--shadow-elevation-medium);
+  width: 95%;
+  padding: 10px 3px;
+  margin: 3rem 0;
+  background-color: ${({ theme }) => theme.section};
 `;
 
 export const RightSection = styled.div`
